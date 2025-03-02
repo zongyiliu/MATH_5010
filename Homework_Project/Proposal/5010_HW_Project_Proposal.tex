@@ -1,0 +1,134 @@
+\documentclass[margin=1in]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor} % For custom colors
+\lstset{
+	language=R,                % Choose the language (e.g., Python, C, R)
+	basicstyle=\ttfamily\small, % Font size and type
+	keywordstyle=\color{blue},  % Keywords color
+	commentstyle=\color{gray},  % Comments color
+	stringstyle=\color{red},    % String color
+	numbers=left,               % Line numbers
+	numberstyle=\tiny\color{gray}, % Line number style
+	stepnumber=1,               % Numbering step
+	breaklines=true,            % Auto line break
+	backgroundcolor=\color{black!5}, % Light gray background
+	frame=single,               % Frame around the code
+}
+\usepackage{float}
+\usepackage[margin=1in]{geometry}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+		\usepackage[]{amssymb} %gives us the character \varnothing
+		
+	
+	
+	\title{Project Proposal, MATH 5010}
+	\author{Zongyi Liu}
+	\date{Feb 28, 2025}
+	\begin{document}
+		\maketitle
+		
+		\section*{Topic }
+		My intended topic is \textbf{Comparison of Monte Carlo methods in American Option Pricing}
+		
+		Using Monte Carlo methods to calculate the value of an option is a important and quite recent topic in mathematical finance. It deals with multiple sources of uncertainty or with complicated features. The first application to option pricing was by  \href{https://www.sciencedirect.com/science/article/abs/pii/0304405X77900058}{Phelim Boyle} in 1977 (for European options). In 1996, \href{https://www.columbia.edu/~mnb2/broadie/Assets/bg_ms_1996.pdf}{M. Broadie and P. Glasserman} from Columbia Business School showed how to price Asian options by Monte Carlo. An important development was the introduction in 1996 by Carriere of Monte Carlo methods for options with early exercise features.
+		
+		American options, unlike their European counterparts, allow the holder to exercise the option at any time before expiration. This additional flexibility makes American options more valuable but significantly more complex to price. Traditional numerical methods like binomial trees and finite difference methods face challenges in high-dimensional settings. 
+		
+		There are various kinds of methods utilizing Monte Carlo, and in this project, I hope to:
+		
+		\begin{itemize}
+			\item Implement and compare different Monte Carlo simulation approaches for pricing American options.
+			
+			\item Evaluate the performance of each method in terms of accuracy, computational efficiency, and scalability.
+			
+			\item Investigate the applicability of machine learning techniques to improve the efficiency of option pricing models.
+			
+			\item Rediscover the pros and cons of Monte Carlo simulation.
+		\end{itemize}
+
+
+		\section*{Methodology}
+		 \subsection*{Monte Carlo Simulation Techniques}
+		 
+		 \begin{itemize}
+		 	\item Longstaff-Schwartz Method: Use least-squares regression to approximate the continuation value at each exercise date.
+		 
+		 \item Stochastic Mesh Method: Create a random mesh of points to approximate the continuation value using weighted averages.
+		 
+		 \item Parametric Exercise Boundaries: Fit parametric models to the optimal exercise boundary.
+		\end{itemize}
+	
+	 \subsection*{Programming Language to Realize the Goal}
+	 Mainly Python, and if time permits, I will rewrite them in C++.
+	 
+	 \subsection*{Evaluation Metrics}
+	 
+	 \begin{itemize}
+	 \item Pricing accuracy compared to benchmark solutions.
+	 
+	\item Computational efficiency (execution time and memory usage).
+	 
+	 \item Robustness under varying market conditions (volatility, interest rates, etc.)
+	\end{itemize}
+
+\subsection*{Data Sources}
+\begin{itemize}
+	\item \href{https://www.barchart.com/}{Barchart} – Comprehensive options data.
+	\item \href{https://www.nasdaq.com/market-activity/quotes/options}{Nasdaq Options} – Options chain and pricing.
+	\item \href{https://www.cboe.com/}{CBOE} – Official site for US options markets.
+	\item \href{https://polygon.io/}{Polygon.io} – Real-time and historical options data.
+	\item \href{https://www.interactivebrokers.com/en/trading/api.php}{Interactive Brokers API} – Market data with trading API.
+\end{itemize}
+	
+	\section*{Settings}
+	
+	Many tests made by previous scholar set similar parameters, in which the expiration date will be denoted by $T$, the strike price by $K$, the interest rate by $r$, the volatility by $\sigma$, and the stock price at time $t$ by $S_{t}$ (starting price $S_{0}$ ), with an argument $S_{t}(k)$ indicating a particular sample path $k$ and superscripts $S_{t}^{i}$ when there are multiple stocks. Here the interest rate and volatility are assumed constant, but these can easily be made stochastic for all the procedures with little difficulty, a usual advantage of Monte Carlo methods. Under the scenario, the price of an American-style option can be written as the solution to the following optimal stopping problem:
+	
+	$$
+		\sup _{\tau} E^{Q}\left[e^{-r \tau} L_{\tau}\left(\left\{S_{t}: t \in[0, \tau]\right\}\right)\right]
+	$$
+	
+	where $Q$ denotes the appropriate risk-neutral (martingale) measure, $L_{t}(\cdot)$ represents the payoff at time $t$, which itself could be path dependent (as in an Asian option), and the supremum is over all stopping times $\tau \leq T$. All cases will have a finite number of discrete exercise opportunities, at points $\left\{t_{0}=0, t_{1}, \ldots, t_{N}=T\right\}$, where $N+1$ gives the total number of exercise opportunities.
+	
+	\subsection*{Scenario 1: Call Option with Discrete Dividends}
+	Here a single stock that distributes dividend $D_{j}$ at time $t_{j}=\sum_{i=1}^{j} \tau_{i}\left(\tau_{i}>0\right), j=1, \ldots, N$, where $\tau_{i}$ is the time between the distribution of dividend $i-1$ and $i$, and $N$ is the number of dividends distributed during the lifetime of the call contract, the last dividend distributed on the expiration date. Thus,
+	$$
+		L_{t}=\left(S_{t}-K\right)^{+}
+	$$
+	
+	The dividend amounts $\left\{D_{j}\right\}$ can be deterministic or stochastic
+	
+	\subsection*{Scenario 2: Call Option with Continuous Dividends}
+	 
+	 In this scenario, a single stock pays continuous dividends at a rate $\delta$, but early exercise is restricted to the discrete points $\left\{t_{j}, j=0,1, \ldots, N\right\}$. We assume that the stock price net of the present value of escrowed dividends changes continuously according to
+	 $$
+	 S_{t_{j}}=S_{t_{j}^{-}}=S_{t_{j}^{+}}=h\left(Z ; S_{t_{j-1}}, \tau_{j}, \mu-\delta, \sigma\right), \quad j=1, \ldots, N .
+	 $$
+	 
+	 \subsection*{Scenario 3: Max Option Multiple Underlying Assets}
+	 
+	 Here the payoff function upon exercise at time $t$ is
+	 $$
+	 	L_{t}=\left(\max _{i=1, \ldots, n} S_{t}^{i}-K\right)^{+} 
+	 $$
+	 where again early exercise is restricted to the discrete points $\left\{t_{j}, j=0,1, \ldots, N\right\}$. The individual stock prices are assumed to follow the correlated geometric Brownian motion processes
+	 $$
+	 d S_{t}^{i}=S_{t}^{i}\left[\left(r-\delta_{i}\right) d t+\sigma_{i} d Z_{t}^{i}\right]
+	 $$
+	 where $Z_{t}^{i}$ is a standard Brownian motion process and the instantaneous correlation of $Z^{i}$ and $Z^{j}$ is $\rho_{i j}$.
+	 
+	 This part mainly follows Broadie and Glasserma's 
+	 \href{https://www.columbia.edu/~mnb2/broadie/Assets/v7n4a3_Broadie.pdf}{paper}.
+	 
+	 \subsection*{To be Expanded}
+	 
+	 
+	\end{document}
