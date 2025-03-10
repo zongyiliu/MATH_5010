@@ -81,6 +81,8 @@
 \end{tcolorbox}
 </code>
 
+Red: Maroon
+
 ## 插入圖片
 <code>
 \includegraphics[max width=\textwidth, center]{gas}
