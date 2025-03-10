@@ -1,3 +1,6 @@
+# 整體
+## 使用的包
+<code>
 \documentclass[letterpaper]{article} 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -53,10 +56,53 @@
 }
 \usepackage{float}
 \usepackage[]{amsthm} %lets us use \begin{proof}
-	\usepackage[]{amssymb} %gives us the character \varnothing
+\usepackage[]{amssymb} %gives us the character \varnothing
 	
+</code>
 
----
+## 標題: 
+* 正標題: Homework/Lecture/Exercise 1, MATH 3040
+* 小標題: Dirichlet Boundary Condition
+* 副標題: Zongyi Liu/Wed Jan 1, 2025 [星期, 月份使用簡寫, 即使 June March這種字數少的]
+
+<code>
+	\title{Homework 1, MATH 3040 \\
+		\small{Dirichlet Boundary Condition}
+	}
+	\author{Zongyi Liu}
+	\date{Wed Jan 1, 2025}
+</code>
+
+# 內部
+## 插入註釋
+<code>
 \begin{tcolorbox}[width=\linewidth, colframe=MidnightBlue, title=A]
 
 \end{tcolorbox}
+</code>
+
+## 插入圖片
+<code>
+\includegraphics[max width=\textwidth, center]{gas}
+\captionof{figure}{Natural gas futures curve on Jan 31, 2025}
+</code>
+
+
+## 引用代碼
+<code>
+\begin{lstlisting}
+\end{lstlisting}
+</code>
+
+## 超鏈接
+<code>
+\href{https:網址}{顯示名}
+</code>
+
+## 代碼打印結果
+<code>
+\begin{minipage}{\linewidth}
+\begin{Verbatim}
+\end{Verbatim}
+\end{minipage}
+</code>
