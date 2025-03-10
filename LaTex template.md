@@ -55,3 +55,8 @@
 \usepackage[]{amsthm} %lets us use \begin{proof}
 	\usepackage[]{amssymb} %gives us the character \varnothing
 	
+
+---
+\begin{tcolorbox}[width=\linewidth, colframe=MidnightBlue, title=A]
+
+	 \end{tcolorbox}
