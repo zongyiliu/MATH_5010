@@ -59,4 +59,4 @@
 ---
 \begin{tcolorbox}[width=\linewidth, colframe=MidnightBlue, title=A]
 
-	 \end{tcolorbox}
+\end{tcolorbox}
