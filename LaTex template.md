@@ -89,6 +89,7 @@ Red: Maroon
 \captionof{figure}{Natural gas futures curve on Jan 31, 2025}
 </code>
 
+caption放在圖片下面
 
 ## 引用代碼
 <code>
