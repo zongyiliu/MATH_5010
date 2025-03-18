@@ -1,0 +1,191 @@
+---
+title: "Homework_Midterm_in_R"
+author: "Zongyi Liu"
+date: "2025-03-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+if(!require(pacman))install.packages("pacman")
+pacman::p_load(tidyverse,
+               sde,
+               prettydoc,janitor)
+```
+
+
+```{r}
+# Initial stock price
+mu <- 0.14
+X0 <- 100
+volatility <- 0.28
+time <- seq(0, 1, length.out = 1001)
+
+# Simulate GBM
+S <- GBM(x = X0, r = mu, sigma = volatility, T = 1, N = 1000)
+
+# Plot GBM
+plot(time, S, type = "l", col = "#00008B", lwd = 2,
+     xlab = "Time", ylab = "Stock Price",
+     main = "Geometric Brownian Motion (GBM) Simulation")
+```
+
+
+```{r}
+mu <- 0.14
+X0 <- 0
+volatility <- 0.28
+
+B_drift <- sde.sim(X0 = 0, model = "BS", theta = c(mu, sigma), T = 1, N = 1000)
+
+plot(time, B_drift, type = "l", col = "red", lwd = 2,
+     xlab = "Time", ylab = "Brownian Motion with Drift",
+     main = "Brownian Motion with Drift (mu = 0.5)")
+```
+
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Simulate a single path of standard Brownian motion
+B <- BM(x = 0, T = 1, N = 1000)
+
+# Create a time vector
+time <- seq(0, 1, length.out = 1001)
+
+# Plot the single path
+plot(time, B, type = "l", col = "blue", lwd = 2,
+     xlab = "Time", ylab = "Brownian Motion",
+    main = )
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(tidyr)
+
+# Parameters
+X0 <- 1000
+mu <- 0.14
+sigma <- 0.20
+n <- 50000    # Number of paths
+T <- 1      # Time horizon
+N <- 250    # Number of time steps
+dt <- T / N # Time increment
+
+# Generate time vector
+time <- seq(0, T, by = dt)
+
+# Initialize matrix to store trajectories
+X <- matrix(NA, nrow = N + 1, ncol = n)
+X[1, ] <- X0
+
+# Simulate GBM
+set.seed(123)  # For reproducibility
+for (i in 1:n) {
+  for (j in 2:(N + 1)) {
+    dW <- rnorm(1, mean = 0, sd = sqrt(dt))
+    X[j, i] <- X[j - 1, i] * exp((mu - 0.5 * sigma^2) * dt + sigma * dW)
+  }
+}
+
+# Convert matrix to data frame for ggplot
+X_df <- as.data.frame(X)
+X_df$time <- time
+
+# Reshape data from wide to long format using tidyr's pivot_longer
+X_long <- X_df %>%
+  pivot_longer(cols = -time, names_to = "trajectory", values_to = "price")
+
+# Plot the trajectories with different colors
+ggplot(X_long, aes(x = time, y = price, color = trajectory)) +
+  geom_line(alpha = 0.7) +  # Set transparency for better visibility
+  labs(
+    x = "Time",
+    y = "Price",
+  ) +
+  theme_minimal() +
+  scale_color_viridis_d()+  # Use a perceptually uniform color palette
+    theme(legend.position = "none")  # Remove the legend
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+
+# Define the Black-Scholes function for options with continuous dividend yield (q)
+black_scholes_stocks <- function(callput, S, K, r, q, sigma, T) {
+  
+  # Compute d1 and d2
+  d1 <- (log(S / K) + (r - q + 0.5 * sigma^2) * T) / (sigma * sqrt(T))
+  d2 <- d1 - sigma * sqrt(T)
+  
+  # Standard normal CDF using pnorm
+  N1 <- pnorm(d1)
+  N2 <- pnorm(d2)
+  
+  if (callput == "c") {
+    # Call option price with dividends
+    Price <- S * exp(-q * T) * N1 - K * exp(-r * T) * N2
+  } else if (callput == "p") {
+    # Put option price with dividends
+    Price <- K * exp(-r * T) * pnorm(-d2) - S * exp(-q * T) * pnorm(-d1)
+  } else {
+    stop("Invalid option type. Use 'c' for call or 'p' for put.")
+  }
+  
+  return(Price)
+}
+
+# Define parameters
+dx <- 0.1
+maxX <- 20
+X <- seq(dx, maxX, by = dx)  # Stock price range
+
+Strike <- 11  # Strike price
+Rate <- 0.01  # Risk-free rate
+Time <- 1     # Time to maturity (years)
+Volatility <- 0.3  # Volatility (30%)
+DividendYield <- 0.02  # Dividend yield (2%)
+
+# Compute payoff at expiration (Intrinsic Value)
+Y <- pmax(X - Strike, 0)
+
+# Compute Black-Scholes call price with dividends
+Z <- sapply(X, function(xVal) {
+  black_scholes_stocks('c', xVal, Strike, Rate, DividendYield, Volatility, Time)
+})
+
+# Create a data frame for plotting
+data <- data.frame(StockPrice = X, CallPrice = Z, Payoff = Y)
+
+# Plot using ggplot2
+ggplot(data) +
+  geom_line(aes(x = StockPrice, y = CallPrice), color = "blue", size = 1, linetype = "solid") +
+  geom_line(aes(x = StockPrice, y = Payoff), color = "orange", size = 1, linetype = "solid") +
+  labs(
+       x = "Stock Price",
+       y = "Option Value") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, max(max(Z), max(Y))))
+
+
+```
+
