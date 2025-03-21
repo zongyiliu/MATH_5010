@@ -80,9 +80,9 @@
 
 \end{tcolorbox}
 </code>
-
-Red: Maroon
-
+藍色: MidnightBlue, 我自己的註釋
+紅色: Maroon
+綠色: OliveGreen, 原lecture的
 ## 插入圖片
 <code>
 \includegraphics[max width=\textwidth, center]{gas}
@@ -108,4 +108,10 @@ caption放在圖片下面
 \begin{Verbatim}
 \end{Verbatim}
 \end{minipage}
+</code>
+
+
+## 用顏色
+<code>
+\textcolor{red}{easily}
 </code>
