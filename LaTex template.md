@@ -1,7 +1,6 @@
 # 整體
 ## 使用的包
 <code>
-	d
 \documentclass[letterpaper]{article} 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -114,7 +113,6 @@ caption放在圖片下面
 \end{minipage}
 </code>
 
-ffffeeee
 ## 用顏色
 <code>
 \textcolor{red}{easily}
