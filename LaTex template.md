@@ -75,7 +75,6 @@ j
 	\author{Zongyi Liu}
 	\date{Wed Jan 1, 2025}
 </code>
-
 # 內部
 ## 插入註釋
 <code>
