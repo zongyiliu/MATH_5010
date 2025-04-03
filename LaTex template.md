@@ -61,9 +61,7 @@
 </code>
 
 
-j
-
-## 標題: 
+## 標題
 * 正標題: Homework/Lecture/Exercise 1, MATH 3040
 * 小標題: Dirichlet Boundary Condition
 * 副標題: Zongyi Liu/Wed Jan 1, 2025 [星期, 月份使用簡寫, 即使 June March這種字數少的]
@@ -75,6 +73,12 @@ j
 	\author{Zongyi Liu}
 	\date{Wed Jan 1, 2025}
 </code>
+## 目錄
+
+<code>
+\tableofcontents
+</code>
+
 # 內部
 ## 插入註釋
 <code>
