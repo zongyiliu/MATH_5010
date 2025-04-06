@@ -60,6 +60,10 @@
 	
 </code>
 
+## 調用漢字
+<code>
+\usepackage{ctex} 
+</code>
 
 ## 標題
 * 正標題: Homework/Lecture/Exercise 1, MATH 3040
