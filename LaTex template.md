@@ -112,6 +112,11 @@ caption放在圖片下面
 \href{https:網址}{顯示名}
 </code>
 
+## R那樣的數字
+<code>
+\mathbb{}
+</code>
+
 ## 代碼打印結果
 <code>
 \begin{minipage}{\linewidth}
