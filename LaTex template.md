@@ -67,15 +67,15 @@
 
 ## 標題
 * 正標題: Homework/Lecture/Exercise 1, MATH 3040
-* 小標題: Dirichlet Boundary Condition
+* 小標題: Dirichlet Boundary Condition 下面換行寫漢字
 * 副標題: Zongyi Liu/Wed Jan 1, 2025 [星期, 月份使用簡寫, 即使 June March這種字數少的]
 
 <code>
-	\title{Homework 1, MATH 3040 \\
-		\small{Dirichlet Boundary Condition}
-	}
+	\title{Lecture 9, IEOR 4732\\
+	\small{Model Calibration and Optimization\\模型的調節和最優化
+}}
 	\author{Zongyi Liu}
-	\date{Wed Jan 1, 2025}
+	\date{Thu, Mar 27, 2025}
 </code>
 
 ## 目錄
