@@ -1,7 +1,7 @@
 # 整體
 ## 使用的包
 <code>
-\documentclass[letterpaper]{article} 
+\documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
