@@ -4,7 +4,7 @@
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}
+\usepackage{amsmath}j
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{hyperref}
