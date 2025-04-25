@@ -36,7 +36,7 @@
 \usepackage{capt-of}
 \usepackage{tcolorbox}
 \usepackage{lipsum}
-\usepackage{graphicx}
+\usepackage{graphicx}yan
 \usepackage{float}
 \usepackage{listings}
 \usepackage{hyperref} 
