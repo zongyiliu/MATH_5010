@@ -1,0 +1,234 @@
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usetheme{SimpleDarkBlue}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{ctex}
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	stringstyle=\color{orange},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	numbersep=5pt,
+	backgroundcolor=\color{white},
+	frame=single,
+	breaklines=true,
+	captionpos=b,
+	tabsize=2,
+	showspaces=false,
+	showstringspaces=false
+}
+
+\usepackage{xcolor} % for color support
+
+\usepackage[absolute,overlay]{textpos}
+
+\title{A Comparative Study of Monte Carlo Methods in European Option Pricing}
+\subtitle{Final Project, MATH 5010}
+
+\author{Zongyi Liu}
+
+\date{Mon, May 5, 2025} % Date, can be changed to a custom date
+
+\begin{document}
+	
+	\begin{frame}
+		% Print the title page as the first slide
+		\titlepage
+		
+		\begin{textblock*}{3cm}(0.5cm,7cm) 
+			\includegraphics[width=2cm]{columbia.png}
+		\end{textblock*}
+	
+	\end{frame}
+	
+	\begin{frame}{Overview}
+		\tableofcontents
+	\end{frame}
+	
+	%------------------------------------------------
+	\section{Introduction}
+	%------------------------------------------------
+	
+	\subsection{{Background}}
+	\begin{frame}{Background}
+		We have studies typically three types of option pricing, Asian, European, and American, in Hull's book; for American option pricing, we use binomial trees as we studied in the book, and MC is usually using in Asian and European OP. In this thesis, I choose to do the experiment in European options because it is easy to retrieve from Yahoo finance package. 
+		
+		European options are among the most fundamental financial derivatives, and accurate pricing of these instruments is essential for risk management and investment strategies. While the Black-Scholes model provides a closed-form solution under certain assumptions, real-world constraints often require more flexible and robust numerical approaches. 
+		
+		Among them, Monte Carlo (MC) simulation has proven to be a powerful and general-purpose tool for pricing options, especially in high-dimensional and path-dependent cases. The first application to option pricing was by Phelim Boyle in 1977 (for European options). In 1996, M. Broadie and P. Glasserman showed how to price Asian options by Monte Carlo, and the book written by Glasserman of implementing Monte-Carlo method in Option Pricing in 2003 laid the foundation of modern financial engineering. 
+
+	\end{frame}
+
+\begin{frame}{Background}
+	
+	This thesis focuses on a comparative study of various Monte Carlo methods applied specifically to European option pricing. Although a standard Monte Carlo approach is conceptually simple, several enhancements—such as variance reduction techniques and quasi-random sampling—can drastically improve accuracy and efficiency. This thesis aims to evaluate and compare the performance of several Monte Carlo variants under a consistent framework.
+	
+	The main aim for this project is to implement and compare various Monte Carlo simulation methods for pricing European options; then evaluate the accuracy, convergence rate, variance, and computational cost of each method. Finally determine under what conditions certain Monte Carlo techniques outperform others.
+\end{frame}
+	
+	%------------------------------------------------
+	
+	\section{Methodology}
+	\subsection{Standard Monte Carlo}
+	
+	\begin{frame}{Standard Monte Carlo}
+		In standard Monte Carlo (MC) simulation for European option pricing, the goal is to estimate the present value of the expected payoff under the risk-neutral measure. Assuming the underlying asset follows a Geometric Brownian Motion (GBM), we simulate a large number of possible terminal stock prices \( S_T \) using the formula \( S_T = S_0 \exp\left[(r - \frac{1}{2} \sigma^2) T + \sigma \sqrt{T} Z\right] \), where \( Z \) is a standard normal random variable. For each simulated path, we calculate the option’s payoff—such as \( \max(S_T - K, 0) \) for a call—and then take the average of all payoffs. This average is finally discounted to the present using \( e^{-rT} \) to obtain the estimated option price. Monte Carlo methods are particularly flexible and can handle a wide range of option types, though they converge slowly with an error rate proportional to \( 1/\sqrt{N} \), where \( N \) is the number of simulations.
+	\end{frame}
+
+\begin{frame}{Pseudocode}
+	\begin{center}
+	\includegraphics[width=\textwidth]{code}
+\end{center}
+\end{frame}
+	
+	%------------------------------------------------
+	
+	\subsection{Antithetic Variates}
+	\begin{frame}{Antithetic Variates}
+		 
+		The Antithetic Variates method is a variance reduction technique used in Monte Carlo simulation to improve the efficiency of option pricing. It builds upon standard Monte Carlo by generating not only a standard normal random variable \( Z \), but also its negative counterpart \( -Z \), effectively producing two negatively correlated sample paths per draw. For each pair, terminal stock prices are simulated using the risk-neutral GBM model, and the corresponding option payoffs are computed. By averaging the two payoffs for each pair and then taking the mean across all such pairs, the method reduces the variance of the estimator without increasing the number of random variables required. The final price is obtained by discounting this averaged payoff using \( e^{-rT} \). Antithetic variates maintain the unbiasedness of the estimator while offering more stable and faster-converging results compared to standard Monte Carlo, especially when the payoff function is monotonic in the simulated variable.
+	
+	\end{frame}
+	
+	%------------------------------------------------
+	 \subsection{Control Variates}
+	 
+	 \begin{frame}{Control Variates}
+	The Control Variates method enhances Monte Carlo simulation by reducing variance through the use of a correlated variable with a known expected value. In the context of European option pricing, a common control variate is the terminal stock price \( S_T \), whose expected value under the risk-neutral measure is \( \mathbb{E}[S_T] = S_0 e^{rT} \). After simulating many paths of \( S_T \), we compute both the option payoff (e.g., \( \max(S_T - K, 0) \)) and the corresponding values of the control variate. The control variate estimator adjusts the original payoff by subtracting the deviation of the control from its known mean, scaled by an optimal coefficient \( b^* \) that minimizes variance. This yields a new estimator that remains unbiased but exhibits significantly reduced variance. The final option price is obtained by averaging these adjusted payoffs and discounting them back to the present using \( e^{-rT} \). Control variates are especially effective when the control and the payoff are highly correlated.
+	\end{frame}
+	
+	%------------------------------------------------
+	\subsection{Importance Sampling}
+	\begin{frame}{Importance Sampling}
+	Importance sampling is a Monte Carlo variance reduction technique that improves efficiency by changing the probability distribution used to simulate paths, focusing more on those that contribute significantly to the payoff. In European option pricing, this often means shifting the distribution of the standard normal variable \( Z \) used in simulating the terminal stock price \( S_T \) under the risk-neutral GBM model. Instead of drawing \( Z \sim \mathcal{N}(0,1) \), we simulate from a shifted distribution \( Z + \theta \), where \( \theta \) is a carefully chosen drift that increases the likelihood of in-the-money outcomes. To correct for this change in distribution, each simulated payoff is multiplied by a likelihood ratio (Radon-Nikodym derivative), typically \( \exp(-\theta Z - \frac{1}{2} \theta^2) \). This adjustment ensures the estimator remains unbiased while significantly reducing the variance. After computing and adjusting the payoffs, the final price is obtained by averaging them and discounting using \( e^{-rT} \). Importance sampling is especially useful for pricing options with rare but high-payoff outcomes, such as deep out-of-the-money options.
+	\end{frame}
+	
+	\subsection{Quasi-Monte Carlo}
+	\begin{frame}{Quasi-Monte Carlo}
+	Quasi-Monte Carlo (QMC) methods are a deterministic alternative to standard Monte Carlo simulation for estimating integrals and expectations. While standard Monte Carlo relies on pseudo-random samples and achieves a convergence rate of order \( \mathcal{O}(N^{-1/2}) \), QMC replaces randomness with carefully constructed low-discrepancy sequences, such as Sobol or Halton sequences, which distribute points more evenly over the sample space. As a result, QMC methods can achieve much faster convergence, approaching \( \mathcal{O}(N^{-1}) \) under favorable conditions, particularly in low to moderate dimensions. In financial engineering, QMC has been widely adopted to improve the efficiency of option pricing, risk measurement, and other simulation tasks, where smoother integrands and moderate dimensionality enable substantial accuracy gains compared to traditional Monte Carlo approaches.
+	\end{frame}
+
+	\section{Comparison}
+	\begin{frame}{Comparison}
+		\begin{center}
+			\includegraphics[width=0.6\textwidth]{comparison}
+		\end{center}
+	
+	Quasi-Monte Carlo and Control Variates show the fastest and most stable convergence.
+	
+	Antithetic and Importance Sampling reduce variance compared to standard MC, but with slightly different behaviors.
+	\end{frame}
+
+\begin{frame}{Comparison}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{convergence}
+	\end{center}
+	
+	Quasi-Monte Carlo and Control Variates show the fastest and most stable convergence.
+	
+	Antithetic and Importance Sampling reduce variance compared to standard MC, but with slightly different behaviors.
+\end{frame}
+	
+	%------------------------------------------------
+	
+\begin{frame}{Comparison}
+		\begin{table}
+			\centering
+			\resizebox{0.9\textwidth}{!}{ % 90% of slide width
+				\begin{tabular}{lccccc}
+					\hline
+					\textbf{Method} & \textbf{Price} & \textbf{Standard Deviation} & \textbf{95\% CI Width} & \textbf{RMSE} & \textbf{Time (ms)} \\
+					\hline
+					Standard MC         & 10.432393 & 14.679770 & 0.090986 & 0.018190 & 0.606775 \\
+					Antithetic          & 10.424779 & 7.323368  & 0.064192 & 0.025804 & 0.583887 \\
+					Control Variates    & 10.450868 & 5.599051  & 0.034703 & 0.000284 & 0.634909 \\
+					Importance Sampling & 10.466836 & 8.079024  & 0.050074 & 0.016252 & 1.052856 \\
+					Quasi-Monte Carlo   & 10.450681 & 14.719819 & 0.091234 & 0.000098 & 1.048088 \\
+					\hline
+				\end{tabular}
+			}
+		\end{table}
+	\centering{Comparison of Monte Carlo methods for European call Option Pricing}
+	\end{frame}
+	
+	\begin{frame}{Comparison}
+	Among the methods compared, Control Variates achieved the best overall performance, combining the lowest RMSE (0.0003), the smallest standard deviation (5.5991), and a relatively fast computation time (0.9770 ms). Quasi-Monte Carlo also produced a very low RMSE (0.0003), comparable to Control Variates, but failed to reduce the standard deviation compared to standard Monte Carlo, resulting in a wider confidence interval. Antithetic variates significantly decreased variance while offering the fastest runtime (0.42 ms), although its RMSE was higher (0.0258). Standard Monte Carlo performed the worst across all metrics, and Importance Sampling achieved moderate improvements in variance and RMSE but was slower than Antithetic. Overall, Control Variates provided the best trade-off between accuracy, stability, and computational efficiency in this experiment.
+	
+		\end{frame}
+		\section{Further}
+	\begin{frame}{Further}
+				\begin{center}
+		\includegraphics[width=0.7\textwidth]{AAPL_1}
+				\end{center}
+					Extract the data of \texttt{AAPL} and \texttt{SPY}, and we can see that it overall trend is testified by the real-time stock prices.
+					
+					
+			\end{frame}
+		
+		\begin{frame}{Further}
+					\begin{center}
+			\includegraphics[width=0.8\textwidth]{AAPL_2}
+			\end{center}
+		
+		
+		
+		\end{frame}
+	
+	\begin{frame}{Further}
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{SPY_1}
+		\end{center}
+		
+		
+		
+	\end{frame}
+
+\begin{frame}{Further}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{SPY_2}
+	\end{center}
+	
+	
+	
+\end{frame}
+		
+		\section{References}
+	\begin{frame}{References}
+	\begin{itemize}
+		\item General
+		\begin{itemize}
+		\item Glasserman, Paul. Monte Carlo methods in financial engineering. Vol. 53. New York: springer, 2004.
+		\item Bahcall, John N., Aldo M. Serenelli, and Sarbani Basu. "10,000 standard solar models: a Monte Carlo simulation." The Astrophysical Journal Supplement Series 165.1 (2006): 400.
+		\item Classnote for \href{https://www.columbia.edu/~mh2078/MonteCarlo.html}{IEOR 4703 Monte Carlo Simulation} and \href{https://api.pageplace.de/preview/DT0400.9781466576049_A37765636/preview-9781466576049_A37765636.pdf}{IEOR 4732 Computational Methods in Finance}.
+	\end{itemize}
+\item Antithetic Variates
+\begin{itemize}
+\item Hammersley, John Michael, and Keith William Morton. "A new Monte Carlo technique: antithetic variates." Mathematical proceedings of the Cambridge philosophical society. Vol. 52. No. 3. Cambridge University Press, 1956.
+\end{itemize}
+
+\item Control Variates
+\begin{itemize}
+	\item Rubinstein, Reuven Y., and Ruth Marcus. "Efficiency of multivariate control variates in Monte Carlo simulation." Operations Research 33.3 (1985): 661-677.
+\end{itemize}
+
+
+	\end{itemize}
+	
+		\end{frame}
+	
+	\begin{frame}
+		\begin{itemize}
+			\item Importance Sampling
+			\begin{itemize}
+				\item Chen, Chun-chieh. 利用重點抽樣的有效率選擇權訂價. 中央大學統計研究所學位論文 2012 (2012): 1-43.
+			\end{itemize}
+		\item For full codes, arithmetic induction, and paper, please refer to my Github repository: \url{https://github.com/zongyiliu/MATH_5010/tree/main/Homework_Project}
+		\end{itemize}
+	\end{frame}
+\end{document}
