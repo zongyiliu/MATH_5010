@@ -1,0 +1,470 @@
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usetheme{SimpleDarkBlue}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{ctex}
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	stringstyle=\color{orange},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	numbersep=5pt,
+	backgroundcolor=\color{white},
+	frame=single,
+	breaklines=true,
+	captionpos=b,
+	tabsize=2,
+	showspaces=false,
+	showstringspaces=false
+}
+
+
+\usepackage{xcolor} % for color support
+
+\usepackage[absolute,overlay]{textpos}
+
+\title{Robust Pricing of Options Using Linear Regression Techniques}
+\subtitle{Final Project, STATS 5205}
+
+\author{Zongyi Liu}
+
+\date{Mon, May 12, 2025} % Date, can be changed to a custom date
+
+\begin{document}
+	
+	\begin{frame}
+		% Print the title page as the first slide
+		\titlepage
+		
+		\begin{textblock*}{3cm}(0.5cm,7cm) 
+			\includegraphics[width=2cm]{columbia.png}
+		\end{textblock*}
+	
+	\end{frame}
+	
+	\begin{frame}{Overview}
+	\tableofcontents
+	\end{frame}
+	
+	%------------------------------------------------
+	\section{Introduction}
+	%------------------------------------------------
+	
+	\subsection{Abstract}
+	\begin{frame}{Abstract}
+	This project investigates the application of linear regression techniques to the pricing of European call and put options. Traditional option pricing relies on closed-form solutions such as the Black-Scholes formula, which assumes constant volatility and log-normal asset dynamics. In contrast, we explore a data-driven approach that models option payoffs as a function of relevant market features using linear regression. 
+	
+	We analyze model robustness under varying market conditions, including changes in volatility, interest rates, and time to maturity. 
+	
+	Results show that linear regression, with some modifications, can achieve pricing accuracy comparable to traditional models in controlled environments.
+
+	\end{frame}
+
+\subsection{Introduction}
+\begin{frame}{Introduction}
+	
+	The valuation of financial derivatives, particularly European options, is a central problem in quantitative finance. The classical Black-Scholes model provides a closed-form solution for European options under the assumptions of constant volatility, friction-less markets, and geometric Brownian motion for the underlying asset. While elegant and computationally efficient, the Black-Scholes formula is sensitive to model misspecification and market imperfections.
+	
+	Typically OLS is not quite suitable for option pricing because the latter is non-linear and more complex. However, in recent years, many scholars and researchers come up with attempts for pricing the option with linear models, like \href{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1963057}{Stentoft} and \href{https://people.math.ethz.ch/~hjfurrer/teaching/LongstaffSchwartzAmericanOptionsLeastSquareMonteCarlo.pdf}{Longstaff and Schwartz} using least square method on American options, \href{https://www.scirp.org/journal/paperinformation?paperid=82776}{Jagannathan} utilized OLS with domestic interest rate process, volatility process and return process, and \href{https://jfin-swufe.springeropen.com/articles/10.1186/s40854-015-0019-0}{de Lima and Samanez} used it for Asian-style options. 
+	
+	Linear regression, one of the most fundamental tools in statistical learning, provides a transparent and interpretable framework for estimating option prices from observable features such as the underlying asset price, time to maturity, volatility estimates, and interest rates.
+\end{frame}
+	\begin{frame}{Introduction}
+	This project examines the use of linear regression techniques for pricing European call and put options. I began by generating a synthetic dataset using Monte Carlo simulations under the Black-Scholes risk-neutral measure. The discounted option payoff is regressed on relevant predictors to estimate the price. We first explained the mechanism of pricing options using OLS, and then come up with one suggestion for building a robust linear regression on option pricing. 
+	
+	Our goal is to assess whether simple linear models can effectively approximate option prices, and to what extent they provide a viable alternative or complement to traditional pricing techniques. Moreover, the linear regression framework can serve as a foundational component in more advanced methods, such as basis function expansions, kernel regression, or even neural networks.
+\end{frame}
+	
+	%------------------------------------------------
+	
+	\section{Mechanism}
+	\subsection{Trinomial Pricing Model and the Least Squares}
+	
+	\begin{frame}{ Trinomial Option Pricing Model}
+	
+	The one-period discrete-time trinomial market model considers two primary assets: 
+	
+	(1) a risk-free asset with price 
+	\( D_1 = D_0 e^r \), with a risk-free rate \( r \geq 0 \) and \( D_0 > 0 \);
+	
+	(2) a risky asset with price \( S_1 \), characterized by three jump behavior as follows:
+	
+	\[
+	S_1 = 
+	\begin{cases}
+		S_0 e^u & \text{with probability } p_u < 1 \\
+		S_0     & \text{with probability } p_0 = 1 - p_u - p_d < 1 \\
+		S_0 e^d & \text{with probability } p_d < 1
+	\end{cases}
+	\]
+	
+	where \( u > 0 \), \( d < 0 \), \( p_u, p_d \in (0, 1) \), and \( p_u + p_d < 1 \).
+	
+	For the market to be arbitrage-free, the following condition is necessary:
+	
+	$$
+	u > r, \quad \frac{e^u - e^r}{e^u - 1} > p_0 > 0.
+	$$
+	\end{frame}
+
+	\begin{frame}{The Standard One-Period Trinomial Option Pricing Model}
+			However, once condition (1) is satisfied, this implies that
+		\[
+		p_u > 0, \quad p_d > 0, \quad \text{and} \quad p_u + p_d < 1.
+		\]
+		
+		Hence, the couple \( (p_u, p_d) \) defines well a probability if and only if condition (1) is satisfied.
+		
+		Now, assume an investor’s portfolio is constructed by \( \Delta_S \in \mathbb{R} \) risky asset and \( \Delta_D \in \mathbb{R} \) risk-free asset, where \( \Delta_S \) and \( \Delta_D \) represent the unknown delta-hedging coefficients that are linearly independent and which need to be estimated efficiently. The self-financing portfolio can be defined as
+		
+		\[
+		C_1 - C_0 = \Delta_S (S_1 - S_0) + \Delta_D (D_1 - D_0).
+		\]
+		
+		More precisely, one has:
+		
+		\vspace{1em}
+		\noindent\textbf{At initial date:}
+		\[
+		C_0 = \Delta_S S_0 + \Delta_D D_0.
+		\]
+			\end{frame}
+	\begin{frame}{Trinomial Option Pricing Model}
+	\vspace{1em}
+\noindent\textbf{At maturity:}
+\[
+C_1 = \Delta_S S_1 + \Delta_D D_1= \begin{cases}
+	\Delta_S (S_0 e^u) + \Delta_D (D_0 e^r) = y_1 \\
+	\Delta_S (S_0) + \Delta_D (D_0 e^r) = y_2 \\
+	\Delta_S (S_0 e^d) + \Delta_D (D_0 e^r) = y_3
+\end{cases}
+\]
+
+where \( y_1 = (S_0 e^u - K)_+ \), \( y_2 = (S_0 - K)_+ \), and \( y_3 = (S_0 e^d - K)_+ \), represent the value of the call option at maturity when the asset price \( S_1 \) goes up, remains the same, or goes down with respect to \( S_0 \), respectively. As we can see, this yields an over-determined linear system of three equations with only two unknowns (\( \Delta_S \) and \( \Delta_D \)).
+
+We denote the corresponding vector of dependent variables by
+\[
+\mathbf{y} = 
+\begin{bmatrix}
+	y_1 \\
+	y_2 \\
+	y_3
+\end{bmatrix}
+\in \mathbb{R}^3_+.
+\]
+
+\end{frame}
+	\begin{frame}{Trinomial Option Pricing Model}
+In general, the vector \( \mathbf{y} \) does not span the column space of the matrix of independent variables
+\[
+\mathbf{X} = 
+\begin{bmatrix}
+	\mathbf{x}_1^T \\
+	\mathbf{x}_2^T \\
+	\mathbf{x}_3^T
+\end{bmatrix}
+=
+\begin{bmatrix}
+	S_0 e^u & D_0 e^r \\
+	S_0 & D_0 e^r \\
+	S_0 e^d & D_0 e^r
+\end{bmatrix}
+\in \mathbb{R}_+^{3 \times 2},
+\]
+and hence, a solution for 
+\[
+\boldsymbol{\Delta} = 
+\begin{bmatrix}
+	\Delta_S \\
+	\Delta_D
+\end{bmatrix}
+\in \mathbb{R}^2
+\]
+does not exist if one forces \( \mathbf{y} \) to be exactly equal to \( \mathbf{X} \boldsymbol{\Delta} \), that is, \( \mathbf{y} = \mathbf{X} \boldsymbol{\Delta} \).
+	\end{frame}
+	
+	%------------------------------------------------
+	
+	\subsection{Estimation of \( \boldsymbol{\Delta} \) via the Least Squares}
+		\begin{frame}{Estimation of \( \boldsymbol{\Delta} \) via the Least Squares}
+		 
+			As it is generally impossible to solve the linear system \( \mathbf{y} = \mathbf{X} \boldsymbol{\Delta} \) when the number of equations exceeds that of unknowns,
+		
+		
+		It is possible, to project \( \mathbf{y} \) into the column space of \( \mathbf{X} \). Consider the following linear regression model:
+		
+		\[
+		\mathbf{y} = \mathbf{X} \boldsymbol{\Delta} + \boldsymbol{\epsilon},
+		\]
+		
+		where \( \boldsymbol{\epsilon} \sim \mathcal{N}(0, \sigma^2 \mathbf{I}_3) \) with \( \mathbf{I}_3 \) an identity matrix of size \( 3 \times 3 \), and \( \mathbf{y} \sim \mathcal{N}(\mathbf{X} \boldsymbol{\Delta}, \sigma^2 \mathbf{I}_3) \).
+		
+		The likelihood under the Gaussian assumption is defined as:
+		\[
+		L(y_1, y_2, y_3; \boldsymbol{\Delta}, \sigma) = \prod_{i=1}^{3} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{1}{2\sigma^2} (y_i - \mathbf{x}_i^T \boldsymbol{\Delta})^2 \right).
+		\]
+	
+	\end{frame}
+	
+			\begin{frame}{Estimation of \( \boldsymbol{\Delta} \) via the Least Squares}
+				Maximizing the log-likelihood with respect to \( \boldsymbol{\Delta} \) under the Gaussian assumption gives the usual estimation known as the ordinary least squares estimator. More precisely, we have:
+				
+				\begin{align*}
+					\hat{\boldsymbol{\Delta}} 
+					&= \arg \min_{\boldsymbol{\Delta}} \left\{ \sum_{i=1}^{3} (y_i - \mathbf{x}_i^T \boldsymbol{\Delta})^2 \right\} \\
+					&= \arg \min_{\boldsymbol{\Delta}} \left\{ \| \mathbf{y} - \mathbf{X} \boldsymbol{\Delta} \|_2^2 \right\} \nonumber \\
+					&= (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}
+					= \begin{bmatrix} \hat{\Delta}_S \\ \hat{\Delta}_D \end{bmatrix} \in \mathbb{R}^2
+				\end{align*}
+				
+				Hence, the least squares estimation of the true payoff can be given as:
+				
+				\[
+				\hat{\mathbf{y}} = \mathbf{X} \hat{\boldsymbol{\Delta}}.
+				\]
+			\end{frame}
+		
+					\begin{frame}{Estimation of \( \boldsymbol{\Delta} \) via the Least Squares}
+				As the option price should always be positive, thus, it would be more realistic to consider the rectified linear unit of \( \hat{\mathbf{y}} \). That is:
+				
+				\[
+				(\hat{\mathbf{y}})_+.
+				\]
+				
+				Once \( \boldsymbol{\Delta} \) is estimated, the least squares estimator of the true (unknown) call option price at initial date (that is, \( C_0 \)) can be given as:
+				
+				$$
+				\hat{C}_0 = \hat{\Delta}_S S_0 + \hat{\Delta}_D D_0.
+				$$
+					\end{frame}
+	%------------------------------------------------
+	 
+	 \begin{frame}
+	 	\begin{center}
+	 		\includegraphics[width=0.6\textwidth]{ols_pricing}
+	 		
+	 		Robust Linear Regression Fit for Option Payoff
+	 	\end{center}
+	\end{frame}
+	
+	\section{Modifications}
+	\subsection{Increasing the Number of Observations}
+	%------------------------------------------------
+	\begin{frame}{Increasing the Number of Observations}
+	Here we increase the number of observations from $3$ to $2n+1$, $n \geq 1$.
+	
+	In order to estimate the option price at initial date, that is, $C_0$, independently from any such a specific single value for each of the parameters $u > 0$ and $d < 0$, we hope to replace the single possible values for $u$ and $d$ by a $n$-vector
+	\[
+	\mathbf{u} = 
+	\begin{bmatrix}
+		u_1, u_2, \cdots, u_n
+	\end{bmatrix}^T 
+	\quad \text{and} \quad
+	\mathbf{d} = 
+	\begin{bmatrix}
+		d_1, d_2, \cdots, d_n
+	\end{bmatrix}^T,
+	\]
+	with $n \in \mathbb{N},\ n \geq 1$, $u_1 > u_2 > \cdots > u_n > r > 0$, and $d_n < d_{n-1} < \cdots < d_1 < 0$. As a result, one has to expect $2n+1$ different values for $S_1$. That is:
+		\end{frame}
+	
+		\begin{frame}{Increasing the Number of Observations}
+	\[
+	S_1 =
+	\begin{cases}
+		S_0 e^{u_1} & \text{with probability } p_{u_1} < 1 \\
+		\vdots \\
+		S_0 e^{u_n} & \text{with probability } p_{u_n} < 1 \\
+		S_0         & \text{with probability } p_0 < 1 \\
+		S_0 e^{d_1} & \text{with probability } p_{d_1} < 1 \\
+		\vdots \\
+		S_0 e^{d_n} & \text{with probability } p_{d_n} < 1
+	\end{cases}
+	\]
+		with
+		\[
+		p_0 = 1 - p_{u_1} - \cdots - p_{u_n} - p_{d_1} - \cdots - p_{d_n} > 0.
+		\]
+	\end{frame}
+
+	\begin{frame}{Increasing the Number of Observations}
+Based on these different $2n + 1$ possibilities for $S_1$, we have now the possibility to construct an over-determined linear system of $2n + 1$ equations with only 2 unknowns. That is:
+
+\[
+C_1 =
+\left\{
+\begin{aligned}
+	&\Delta_S (S_0 e^{u_1}) + \Delta_D D_1 = y_1 \\
+	&\Delta_S (S_0 e^{u_2}) + \Delta_D D_1 = y_2 \\
+	&\quad\vdots \\
+	&\Delta_S (S_0 e^{u_n}) + \Delta_D D_1 = y_n \\
+	&\boxed{\Delta_S S_0 + \Delta_D D_1 = y_{n+1}} \\
+	&\Delta_S (S_0 e^{d_1}) + \Delta_D D_1 = y_{n+2} \\
+	&\Delta_S (S_0 e^{d_2}) + \Delta_D D_1 = y_{n+3} \\
+	&\quad\vdots \\
+	&\Delta_S (S_0 e^{d_n}) + \Delta_D D_1 = y_{2n+1}
+\end{aligned}
+\right.
+\]
+\end{frame}
+
+\subsection{M-estimators}
+\begin{frame}{M-estimators}
+Since the least squares is derived under the Gaussian assumption which does not take into consideration the outliers. In order to not consider any specific kind of distribution (ex. the Gaussian assumption), we are going to assume that the $y_i$'s, $i \in [1, 2n+1],\ n \geq 1$, are independent and not identically distributed with any density of the form
+\[
+\frac{1}{\sigma} f_0\left( \frac{y_i - \mathbf{x}_i^T {\Delta}}{\sigma} \right).
+\]
+
+likelihood under this density function can be written as:
+\[
+L(y_1, \cdots, y_{2n+1};\ {\Delta}, \sigma) = \prod_{i=1}^{2n+1} \frac{1}{\sigma} f_0 \left( \frac{y_i - \mathbf{x}_i^T {\Delta}}{\sigma} \right).
+\]
+\end{frame}
+
+\begin{frame}{M-estimators}
+	\textbf{M-estimation objective:}
+	
+	Define a loss function
+	\[
+	\rho(u) = -\log f_0(u),
+	\]
+	then minimizing the negative log-likelihood is equivalent to solving:
+	\[
+	\min_{\Delta} \sum_{i=1}^{n} \rho\left( y_i - \mathbf{x}_i^T \Delta \right).
+	\]
+	
+	\textbf{Special cases:}
+	\begin{itemize}
+		\item If \( f_0(u) = \frac{1}{\sqrt{2\pi}} e^{-u^2/2} \), then \( \rho(u) = \frac{1}{2} u^2 \) ⇒ this recovers ordinary least squares (OLS).
+		\item If \( f_0(u) \propto e^{-|u|} \), then \( \rho(u) = |u| \) ⇒ least absolute deviations (LAD).
+	\end{itemize}
+	
+	
+\end{frame}
+\subsubsection{sample mean estimator}
+\subsubsection{sample median estimator}
+\subsubsection{winsorized mean estimator}
+\subsubsection{bisquare etimator}
+\begin{frame}{M-estimators}
+\textbf{Estimating equation:}
+
+Let \( \psi(u) = \frac{d}{du} \rho(u) \), then the first-order condition becomes:
+\[
+\sum_{i=1}^{n} \psi\left( y_i - \mathbf{x}_i^T \Delta \right) \mathbf{x}_i = 0
+\]
+
+With different $\rho$, I hope to get 4 M-estimators.
+
+\begin{itemize}
+	\item \textbf{Sample Mean Estimator:}
+	\[
+	\hat{\mu}_{\text{mean}} = \arg\min_{\mu} \sum_{i=1}^{n} \rho(y_i - \mu), \quad \rho(u) = \frac{1}{2} u^2
+	\]
+	This corresponds to the standard OLS, which assumes Gaussian errors and minimizes the squared error loss.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{M-estimators}
+	\begin{itemize}
+	\item \textbf{Sample Median Estimator:}
+	\[
+	\hat{\mu}_{\text{median}} = \arg\min_{\mu} \sum_{i=1}^{n} \rho(y_i - \mu), \quad \rho(u) = |u|
+	\]
+	This is the Least Absolute Deviations (LAD) estimator, robust to outliers and corresponds to Laplace-distributed errors.
+	
+	\item \textbf{Winsorized Mean Estimator:}
+	\[
+	\hat{\mu}_{\text{win}} = \frac{1}{n} \sum_{i=1}^{n} w_i, \quad
+	w_i =
+	\begin{cases}
+		y_{(k+1)}, & \text{if } y_i < y_{(k+1)} \\
+		y_i,       & \text{if } y_{(k+1)} \leq y_i \leq y_{(n-k)} \\
+		y_{(n-k)}, & \text{if } y_i > y_{(n-k)}
+	\end{cases}
+	\]
+	Although not explicitly derived from a \(\rho(u)\), this estimator is a practical approximation of minimizing loss while bounding influence of outliers.
+\end{itemize}
+\end{frame}
+
+	\begin{frame}{M-estimators}
+		\begin{itemize}
+	\item \textbf{Bi-square (Tukey's re-descending M-estimator):}
+	\[
+	\hat{\mu}_{\text{bisq}} = \arg\min_{\mu} \sum_{i=1}^{n} \rho\left( \frac{y_i - \mu}{s} \right), \quad
+	\rho(u) =
+	\begin{cases}
+		\frac{c^2}{6} \left[ 1 - \left(1 - \left( \frac{u}{c} \right)^2 \right)^3 \right], & |u| \leq c \\
+		\frac{c^2}{6}, & |u| > c
+	\end{cases}
+	\]
+	where \( s \) is a robust scale estimator (e.g., MAD), and \( c \) is a tuning constant (commonly \( c = 4.685 \)). This loss function downweights large residuals, making the estimator highly robust.
+\end{itemize}
+
+\end{frame}
+
+	 \begin{frame}{M-estimators}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{4methods}
+		
+		Comparison of Four Methods and BS Theoretical Value
+	\end{center}
+\end{frame}
+
+\begin{frame}{M-estimators}
+In the context of option pricing via OLS model, four estimators—sample mean, sample median, winsorized mean, and bi-square (re-descending M-estimator)—offer distinct trade-offs between accuracy and robustness. The sample mean is the most efficient and unbiased estimator under ideal conditions (i.e., normally distributed data with no outliers) and closely matches the theoretical Black-Scholes value, making it the benchmark in clean settings. However, it is highly sensitive to extreme values in the simulated payoff distribution. The sample median, in contrast, is a robust measure of central tendency that reduces the influence of outliers, but tends to systematically underestimate the true mean in positively skewed distributions like those of European call payoffs. The winsorized mean offers a compromise by trimming extreme values while preserving the bulk of the data, leading to more stable estimates in the presence of noise. Lastly, the bi-square estimator downweights outliers via iterative re-weighted least squares, achieving strong robustness with minimal distortion, although it may introduce slight bias depending on the tuning parameters. Overall, the choice of estimator should be context-dependent: the mean is appropriate for accurate theoretical pricing under clean data, while robust estimators like bi-square or winsorized mean are preferable when the data contain significant anomalies or simulation noise.
+\end{frame}
+\section{Conclusion}
+\begin{frame}{Conclusion}
+	
+	The least squares method is highly sensitive to outliers, where even a single anomalous observation can significantly distort the predicted payoff and the resulting option price at the initial date. However, we can still try to use it in option pricing with amelioration.
+	
+	I here get a suggestive strategy to mitigate the impact of outliers in option pricing, which employs robust regression techniques based on M-estimators, including the sample median, winsorized mean, and bisquare estimator. 
+	
+	We can improve the trinomial model for pricing European call options via least squares linear regression.
+	
+	Further, we can apply this in real world option pricing by acquiring data from Yahoo Finance and other datasets. 
+
+\end{frame}
+\section{References}
+\begin{frame}{References}
+	\begin{itemize}
+		
+		\item \textbf{Option Pricing}
+		\begin{itemize}
+			\item R.~C.~Merton, ``Theory of rational option pricing,'' \textit{The Bell Journal of Economics and Management Science}, vol.~4, no.~1, pp.~141--183, 1973.
+			\item Lecture notes: \href{https://api.pageplace.de/preview/DT0400.9781466576049_A37765636/preview-9781466576049_A37765636.pdf}{IEOR 4732 Computational Methods in Finance}.
+			\item S.~Calogero, \textit{A First Course in Option Pricing Theory}. Philadelphia, PA: SIAM, 2008.
+		\end{itemize}
+		
+		\item \textbf{OLS Model and Least-Squares}
+		\begin{itemize}
+			\item H.~Takahashi, ``On Embedded Complete Markets,'' \textit{Hitotsubashi Journal of Economics}
+			\item F.~A.~Longstaff and E.~S.~Schwartz, ``Valuing American options by simulation: A simple least-squares approach,'' \textit{The Review of Financial Studies}, vol.~14, no.~1, pp.~113--147, 2001.
+			\item L.~Stentoft, ``American option pricing using simulation and regression: Numerical convergence results,'' in \textit{Topics in Numerical Methods for Finance}, B.~Crepey, T.~R.~Hurd, and A.~Badran, Eds., Springer, 2012, pp.~57--94.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{References}
+\begin{itemize}
+	
+	\item \textbf{OLS Model and Least-Squares}
+	\begin{itemize}
+		\item U.~S.~Monteiro~de~Lima and C.~P.~Samanez, ``Complex derivatives valuation: Applying the Least-Squares Monte Carlo simulation method with several polynomial basis,'' \textit{Financial Innovation}, vol.~2, no.~1, pp.~1--18, 2016.
+	\end{itemize}
+
+		\item \textbf{Code Repository}
+		\begin{itemize}
+			\item For full codes, induction details, and paper, see: \url{https://github.com/zongyiliu/STATS_5205/tree/main/Homework_Project}
+		\end{itemize}
+		
+	\end{itemize}
+\end{frame}
+
+	
+\end{document}
