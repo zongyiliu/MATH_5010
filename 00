@@ -6,105 +6,54 @@
 \usepackage{amssymb}
 \usepackage[version=4]{mhchem}
 \usepackage{stmaryrd}
-\usepackage{bbold}
-
-%New command to display footnote whose markers will always be hidden
-\let\svthefootnote\thefootnote
-\newcommand\blfootnotetext[1]{%
-  \let\thefootnote\relax\footnote{#1}%
-  \addtocounter{footnote}{-1}%
-  \let\thefootnote\svthefootnote%
-}
-
-%Overriding the \footnotetext command to hide the marker if its value is `0`
-\let\svfootnotetext\footnotetext
-\renewcommand\footnotetext[2][?]{%
-  \if\relax#1\relax%
-    \ifnum\value{footnote}=0\blfootnotetext{#2}\else\svfootnotetext{#2}\fi%
-  \else%
-    \if?#1\ifnum\value{footnote}=0\blfootnotetext{#2}\else\svfootnotetext{#2}\fi%
-    \else\svfootnotetext[#1]{#2}\fi%
-  \fi
-}
 
 \begin{document}
-\section*{GU4265/GR5265 HOMEWORK \#1}
-Fall 2025
-
-Total Points: 50\\
-Assignment Date: Friday, September 19th.\\
-Due Date: Thursday, October 2nd at 11:59pm (EST).
-
-\section*{Instructions}
-Read each question carefully and complete all the requirements. While only a subset of the questions may be graded, it is recommended that you attempt all of them. You may discuss homework problems with your peers, but the submitted work must be your own. Identical submissions will receive a zero.\\
-Submission Instructions: Submit a PDF file of your solutions to Canvas by the stated deadline. Scanned handwritten solutions in PDF format will be accepted but must be written neatly. It is your responsibility to ensure that the solutions are clear and legible. Late submissions will NOT be accepted!
-
-\section*{Problem Set}
-Problem 1 (10 points). Let $W=\left(W_{t}\right)_{t \geq 0}$ be a Brownian motion and consider the SDEs defining the Geometric Brownian Motion (GBM). $S= \left(S_{t}\right)_{t \geq 0}$, and OU process, $X=\left(X_{t}\right)_{t \geq 0}$ :
-
-$$
-\begin{gathered}
-d S_{t}=\mu S_{t} d t+\sigma S_{t} d W_{t}, \quad S_{0}=s_{0} \\
-d X_{t}=\kappa\left(\theta-X_{t}\right) d t+\sigma d W_{t}, \quad X_{0}=x_{0}
-\end{gathered}
-$$
-
-Fix $\Delta t>0$, and let $\mu=0.25, \kappa=0.2, \theta=1, \sigma=0.5$ and $s_{0}=x_{0}=1.2$. From the SDEs we have that ${ }^{1}$ :
-
-$$
-\begin{gathered}
-S_{t+\Delta t} \stackrel{d}{\approx} S_{t}+\mu S_{t} \Delta t+\sigma S_{t} \sqrt{\Delta t} Z, \quad Z \sim N(0,1), \\
-X_{t+\Delta t} \stackrel{d}{\approx} X_{t}+\kappa\left(\theta-X_{t}\right) \Delta t+\sigma \sqrt{\Delta t} Z, \quad Z \sim N(0,1) .
-\end{gathered}
-$$
-
-\footnotetext{${ }^{1}$ Here $\stackrel{d}{\approx}$ is to be read as "is approximately equal to in distribution".
-}Using this observation, simulate (and plot) 10 paths of the GBM and OU process. You may use any programming language that you are familiar with for this task. Include your code as a separate file in your submission.
-
-Problem 2 (10 points). Let $W=\left(W_{t}\right)_{t \geq 0}$ and $B=\left(B_{t}\right)_{t \geq 0}$ be Brownian motions with instantaneous correlation $\rho \in[-1,1]$. Find the mean and variance of the following random variables:
-
+\section*{Homework \# 4}
 \begin{enumerate}
-  \item $W_{r}+W_{s}+W_{t}$ for $0 \leq r<s<t$.
-  \item $\exp \left\{a W_{t}+b B_{t}\right\}$ for $t>0$.
-  \item $W_{s} B_{t}$ for $0 \leq s<t$.
+  \item Do problems 1, 2, and 3 from Section 16.10 .1 of Chapter 16. Each problem is worth 5 points. To receive full credit, you must provide both:
 \end{enumerate}
 
-Hint: For (2) recall the distribution of the sum of two jointly normal random variables. Then, use the moment generating function formula for this distribution.
-
-Problem 3 (10 points). Let $W=\left(W_{t}\right)_{t \geq 0}$ be a Brownian motion. Report the mean and variance of the following integrals.
-
-\begin{enumerate}
-  \item $\int_{0}^{T} W_{s} d W_{s}$
-  \item $\int_{0}^{T} s^{2} d W_{s}$
-  \item $\int_{0}^{T} e^{W_{s}} d W_{s}$
-  \item $\int_{0}^{T} s W_{s} d W_{s}$
-\end{enumerate}
-
-Problem 4 (10 points). Let $W=\left(W_{t}\right)_{t \geq 0}$ and $B=\left(B_{t}\right)_{t \geq 0}$ be Brownian motions with instantaneous correlation $\rho$. Apply Itô's formula to get the dynamics of:
+\begin{itemize}
+  \item The R code you used to solve each problem.
+  \item Your answers to each question.
+\end{itemize}
 
 \begin{enumerate}
-  \item $X_{t}=\sin \left(t W_{t}\right)$.
-  \item $X_{t}=\operatorname{sigmoid}\left(W_{t}\right)=\left(1+e^{-W_{t}}\right)^{-1}$.
-  \item $X_{t}=S_{t} / P_{t}$ where $S=\left(S_{t}\right)_{t \geq 0}$ and $P=\left(P_{t}\right)_{t \geq 0}$ are Geometric Brownian Motions:
+  \setcounter{enumi}{1}
+  \item (5pts) Suppose a firm is planning to invest $\$ 1,000,000$ in a combination of a risk-free asset and a risky asset A. Assume:
 \end{enumerate}
 
 $$
-\begin{aligned}
-d S_{t} & =\mu S_{t} d t+\sigma S_{t} d W_{t} \\
-d P_{t} & =\nu P_{t} d t+\eta P_{t} d B_{t}
-\end{aligned}
+\mu_{f}=5 \%, \quad \mu_{A}=12 \%, \quad \sigma_{A}=25 \%
 $$
 
-Problem 5 ( 10 points). Fix $\kappa, \sigma>0$ and $\theta \in \mathbb{R}$. Solve the following stochastic differential equation for $X=\left(X_{t}\right)_{t \geq 0}$ :
+The company has capital reserves to cover losses up to $\$ 200,000$, and they want the probability of losing this amount or more to be at most 0.01 .
+
+If the return of the portfolio is:
 
 $$
-\left\{\begin{array}{l}
-d X_{t}=\kappa\left(\theta-\log \left(X_{t}\right)\right) X_{t} d t+\sigma X_{t} d W_{t} \\
-X_{0}=x_{0}>0
-\end{array}\right.
+R=\omega \mu_{A}+(1-\omega) \mu_{f}
 $$
 
-Hint: Combine the methods of solution for the GBM and OU Process.
+and the return is normally distributed, find the value of $\omega$ that satisfies the risk requirement.\\
+3. (15pt) The table below gives sample statistics (monthly means, standard deviations, and covariances) for returns on Microsoft, Nordstrom, and Starbucks over the period January 1995 to January 2000.
+
+\begin{center}
+\begin{tabular}{cccc}
+\hline
+Asset & $\mu_{i}$ & $\sigma_{i}$ & Covariances \\
+\hline
+A (Microsoft) & 0.0427 & 0.1000 & $\sigma_{A B}=0.0018$ \\
+B (Nordstrom) & 0.0015 & 0.1044 & $\sigma_{A C}=0.0011$ \\
+C (Starbucks) & 0.0285 & 0.1411 & $\sigma_{B C}=0.0026$ \\
+\hline
+\end{tabular}
+\end{center}
+
+(a) (4pt) Find the global minimum variance portfolio. What is its mean? What is its variance?\\
+(b) (4pt) Find the efficient portfolio of these assets with the same expected return as Microsoft. What is its risk?\\
+(c) (4pt) Assume a risk-free rate of 0.0001 per month (T-bill). What are the weights of the tangency portfolio?\\
+(d) (3pt) Find the portfolio made up of the risky assets and the risk-free asset that has the same expected return as Microsoft. What is its risk equal to?
 
 
 \end{document}
