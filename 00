@@ -271,7 +271,7 @@
 		
 		又由於獨立常態變數的「和」仍為常態分布, 單期對數報酬若為常態, 則多期對數報酬亦為常態. 
 		
-		\textbf{範例}: 設簡單總報酬 $ (1+R) $ 服從對數常態 $\mathrm{Lognormal} (0, \, 0.01) $, 即
+		\textbf{範例}: 設簡單總報酬 $ (1+R) $ 服從對數常態. $\mathrm{Lognormal} (0, \, 0.01) $, 即
 		\[
 		\log (1+R) \sim N\!\left (\mu=0, \ \sigma^2=0.01\right).
 		\]
@@ -332,7 +332,7 @@
 		\end{figure}
 		
 		\subsubsection{股利的調整}
-		此處討論股利的調整 (Adjustment for Dividends), 許多股票會支付股利, 在計算報酬時必須將其納入考量. 若在時間 \ ( t \) 之前支付股利 \ ( D_t \), 則在時間 \ ( t \) 的總報酬 (gross return) 定義為: 
+		此處討論股利的調整 (Adjustment for Dividends), 許多股票會支付股利, 在計算報酬時必須將其納入考量. 若在時間 \( t \) 之前支付股利 \( D_t \), 則在時間 \( t \) 的總報酬 (gross return) 定義為: 
 		
 		
 		$$
@@ -373,14 +373,14 @@
 		
 		\subsection{隨機漫步}
 		\subsubsection{引入}
-		設 \ ( Z_{1}, Z_{2}, \ldots, Z_{n} \) 為具有平均數 \(\mu\) 與標準差 \(\sigma\) 的獨立同分布 (IID) 隨機變數. 令 \ ( Z_{0} \) 為任意起始點, 並定義: 
+		設 \( Z_{1}, Z_{2}, \ldots, Z_{n} \) 為具有平均數 \(\mu\) 與標準差 \(\sigma\) 的獨立同分布 (IID) 隨機變數. 令 \( Z_{0} \) 為任意起始點, 並定義: 
 		
 		$$
 		S_{0}=Z_{0}, \quad \text { and } \quad S_{t}=Z_{0}+Z_{1}+\ldots+Z_{t}, t \geq 1 .
 		$$
 		
-		過程 \ ( S_{0}, S_{1}, \ldots \) 稱為隨機漫步 (random walk), 而 \ ( Z_{1}, Z_{2}, \ldots \) 稱為其步長 (steps). 
-		在給定 \ ( S_{0} \) 的條件下, \ ( S_{t} \) 的期望與變異數分別為: 
+		過程 \( S_{0}, S_{1}, \ldots \) 稱為隨機漫步 (random walk), 而 \( Z_{1}, Z_{2}, \ldots \) 稱為其步長 (steps). 
+		在給定 \( S_{0} \) 的條件下, \( S_{t} \) 的期望與變異數分別為: 
 		
 		\begin{itemize}
 			\item $E\left (S_{t} \mid Z_{0}\right) =Z_{0}+t \mu$
@@ -390,20 +390,20 @@
 		
 		\begin{itemize}
 			\item 參數 \(\mu\) 稱為漂移 (drift), 它決定隨機漫步的大致方向. 
-			\item 參數 \(\sigma\) 為波動率 (volatility), 決定隨機漫步相對於條件平均值 \ ( S_{0} + \mu t \) 的波動程度. 
-			\item 由於在給定 \ ( S_{0} \) 的情況下, \ ( S_{t} \) 的標準差為 \(\sigma \sqrt{t}\), 因此 \ ( (S_{0} + \mu t) \pm \sigma \sqrt{t}\) 表示平均值加減一個標準差. 對於正態隨機漫步 (即 \ ( Z_i \) 為正態分布) 而言, 這對應於條件平均值的 68\% 信賴區間. 
+			\item 參數 \(\sigma\) 為波動率 (volatility), 決定隨機漫步相對於條件平均值 \( S_{0} + \mu t \) 的波動程度. 
+			\item 由於在給定 \( S_{0} \) 的情況下, \( S_{t} \) 的標準差為 \(\sigma \sqrt{t}\), 因此 \( (S_{0} + \mu t) \pm \sigma \sqrt{t}\) 表示平均值加減一個標準差. 對於正態隨機漫步 (即 \( Z_i \) 為正態分布) 而言, 這對應於條件平均值的 68\% 信賴區間. 
 			\item 該區間的寬度與 \(\sqrt{t}\) 成正比, 如下一張圖所示. 
 		\end{itemize}
 		
 		
 		\includegraphics[max width=0.7\textwidth, center]{2025_10_19_52d7c6626a2b8229e644g-21}
-		\captionof{figure}{對於具有 \ ( S_{0} = 0, \mu = 0.5, \sigma = 1 \) 的隨機漫步, 其平均值與機率界限如下圖所示. 
-			在任意時間點, 位於機率界限 (虛線曲線) 之間的機率為 \ (68\%\). 此處的 \ ( Z_i \) 服從正態分布.}
+		\captionof{figure}{對於具有 \( S_{0} = 0, \mu = 0.5, \sigma = 1 \) 的隨機漫步, 其平均值與機率界限如下圖所示. 
+			在任意時間點, 位於機率界限 (虛線曲線) 之間的機率為 \(68\%\). 此處的 \( Z_i \) 服從正態分布.}
 		
 		\begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=0.7\textwidth]{2025_10_19_52d7c6626a2b8229e644g-22}
-				\caption{ 具有參數 \ ( (\mu, \sigma) = (0, 1) 、 (0, 2) 、 (1, 1) \) 與 \ ( (1, 2) \) 的隨機漫步}
+				\caption{ 具有參數 \( (\mu, \sigma) = (0, 1) 、 (0, 2) 、 (1, 1) \) 與 \( (1, 2) \) 的隨機漫步}
 			\end{center}
 		\end{figure}
 		
@@ -425,20 +425,20 @@
 		\frac{P_{t}}{P_{t-k}} = 1 + R_{t} (k) = \exp \left ( r_{t} + r_{t-1} + \ldots + r_{t-k+1} \right) 
 		\]
 		
-		若取 \ ( k = t \), 則有
+		若取 \( k = t \), 則有
 		
 		\[
 		P_{t} = P_{0} \exp \left ( r_{t} + r_{t-1} + \ldots + r_{1} \right) 
 		\]
 		
-		若 \ ( r_{1}, r_{2}, \ldots, r_{t} \) 為獨立同分布的 \ ( N (\mu, \sigma^{2}) \), 即總報酬為對數常態且彼此獨立, 則有: 
+		若 \( r_{1}, r_{2}, \ldots, r_{t} \) 為獨立同分布的 \( N (\mu, \sigma^{2}) \), 即總報酬為對數常態且彼此獨立, 則有: 
 		
 		
 		\begin{itemize}
 			\item \(\log \left (1 + R_{t} (k) \right) = r_{1} + r_{2} + \ldots + r_{t-k+1}\) 是一個隨機漫步.
 			\item \(\{ P_{t}, \, t = 1, 2, \ldots, k \}\) 為隨機漫步的指數形式. 
 			\item 此類過程稱為幾何隨機漫步 (geometric random walk).
-			\item \ (1 + R_{t} (k) = \exp \left ( r_{t} + r_{t-1} + \ldots + r_{1} \right) \) 服從對數常態分布 (lognormal), 且具有偏態 (skewed). 
+			\item \(1 + R_{t} (k) = \exp \left ( r_{t} + r_{t-1} + \ldots + r_{1} \right) \) 服從對數常態分布 (lognormal), 且具有偏態 (skewed). 
 		\end{itemize}
 		
 		
@@ -447,7 +447,7 @@
 		\begin{itemize}
 			\item 幾何隨機漫步並不意味著無法獲利. 
 			\item 由於 \(\mu\) 為正值, 該過程具有向上的漂移 (upward drift). 
-			\item 美國整體股市的對數報酬率平均約為 \ (10\%\), 標準差約為 \ (20\%\). 
+			\item 美國整體股市的對數報酬率平均約為 \(10\%\), 標準差約為 \(20\%\). 
 		\end{itemize}
 		
 		\subsection{收益的分佈}
@@ -458,7 +458,7 @@
 			\item 樣本偏態 (skewness) 與峰度 (kurtosis): 檢查其數值是否接近常態分布的理論值. 偏態與峰度衡量分配形狀, 且與平均數與變異數無關. 任何常態分布的偏態係數皆為 0, 峰度為 3. 
 		\end{itemize}
 		
-		設 \ ( r_{1}, r_{2}, \ldots, r_{T} \) 為某資產的對數報酬, 令 \(\hat{\mu}\) 為樣本平均值, \(\hat{\sigma}\) 為樣本標準差. 則樣本偏態 (sample skewness) 定義為: 
+		設 \( r_{1}, r_{2}, \ldots, r_{T} \) 為某資產的對數報酬, 令 \(\hat{\mu}\) 為樣本平均值, \(\hat{\sigma}\) 為樣本標準差. 則樣本偏態 (sample skewness) 定義為: 
 		
 		$$
 		\hat{S}=\frac{1}{T} \sum_{t=1}^{T}\left (\frac{r_{t}-\hat{\mu}}{\hat{\sigma}}\right) ^{3}
