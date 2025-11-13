@@ -1,0 +1,321 @@
+\documentclass[letterpaper]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage[dvipsnames]{xcolor}
+\colorlet{LightRubineRed}{RubineRed!70}
+\colorlet{Mycolor1}{green!10!orange}
+\definecolor{Mycolor2}{HTML}{00F9DE}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{lipsum}
+\usepackage{fancyvrb}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./images/} }
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{hyperref} 
+\usepackage{xcolor} % For custom colors
+\lstset{
+	language=Python,                % Choose the language (e.g., Python, C, R)
+	basicstyle=\ttfamily\small, % Font size and type
+	keywordstyle=\color{blue},  % Keywords color
+	commentstyle=\color{gray},  % Comments color
+	stringstyle=\color{red},    % String color
+	numbers=left,               % Line numbers
+	numberstyle=\tiny\color{gray}, % Line number style
+	stepnumber=1,               % Numbering step
+	breaklines=true,            % Auto line break
+	backgroundcolor=\color{black!5}, % Light gray background
+	frame=single,               % Frame around the code
+}
+\usepackage{float}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+
+	\title{Homework 2, MATH 5504}
+	\author{Zongyi Liu}
+	\date{Mon, Nov 10, 2025}
+	\begin{document}
+		\maketitle
+		
+		\section{8.1}
+		\subsection{Question 1 (8.1.2)}
+		Suppose that a random sample is to be taken from the normal distribution with unknown mean $\theta$ and standard deviation 2. How large a random sample must be taken in order that $E_\theta(|\bar{X}_n - \theta|^2) \le 0.1$ for every possible value of $\theta$?
+		
+		\textbf{Answer}
+		
+		Since $X_1,\dots,X_n \sim N(\theta, 2^2)$, we have
+		\[
+		Var(\bar X_n)=\frac{4}{n}.
+		\]
+		Because $\bar X_n$ is unbiased for $\theta$,
+		\[
+		E_\theta\!\left[(\bar X_n-\theta)^2\right]=Var(\bar X_n)=\frac{4}{n}.
+		\]
+		We require
+		\[
+		\frac{4}{n} \le 0.1
+		\quad\Longrightarrow\quad
+		n \ge 40.
+		\]
+		Thus, the required sample size is
+		\[
+		n = 40.
+		\]
+		
+		
+		
+		\subsection{Question 2 (8.1.4)}
+		
+		For the conditions of Exercise 2, how large a random sample must be taken in order that $\Pr(|\overline{X}_n-\theta|\le 0.1)\ge 0.95$ for every possible value of $\theta$?
+		
+		\textbf{Answer}
+		
+		Since $X_1,\dots,X_n \sim N(\theta,2^2)$, we have
+		\[
+		\overline{X}_n \sim N\!\left(\theta,\frac{4}{n}\right),
+		\]
+		so
+		\[
+		\frac{\overline{X}_n-\theta}{2/\sqrt{n}} \sim N(0,1).
+		\]
+		We require
+		\[
+		\Pr\big(|\overline{X}_n-\theta|\le 0.1\big)
+		= \Pr\!\left(\left|\frac{\overline{X}_n-\theta}{2/\sqrt{n}}\right|
+		\le \frac{0.1}{2/\sqrt{n}}\right)
+		= \Pr\big(|Z|\le a\big)\ge 0.95,
+		\]
+		where $Z\sim N(0,1)$ and
+		\[
+		a = \frac{0.1\sqrt{n}}{2}.
+		\]
+		Now
+		\[
+		\Pr(|Z|\le a) = 2\Phi(a)-1 \ge 0.95
+		\quad\Longrightarrow\quad
+		\Phi(a)\ge 0.975
+		\quad\Longrightarrow\quad
+		a \ge z_{0.975} \approx 1.96.
+		\]
+		Thus
+		\[
+		\frac{0.1\sqrt{n}}{2} \ge 1.96
+		\quad\Longrightarrow\quad
+		\sqrt{n} \ge \frac{2\cdot 1.96}{0.1} = 39.2
+		\quad\Longrightarrow\quad
+		n \ge 39.2^2 = 1536.64.
+		\]
+		Hence the smallest integer $n$ satisfying the requirement is
+		\[
+		n = 1537
+		\]
+		
+		
+		
+		\clearpage
+		
+		
+		\section{8.2}
+		\subsection{Question 3 (8.2.4)}
+		
+		Suppose that a point $(X, Y)$ is to be chosen at random in the $xy$-plane, where $X$ and $Y$ are independent random variables and each has the standard normal distribution. If a circle is drawn in the $xy$-plane with its center at the origin, what is the radius of the smallest circle that can be chosen in order for there to be probability $0.99$ that the point $(X, Y)$ will lie inside the circle?
+		
+		\textbf{Answer}
+		
+		Since $X$ and $Y$ are independent $N(0,1)$ random variables, the random variable
+		\[
+		R^2 = X^2 + Y^2
+		\]
+		has a chi-square distribution with $2$ degrees of freedom:
+		\[
+		R^2 \sim \chi^2_2.
+		\]
+		It is known that $\chi^2_2$ has the same distribution as an exponential random
+		variable with mean $2$, i.e.\ with rate $\lambda = \tfrac12$. Hence, for $t \ge 0$,
+		\[
+		\Pr(R^2 \le t) = 1 - e^{-t/2}.
+		\]
+		
+		We want the radius $r$ of the circle centered at the origin such that
+		\[
+		\Pr\bigl((X,Y)\ \text{lies inside the circle of radius } r\bigr)
+		= \Pr(X^2 + Y^2 \le r^2) = 0.99.
+		\]
+		That is,
+		\[
+		\Pr(R^2 \le r^2) = 0.99
+		\quad\Longrightarrow\quad
+		1 - e^{-r^2/2} = 0.99.
+		\]
+		Thus
+		\[
+		e^{-r^2/2} = 0.01
+		\quad\Longrightarrow\quad
+		-\frac{r^2}{2} = \ln(0.01)
+		\quad\Longrightarrow\quad
+		r^2 = -2\ln(0.01).
+		\]
+		Note that $0.01 = 10^{-2}$, so
+		\[
+		\ln(0.01) = \ln(10^{-2}) = -2\ln 10,
+		\]
+		which gives
+		\[
+		r^2 = -2(-2\ln 10) = 4\ln 10.
+		\]
+		Therefore
+		\[
+		r = \sqrt{4\ln 10} = 2\sqrt{\ln 10} \approx 3.04.
+		\]
+		
+		So the radius of the smallest circle is
+		\[
+		\boxed{r = 2\sqrt{\ln 10}}.
+		\]
+		
+		
+		
+		\subsection{Question 4 (8.2.10)}
+		
+		Suppose that six random variables $X_1,\ldots,X_6$ form a random sample from the standard normal distribution, and let
+		\[
+		Y=(X_1+X_2+X_3)^2+(X_4+X_5+X_6)^2.
+		\]
+		Determine a value of $c$ such that the random variable $cY$ will have a $\chi^2$ distribution.
+		\clearpage
+		
+		\section{8.3}
+		\subsection{Question 5 (8.3.4)}
+		
+		Suppose that the random variables $X_1, X_2,$ and $X_3$ are i.i.d., and that each has the standard normal distribution. Also, suppose that
+		\[
+		Y_1 = 0.8X_1 + 0.6X_2,\qquad
+		Y_2 = \sqrt{2}\,(0.3X_1 - 0.4X_2 - 0.5X_3),\qquad
+		Y_3 = \sqrt{2}\,(0.3X_1 - 0.4X_2 + 0.5X_3).
+		\]
+		Find the joint distribution of $Y_1, Y_2,$ and $Y_3$.
+		
+		
+		
+		\section{8.4}
+		\subsection{Question 6 (8.4.2)}
+		 Suppose that $X_1,\ldots,X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and unknown standard deviation $\sigma$, and let $\hat\mu$ and $\hat\sigma$ denote the M.L.E.'s of $\mu$ and $\sigma$. For the sample size $n=17$, find a value of $k$ such that
+		\[
+		\Pr(\hat\mu>\mu+k\hat\sigma)=0.95.
+		\]
+		
+		
+		
+		\section{8.5}
+		\subsection{Question 7 (8.5.4)}
+	 Suppose that $X_1,\ldots,X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and known variance $\sigma^2$. How large a random sample must be taken in order that there will be a confidence interval for $\mu$ with confidence coefficient $0.95$ and length less than $0.01\sigma$?
+		
+		
+		
+		\subsection{Question 8 (8.5.6)}
+	Suppose that $X_1, \ldots, X_n$ form a random sample from the exponential distribution with unknown mean $\mu$. Describe a method for constructing a confidence interval for $\mu$ with a specified confidence coefficient $\gamma \ (0 < \gamma < 1)$. \textit{Hint:} Determine constants $c_1$ and $c_2$ such that
+	\[
+	\Pr\!\left[c_1 < (1/\mu)\sum_{i=1}^n X_i < c_2\right] = \gamma .
+	\]
+		
+		\clearpage
+		
+		
+		\section{8.7}
+		\subsection{Question 9 (8.7.4)}
+		Suppose that a random variable \(X\) has the geometric distribution with unknown parameter \(p\). Find a statistic \(\delta(X)\) that will be an unbiased estimator of \(1/p\).
+		
+		
+		
+		\subsection{Question 10 (8.7.10)}
+		Consider an infinite sequence of Bernoulli trials for which the parameter \(p\) is unknown \((0<p<1)\), and suppose that sampling is continued until exactly \(k\) successes have been obtained, where \(k\ge2\) is fixed. Let \(N\) denote the total number of trials needed to obtain the \(k\) successes. Show that the estimator \((k-1)/(N-1)\) is an unbiased estimator of \(p\).
+		
+		
+		
+		
+		\subsection{Question 11 (8.7.12)}
+		Suppose that a certain population of individuals is composed of \(k\) strata \((k\ge2)\) with proportions \(p_i>0\) satisfying \(\sum_{i=1}^k p_i=1\). In stratum \(i\), the characteristic has mean \(\mu_i\) (unknown) and variance \(\sigma_i^2\) (known). A stratified sample is taken: from stratum \(i\), a random sample of \(n_i\) individuals is taken, and \(\bar X_i\) denotes the average of the \(n_i\) measurements from stratum \(i\).
+		\begin{enumerate}
+			\item Show that \(\mu=\sum_{i=1}^k p_i\mu_i\), and also that \(\hat\mu=\sum_{i=1}^k p_i\bar X_i\) is an unbiased estimator of \(\mu\).
+			\item Let \(n=\sum_{i=1}^k n_i\) be the total number of observations. For fixed \(n\), find the values of \(n_1,\ldots,n_k\) that minimize \(\operatorname{Var}(\hat\mu)\).
+		\end{enumerate}
+		\clearpage
+		
+		\section{8.8}
+		\subsection{Question 12 (8.8.6)}
+		Suppose that \(X\) has density or p.f.\ \(f(x\mid \theta)\) with unknown parameter \(\theta\in\Omega\). Let \(I_0(\theta)\) denote the Fisher information in \(X\). Now reparameterize by \(\theta=\psi(\mu)\) with differentiable \(\psi\). Let \(I_1(\mu)\) denote the Fisher information when the parameter is \(\mu\). Show that
+		\[
+		I_1(\mu)=[\psi'(\mu)]^2\, I_0[\psi(\mu)].
+		\]
+		
+		
+		\subsection{Question 13 (8.8.10)}
+		Suppose that \(X_1,\ldots,X_n\) form a random sample from the normal distribution with mean \(0\) and unknown standard deviation \(\sigma>0\). Find the lower bound specified by the information inequality for the variance of any unbiased estimator of \(\log\sigma\).
+		\clearpage
+		
+		\section{8.9}
+		\subsection{Question 14 (8.9.6)}
+		Suppose that \(X_1,\ldots,X_n\) form a random sample from an unknown probability distribution \(P\) on the real line. Let \(A\) be a given subset of the real line, and let \(\theta=P(A)\). Construct an unbiased estimator of \(\theta\), and specify its variance.
+		
+		
+		
+		
+		\subsection{Question 15 (8.9.8)}
+		Suppose that \(X_1,\ldots,X_{n+1}\) form a random sample from a normal distribution, and let \(\bar X_n=\frac1n\sum_{i=1}^n X_i\) and
+		\[
+		T_n=\left[\frac1n\sum_{i=1}^n (X_i-\bar X_n)^2\right]^{1/2}.
+		\]
+		Determine the constant \(k\) such that \(k(X_{n+1}-\bar X_n)/T_n\) has a \(t\) distribution.
+		
+		\clearpage
+		
+		
+		\subsection{Question 16 (8.9.14)}
+		Suppose that \(X_1,\ldots,X_n\) form a random sample from the Poisson distribution with unknown mean \(\theta\), and let \(Y=\sum_{i=1}^n X_i\).
+		\begin{enumerate}
+			\item Determine \(c\) such that the estimator \(e^{-cY}\) is an unbiased estimator of \(e^{-\theta}\).
+			\item Use the information inequality to obtain a lower bound for the variance of the unbiased estimator found in part (a).
+		\end{enumerate}
+		
+		
+		\subsection{Question 17 (8.9.22)}
+		Let $X_1, \ldots, X_n$ be conditionally i.i.d.\ with the uniform distribution on the interval $[0,\theta]$. Let $Y_n = \max\{X_1,\ldots,X_n\}$.
+		
+		\begin{enumerate}
+			\item[a.] Find the p.d.f.\ and the quantile function of $Y_n/\theta$.
+			
+			\item[b.] $Y_n$ is often used as an estimator of $\theta$ even though it has bias. Compute the bias of $Y_n$ as an estimator of $\theta$.
+			
+			\item[c.] Prove that $Y_n/\theta$ is a pivotal.
+			
+			\item[d.] Find a confidence interval for $\theta$ with coefficient $\gamma$.
+		\end{enumerate}
+		
+	
+	\end{document}
