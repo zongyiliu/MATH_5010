@@ -1,0 +1,1309 @@
+\documentclass[letterpaper]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage[dvipsnames]{xcolor}
+\colorlet{LightRubineRed}{RubineRed!70}
+\colorlet{Mycolor1}{green!10!orange}
+\definecolor{Mycolor2}{HTML}{00F9DE}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{lipsum}
+\usepackage{fancyvrb}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./images/} }
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{hyperref} 
+\usepackage{xcolor} % For custom colors
+\lstset{
+	language=Python,                % Choose the language (e.g., Python, C, R)
+	basicstyle=\ttfamily\small, % Font size and type
+	keywordstyle=\color{blue},  % Keywords color
+	commentstyle=\color{gray},  % Comments color
+	stringstyle=\color{red},    % String color
+	numbers=left,               % Line numbers
+	numberstyle=\tiny\color{gray}, % Line number style
+	stepnumber=1,               % Numbering step
+	breaklines=true,            % Auto line break
+	backgroundcolor=\color{black!5}, % Light gray background
+	frame=single,               % Frame around the code
+}
+\usepackage{float}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+
+	\title{Homework 2, MATH 5504}
+	\author{Zongyi Liu}
+	\date{Mon, Nov 10, 2025}
+	\begin{document}
+		\maketitle
+		
+		\section{8.1}
+		\subsection{Question 1 (8.1.2)}
+		Suppose that a random sample is to be taken from the normal distribution with unknown mean $\theta$ and standard deviation 2. How large a random sample must be taken in order that $E_\theta(|\bar{X}_n - \theta|^2) \le 0.1$ for every possible value of $\theta$?
+		
+		\textbf{Answer}
+		
+		Since $X_1,\dots,X_n \sim N(\theta, 2^2)$, we have
+		\[
+		Var(\bar X_n)=\frac{4}{n}.
+		\]
+		Because $\bar X_n$ is unbiased for $\theta$,
+		\[
+		E_\theta\!\left[(\bar X_n-\theta)^2\right]=Var(\bar X_n)=\frac{4}{n}.
+		\]
+		We require
+		\[
+		\frac{4}{n} \le 0.1
+		\quad\Longrightarrow\quad
+		n \ge 40.
+		\]
+		Thus, the required sample size is
+		\[
+		n = 40.
+		\]
+		
+		\clearpage
+		
+		
+		\subsection{Question 2 (8.1.4)}
+		
+		For the conditions of Exercise 2, how large a random sample must be taken in order that $\Pr(|\overline{X}_n-\theta|\le 0.1)\ge 0.95$ for every possible value of $\theta$?
+		
+		\textbf{Answer}
+		
+		Since $X_1,\dots,X_n \sim N(\theta,2^2)$, we have
+		\[
+		\overline{X}_n \sim N\!\left(\theta,\frac{4}{n}\right),
+		\]
+		so
+		\[
+		\frac{\overline{X}_n-\theta}{2/\sqrt{n}} \sim N(0,1).
+		\]
+		We require
+		\[
+		\Pr\big(|\overline{X}_n-\theta|\le 0.1\big)
+		= \Pr\!\left(\left|\frac{\overline{X}_n-\theta}{2/\sqrt{n}}\right|
+		\le \frac{0.1}{2/\sqrt{n}}\right)
+		= \Pr\big(|Z|\le a\big)\ge 0.95,
+		\]
+		where $Z\sim N(0,1)$ and
+		\[
+		a = \frac{0.1\sqrt{n}}{2}.
+		\]
+		Now
+		\[
+		\Pr(|Z|\le a) = 2\Phi(a)-1 \ge 0.95
+		\quad\Longrightarrow\quad
+		\Phi(a)\ge 0.975
+		\quad\Longrightarrow\quad
+		a \ge z_{0.975} \approx 1.96.
+		\]
+		Thus
+		\[
+		\frac{0.1\sqrt{n}}{2} \ge 1.96
+		\quad\Longrightarrow\quad
+		\sqrt{n} \ge \frac{2\cdot 1.96}{0.1} = 39.2
+		\quad\Longrightarrow\quad
+		n \ge 39.2^2 = 1536.64.
+		\]
+		Hence the smallest integer $n$ satisfying the requirement is
+		\[
+		n = 1537
+		\]
+		
+		
+		
+		\clearpage
+		
+		
+		\section{8.2}
+		\subsection{Question 3 (8.2.4)}
+		
+		Suppose that a point $(X, Y)$ is to be chosen at random in the $xy$-plane, where $X$ and $Y$ are independent random variables and each has the standard normal distribution. If a circle is drawn in the $xy$-plane with its center at the origin, what is the radius of the smallest circle that can be chosen in order for there to be probability $0.99$ that the point $(X, Y)$ will lie inside the circle?
+		
+		\textbf{Answer}
+		
+		Since $X$ and $Y$ are independent $N(0,1)$ random variables, the random variable
+		\[
+		R^2 = X^2 + Y^2
+		\]
+		has a chi-square distribution with $2$ degrees of freedom:
+		\[
+		R^2 \sim \chi^2_2.
+		\]
+		It is known that $\chi^2_2$ has the same distribution as an exponential random
+		variable with mean $2$, i.e.\ with rate $\lambda = \tfrac12$. Hence, for $t \ge 0$,
+		\[
+		\Pr(R^2 \le t) = 1 - e^{-t/2}.
+		\]
+		
+		We want the radius $r$ of the circle centered at the origin such that
+		\[
+		\Pr\bigl((X,Y)\ \text{lies inside the circle of radius } r\bigr)
+		= \Pr(X^2 + Y^2 \le r^2) = 0.99.
+		\]
+		That is,
+		\[
+		\Pr(R^2 \le r^2) = 0.99
+		\quad\Longrightarrow\quad
+		1 - e^{-r^2/2} = 0.99.
+		\]
+		Thus
+		\[
+		e^{-r^2/2} = 0.01
+		\quad\Longrightarrow\quad
+		-\frac{r^2}{2} = \ln(0.01)
+		\quad\Longrightarrow\quad
+		r^2 = -2\ln(0.01).
+		\]
+		Note that $0.01 = 10^{-2}$, so
+		\[
+		\ln(0.01) = \ln(10^{-2}) = -2\ln 10,
+		\]
+		which gives
+		\[
+		r^2 = -2(-2\ln 10) = 4\ln 10.
+		\]
+		Therefore
+		\[
+		r = \sqrt{4\ln 10} = 2\sqrt{\ln 10} \approx 3.04.
+		\]
+		
+		So the radius of the smallest circle is
+		\[
+		{r = 2\sqrt{\ln 10}}.
+		\]
+		
+		\clearpage
+		
+		\subsection{Question 4 (8.2.10)}
+		
+		Suppose that six random variables $X_1,\ldots,X_6$ form a random sample from the standard normal distribution, and let
+		\[
+		Y=(X_1+X_2+X_3)^2+(X_4+X_5+X_6)^2.
+		\]
+		Determine a value of $c$ such that the random variable $cY$ will have a $\chi^2$ distribution.
+		
+		\textbf{Answer}
+		
+		Let
+		\[
+		S_1 = X_1 + X_2 + X_3, 
+		\qquad 
+		S_2 = X_4 + X_5 + X_6.
+		\]
+		Since $X_1,\dots,X_6$ are i.i.d.\ $N(0,1)$, we have
+		\[
+		S_1 \sim N(0,3), 
+		\qquad 
+		S_2 \sim N(0,3),
+		\]
+		and $S_1$ and $S_2$ are independent (they are sums of disjoint subsets of the sample).
+		
+		Hence
+		\[
+		\frac{S_1}{\sqrt{3}}, \, \frac{S_2}{\sqrt{3}} \sim N(0,1)
+		\quad\text{independently}.
+		\]
+		Therefore,
+		\[
+		\left(\frac{S_1}{\sqrt{3}}\right)^2 + \left(\frac{S_2}{\sqrt{3}}\right)^2
+		\sim \chi^2_2.
+		\]
+		
+		Now
+		\[
+		Y = S_1^2 + S_2^2
+		= 3\left[\left(\frac{S_1}{\sqrt{3}}\right)^2 + \left(\frac{S_2}{\sqrt{3}}\right)^2\right],
+		\]
+		so
+		\[
+		\frac{1}{3}Y 
+		= \left(\frac{S_1}{\sqrt{3}}\right)^2 + \left(\frac{S_2}{\sqrt{3}}\right)^2
+		\sim \chi^2_2.
+		\]
+		
+		Thus, choosing
+		\[
+		c = \frac{1}{3}
+		\]
+		gives
+		\[
+		cY \sim \chi^2_2.
+		\]
+		
+		
+		\clearpage
+		
+		\section{8.3}
+		\subsection{Question 5 (8.3.4)}
+		
+		Suppose that the random variables $X_1, X_2,$ and $X_3$ are i.i.d., and that each has the standard normal distribution. Also, suppose that
+		\[
+		Y_1 = 0.8X_1 + 0.6X_2,\qquad
+		Y_2 = \sqrt{2}\,(0.3X_1 - 0.4X_2 - 0.5X_3),\qquad
+		Y_3 = \sqrt{2}\,(0.3X_1 - 0.4X_2 + 0.5X_3).
+		\]
+		Find the joint distribution of $Y_1, Y_2,$ and $Y_3$.
+		
+		\textbf{Answer}
+		
+		Let
+		\[
+		\mathbf{X} =
+		\begin{pmatrix}
+			X_1\\X_2\\X_3
+		\end{pmatrix},
+		\qquad
+		\mathbf{Y} =
+		\begin{pmatrix}
+			Y_1\\Y_2\\Y_3
+		\end{pmatrix}.
+		\]
+		Then $\mathbf{X}\sim N_3(\mathbf{0}, I_3)$ and $\mathbf{Y} = A\mathbf{X}$, where
+		\[
+		A =
+		\begin{pmatrix}
+			0.8 & 0.6 & 0\\[4pt]
+			\sqrt{2}\cdot 0.3 & \sqrt{2}\cdot(-0.4) & \sqrt{2}\cdot(-0.5)\\[4pt]
+			\sqrt{2}\cdot 0.3 & \sqrt{2}\cdot(-0.4) & \sqrt{2}\cdot 0.5
+		\end{pmatrix}.
+		\]
+		
+		The rows of $A$ are
+		\[
+		a_1 = (0.8,\,0.6,\,0),\quad
+		a_2 = (\sqrt{2}\cdot 0.3,\,\sqrt{2}\cdot(-0.4),\,\sqrt{2}\cdot(-0.5)),\quad
+		a_3 = (\sqrt{2}\cdot 0.3,\,\sqrt{2}\cdot(-0.4),\,\sqrt{2}\cdot 0.5).
+		\]
+		Compute their norms:
+		\[
+		\|a_1\|^2 = 0.8^2 + 0.6^2 = 0.64 + 0.36 = 1,
+		\]
+		\[
+		\|a_2\|^2 
+		= 2(0.3^2 + 0.4^2 + 0.5^2)
+		= 2(0.09 + 0.16 + 0.25)
+		= 2\cdot 0.5 = 1,
+		\]
+		\[
+		\|a_3\|^2 
+		= 2(0.3^2 + 0.4^2 + 0.5^2)
+		= 1.
+		\]
+		Compute their inner products:
+		\[
+		a_1\cdot a_2 
+		= 0.8(\sqrt{2}\cdot 0.3) + 0.6(\sqrt{2}\cdot -0.4)
+		= \sqrt{2}(0.24 - 0.24) = 0,
+		\]
+		\[
+		a_1\cdot a_3 
+		= 0.8(\sqrt{2}\cdot 0.3) + 0.6(\sqrt{2}\cdot -0.4)
+		= 0,
+		\]
+		\[
+		a_2\cdot a_3
+		= 2(0.3^2 + 0.4^2 - 0.5^2)
+		= 2(0.09 + 0.16 - 0.25)
+		= 0.
+		\]
+		Thus the rows of $A$ are orthonormal, so
+		\[
+		AA^\top = I_3.
+		\]
+		
+		Since $\mathbf{X}\sim N_3(\mathbf{0}, I_3)$, we have
+		\[
+		\mathbf{Y} = A\mathbf{X} \sim N_3\bigl(\mathbf{0},\, AA^\top\bigr)
+		= N_3(\mathbf{0}, I_3).
+		\]
+		
+		Therefore,
+		\[
+		(Y_1,Y_2,Y_3) \text{ are independent } N(0,1),
+		\]
+		and the joint distribution is
+		\[
+		f_{Y_1,Y_2,Y_3}(y_1,y_2,y_3)
+		= \frac{1}{(2\pi)^{3/2}}
+		\exp\!\left(-\frac{1}{2}(y_1^2 + y_2^2 + y_3^2)\right).
+		\]
+		
+		
+		
+		\clearpage
+		
+		
+		\section{8.4}
+		\subsection{Question 6 (8.4.2)}
+		 Suppose that $X_1,\ldots,X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and unknown standard deviation $\sigma$, and let $\hat\mu$ and $\hat\sigma$ denote the M.L.E.'s of $\mu$ and $\sigma$. For the sample size $n=17$, find a value of $k$ such that
+		\[
+		\Pr(\hat\mu>\mu+k\hat\sigma)=0.95.
+		\]
+		
+		
+		\textbf{Answer}
+		
+		Since $X_1,\dots,X_n$ are i.i.d.\ $N(\mu,\sigma^2)$, the MLEs are
+		\[
+		\hat\mu = \bar X, 
+		\qquad 
+		\hat\sigma^2 = \frac1n\sum_{i=1}^n (X_i-\bar X)^2.
+		\]
+		Let
+		\[
+		S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i-\bar X)^2
+		\]
+		be the usual unbiased sample variance. Then
+		\[
+		\hat\sigma^2 = \frac{n-1}{n} S^2
+		\quad\Longrightarrow\quad
+		\hat\sigma = \sqrt{\frac{n-1}{n}}\,S.
+		\]
+		
+		We know that $
+		T := \frac{\bar X - \mu}{S/\sqrt{n}} \sim t_{n-1}$; and we want $k$ such that
+		\[
+		\Pr(\hat\mu > \mu + k\hat\sigma) = 0.95.
+		\]
+		
+		Which is $\Pr(\bar X - \mu > k\hat\sigma) = 0.95.$ Divide both sides of the inequality by $S/\sqrt{n}$ (which is positive):
+		\[
+		\Pr\!\left(\frac{\bar X - \mu}{S/\sqrt{n}} > \frac{k\hat\sigma}{S/\sqrt{n}}\right)
+		= 0.95.
+		\]
+		Now
+		\[
+		\frac{k\hat\sigma}{S/\sqrt{n}}
+		= k \cdot \frac{\sqrt{\frac{n-1}{n}}\,S}{S/\sqrt{n}}
+		= k \sqrt{n-1}.
+		\]
+		Thus
+		\[
+		\Pr\bigl(T > k\sqrt{n-1}\bigr) = 0.95,
+		\]
+		where $T\sim t_{n-1}$. Hence
+		\[
+		\Pr\bigl(T \le k\sqrt{n-1}\bigr) = 0.05,
+		\]
+		so
+		\[
+		k\sqrt{n-1} = t_{0.05,n-1},
+		\]
+		where $t_{0.05,n-1}$ is the $0.05$-quantile of the $t$ distribution with $n-1$ degrees of freedom. Therefore
+		\[
+		k = \frac{t_{0.05,n-1}}{\sqrt{n-1}}.
+		\]
+		
+		For $n=17$ we have $n-1=16$, so
+		\[
+		k = \frac{t_{0.05,16}}{\sqrt{16}}
+		= \frac{t_{0.05,16}}{4}.
+		\]
+		Using $t_{0.05,16}\approx -1.746$, we obtain
+		\[
+		k \approx \frac{-1.746}{4} \approx -0.44.
+		\]
+		
+		Thus,
+		\[
+		{k \approx -0.44.}
+		\]
+		
+		
+		\clearpage
+		
+		
+		\section{8.5}
+		\subsection{Question 7 (8.5.4)}
+	 Suppose that $X_1,\ldots,X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and known variance $\sigma^2$. How large a random sample must be taken in order that there will be a confidence interval for $\mu$ with confidence coefficient $0.95$ and length less than $0.01\sigma$?
+		
+		
+		\textbf{Answer}
+		
+		For $X_1,\dots,X_n \sim N(\mu,\sigma^2)$ with $\sigma^2$ known, a $95\%$ confidence
+		interval for $\mu$ is
+		\[
+		\bar X_n \pm z_{0.975}\,\frac{\sigma}{\sqrt{n}},
+		\]
+		so the length of the interval is
+		\[
+		L = 2 z_{0.975}\,\frac{\sigma}{\sqrt{n}}.
+		\]
+		We require
+		\[
+		L < 0.01\sigma
+		\quad\Longrightarrow\quad
+		2 z_{0.975}\,\frac{\sigma}{\sqrt{n}} < 0.01\sigma
+		\quad\Longrightarrow\quad
+		\frac{2 z_{0.975}}{\sqrt{n}} < 0.01.
+		\]
+		Thus
+		\[
+		\sqrt{n} > \frac{2 z_{0.975}}{0.01} = 200 z_{0.975}
+		\quad\Longrightarrow\quad
+		n > \bigl(200 z_{0.975}\bigr)^2.
+		\]
+		Using $z_{0.975} \approx 1.96$,
+		\[
+		n > (200\cdot 1.96)^2 = (392)^2 = 153{,}664.
+		\]
+		Hence the required sample size is
+		\[
+		n = 153{,}665.
+		\]
+		
+		
+		\clearpage
+		
+		
+		\subsection{Question 8 (8.5.6)}
+	Suppose that $X_1, \ldots, X_n$ form a random sample from the exponential distribution with unknown mean $\mu$. Describe a method for constructing a confidence interval for $\mu$ with a specified confidence coefficient $\gamma \ (0 < \gamma < 1)$. \textit{Hint:} Determine constants $c_1$ and $c_2$ such that
+	\[
+	\Pr\!\left[c_1 < (1/\mu)\sum_{i=1}^n X_i < c_2\right] = \gamma .
+	\]
+	
+	\textbf{Answer}
+	
+	Let $X_1,\ldots,X_n$ be i.i.d.\ $\operatorname{Exp}(\mu)$ with unknown mean $\mu$.
+	Then
+	\[
+	S = \sum_{i=1}^n X_i
+	\]
+	has a gamma distribution with shape $n$ and mean $n\mu$. Equivalently,
+	\[
+	\frac{1}{\mu} S = \sum_{i=1}^n \frac{X_i}{\mu}
+	\]
+	is a sum of $n$ i.i.d.\ $\operatorname{Exp}(1)$ random variables, so
+	\[
+	T := \frac{1}{\mu} S \sim \Gamma(n,1),
+	\]
+	that is, $T$ has density
+	\[
+	f_T(t) = \frac{1}{\Gamma(n)} t^{n-1} e^{-t}, \quad t>0.
+	\]
+	
+	Let $G_n$ denote the cdf of $\Gamma(n,1)$. To construct a two–sided
+	confidence interval with confidence coefficient $\gamma$ (where $0<\gamma<1$),
+	choose constants $c_1$ and $c_2$ such that
+	\[
+	\Pr\bigl( c_1 < T < c_2 \bigr) = \gamma,
+	\]
+	which is equivalent to
+	\[
+	G_n(c_2) - G_n(c_1) = \gamma.
+	\]
+	A common symmetric choice is
+	\[
+	G_n(c_1) = \frac{1-\gamma}{2}, 
+	\qquad
+	G_n(c_2) = \frac{1+\gamma}{2},
+	\]
+	so that
+	\[
+	\Pr\bigl( c_1 < T < c_2 \bigr)
+	= \Pr\Bigl( c_1 < \frac{S}{\mu} < c_2 \Bigr) = \gamma.
+	\]
+	
+	Now rewrite the event in terms of $\mu$:
+	\[
+	c_1 < \frac{S}{\mu} < c_2
+	\quad\Longleftrightarrow\quad
+	\frac{S}{c_2} < \mu < \frac{S}{c_1},
+	\]
+	since $S>0$ and $\mu>0$.
+	
+	Therefore, a $(100\gamma)\%$ confidence interval for $\mu$ is
+	\[
+	\left( \frac{S}{c_2},\; \frac{S}{c_1} \right),
+	\]
+	where $c_1$ and $c_2$ are the $(1-\gamma)/2$ and $(1+\gamma)/2$ quantiles
+	of the $\Gamma(n,1)$ distribution, respectively.
+	
+	
+		
+		\clearpage
+		
+		
+		\section{8.7}
+		\subsection{Question 9 (8.7.4)}
+		Suppose that a random variable \(X\) has the geometric distribution with unknown parameter \(p\). Find a statistic \(\delta(X)\) that will be an unbiased estimator of \(1/p\).
+		
+		
+		\textbf{Answer}
+		
+		Let \(X\) have the geometric distribution with parameter \(p\), using the
+		convention
+		\[
+		\Pr(X=k)=p(1-p)^{k-1},\qquad k=1,2,3,\ldots
+		\]
+		Then
+		\[
+		E[X] = \frac{1}{p}.
+		\]
+		
+		Therefore, the statistic
+		\[
+		\delta(X)=X
+		\]
+		satisfies
+		\[
+		E[\delta(X)] = E[X] = \frac{1}{p}.
+		\]
+		
+		Hence an unbiased estimator of \(1/p\) is simply
+		\[
+		{\delta(X)=X}.
+		\]
+		
+		
+		
+		\clearpage
+		
+		\subsection{Question 10 (8.7.10)}
+		Consider an infinite sequence of Bernoulli trials for which the parameter \(p\) is unknown \((0<p<1)\), and suppose that sampling is continued until exactly \(k\) successes have been obtained, where \(k\ge2\) is fixed. Let \(N\) denote the total number of trials needed to obtain the \(k\) successes. Show that the estimator \((k-1)/(N-1)\) is an unbiased estimator of \(p\).
+		
+		\textbf{Answer}
+		
+		Let $N$ be the number of trials needed to obtain $k$ successes in i.i.d.\
+		Bernoulli$(p)$ trials, with $k \ge 2$ fixed and $0<p<1$.
+		Then $N$ has a negative binomial distribution:
+		\[
+		\Pr(N = n)
+		= \binom{n-1}{k-1} p^k (1-p)^{\,n-k},
+		\qquad n = k, k+1, k+2, \dots
+		\]
+		
+		We want to show that
+		\[
+		E\!\left[\frac{k-1}{N-1}\right] = p.
+		\]
+		Compute the expectation:
+		\[
+		E\!\left[\frac{k-1}{N-1}\right]
+		= \sum_{n=k}^\infty \frac{k-1}{n-1} \Pr(N=n)
+		= \sum_{n=k}^\infty \frac{k-1}{n-1} \binom{n-1}{k-1} p^k (1-p)^{\,n-k}.
+		\]
+		Use the combinatorial identity
+		\[
+		\frac{k-1}{n-1}\binom{n-1}{k-1}
+		= \binom{n-2}{k-2},
+		\]
+		since
+		\[
+		\frac{k-1}{n-1}\binom{n-1}{k-1}
+		= \frac{k-1}{n-1}\cdot\frac{(n-1)!}{(k-1)!(n-k)!}
+		= \frac{(n-2)!}{(k-2)!(n-k)!}
+		= \binom{n-2}{k-2}.
+		\]
+		Thus
+		\[
+		E\!\left[\frac{k-1}{N-1}\right]
+		= \sum_{n=k}^\infty \binom{n-2}{k-2} p^k (1-p)^{\,n-k}.
+		\]
+		Let $j = n-k$, so that $n = j+k$ and $j = 0,1,2,\dots$. Then
+		\[
+		n-2 = j+k-2, \quad n-k = j,
+		\]
+		and hence
+		\[
+		E\!\left[\frac{k-1}{N-1}\right]
+		= \sum_{j=0}^\infty \binom{j+k-2}{k-2} p^k (1-p)^j.
+		\]
+		
+		Recall the power–series identity, valid for $|x|<1$ and integer $r\ge1$:
+		\[
+		\sum_{j=0}^\infty \binom{j+r-1}{r-1} x^j = \frac{1}{(1-x)^r}.
+		\]
+		Here, take $r = k-1$ and $x = 1-p$ (note that $|1-p|<1$ since $0<p<1$). Then
+		\[
+		\sum_{j=0}^\infty \binom{j+k-2}{k-2} (1-p)^j
+		= \frac{1}{\bigl(1-(1-p)\bigr)^{k-1}}
+		= \frac{1}{p^{\,k-1}}.
+		\]
+		Therefore
+		\[
+		E\!\left[\frac{k-1}{N-1}\right]
+		= p^k \cdot \frac{1}{p^{\,k-1}}
+		= p.
+		\]
+		
+		Hence
+		\[
+		{E\!\left[\frac{k-1}{N-1}\right] = p,}
+		\]
+		so $\dfrac{k-1}{N-1}$ is an unbiased estimator of $p$.
+		
+		
+		\clearpage
+		
+		
+		\subsection{Question 11 (8.7.12)}
+		Suppose that a certain population of individuals is composed of \(k\) strata \((k\ge2)\) with proportions \(p_i>0\) satisfying \(\sum_{i=1}^k p_i=1\). In stratum \(i\), the characteristic has mean \(\mu_i\) (unknown) and variance \(\sigma_i^2\) (known). A stratified sample is taken: from stratum \(i\), a random sample of \(n_i\) individuals is taken, and \(\bar X_i\) denotes the average of the \(n_i\) measurements from stratum \(i\).
+		\begin{enumerate}
+			\item Show that \(\mu=\sum_{i=1}^k p_i\mu_i\), and also that \(\hat\mu=\sum_{i=1}^k p_i\bar X_i\) is an unbiased estimator of \(\mu\).
+			\item Let \(n=\sum_{i=1}^k n_i\) be the total number of observations. For fixed \(n\), find the values of \(n_1,\ldots,n_k\) that minimize \(\operatorname{Var}(\hat\mu)\).
+		\end{enumerate}
+	
+	
+	\textbf{Answer}
+	
+	\underline{Part 1}
+	
+	${Let }I\text{ be the stratum index, with }\Pr(I=i)=p_i,\ i=1,\dots,k.
+	\text{ Then we have }
+	\mu = E[X] = E\bigl(E[X\mid I]\bigr)
+	= \sum_{i=1}^k \Pr(I=i)\,E[X\mid I=i]
+	= \sum_{i=1}^k p_i \mu_i.
+	$
+	
+	For the estimator
+	\[
+	\hat\mu = \sum_{i=1}^k p_i \bar X_i,
+	\]
+	we have, since $\bar X_i$ is the sample mean in stratum $i$,
+	\[
+	E[\bar X_i] = \mu_i,\quad i=1,\dots,k.
+	\]
+	Hence
+	\[
+	E[\hat\mu]
+	= \sum_{i=1}^k p_i E[\bar X_i]
+	= \sum_{i=1}^k p_i \mu_i
+	= \mu,
+	\]
+	so $\hat\mu$ is an unbiased estimator of $\mu$.
+	
+	\bigskip
+	
+	\underline{Part 2}
+	
+	
+	Assume the samples from different strata are independent. Then
+	\[
+	Var(\bar X_i) = \frac{\sigma_i^2}{n_i},\quad i=1,\dots,k,
+	\]
+	and therefore
+	\[
+	Var(\hat\mu)
+	= Var\Bigl(\sum_{i=1}^k p_i \bar X_i\Bigr)
+	= \sum_{i=1}^k p_i^2 Var(\bar X_i)
+	= \sum_{i=1}^k \frac{p_i^2 \sigma_i^2}{n_i}.
+	\]
+	
+	We want to minimize
+	\[
+	V = \sum_{i=1}^k \frac{p_i^2 \sigma_i^2}{n_i}
+	\]
+	subject to
+	\[
+	\sum_{i=1}^k n_i = n,\quad n_i>0.
+	\]
+	Use a Lagrange multiplier $\lambda$:
+	\[
+	\mathcal{L}(n_1,\dots,n_k,\lambda)
+	= \sum_{i=1}^k \frac{p_i^2 \sigma_i^2}{n_i}
+	+ \lambda\Bigl(\sum_{i=1}^k n_i - n\Bigr).
+	\]
+	Take partial derivatives and set to zero:
+	\[
+	\frac{\partial\mathcal{L}}{\partial n_i}
+	= -\frac{p_i^2\sigma_i^2}{n_i^2} + \lambda = 0
+	\quad\Longrightarrow\quad
+	n_i^2 = \frac{p_i^2\sigma_i^2}{\lambda},
+	\]
+	so
+	\[
+	n_i = \frac{p_i\sigma_i}{\sqrt{\lambda}},\quad i=1,\dots,k.
+	\]
+	Thus the $n_i$ are proportional to $p_i\sigma_i$. Enforce the constraint
+	$\sum_{i=1}^k n_i = n$:
+	\[
+	\sum_{i=1}^k n_i
+	= \frac{1}{\sqrt{\lambda}}\sum_{i=1}^k p_i\sigma_i
+	= n
+	\quad\Longrightarrow\quad
+	\sqrt{\lambda} = \frac{1}{n}\sum_{i=1}^k p_i\sigma_i.
+	\]
+	Hence
+	\[
+	n_i
+	= \frac{p_i\sigma_i}{\sqrt{\lambda}}
+	= \frac{p_i\sigma_i}{\frac{1}{n}\sum_{j=1}^k p_j\sigma_j}
+	= n\,\frac{p_i\sigma_i}{\sum_{j=1}^k p_j\sigma_j},
+	\quad i=1,\dots,k.
+	\]
+	
+	So, for fixed $n$, the variance $Var(\hat\mu)$ is minimized by choosing
+	\[
+	{
+		n_i = n\,\frac{p_i\sigma_i}{\sum_{j=1}^k p_j\sigma_j},
+		\quad i=1,\dots,k.}
+	\]
+	
+		\clearpage
+		
+		\section{8.8}
+		\subsection{Question 12 (8.8.6)}
+		Suppose that \(X\) has density or p.f.\ \(f(x\mid \theta)\) with unknown parameter \(\theta\in\Omega\). Let \(I_0(\theta)\) denote the Fisher information in \(X\). Now reparameterize by \(\theta=\psi(\mu)\) with differentiable \(\psi\). Let \(I_1(\mu)\) denote the Fisher information when the parameter is \(\mu\). Show that
+		\[
+		I_1(\mu)=[\psi'(\mu)]^2\, I_0[\psi(\mu)].
+		\]
+		
+		\textbf{Answer}
+		
+		We start from the definition of Fisher information for a single observation.
+		
+		For the original parameterization $\theta\in\Omega$, the Fisher information in $X$ is
+		\[
+		I_0(\theta)
+		= \operatorname{Var}_\theta\!\left(\frac{\partial}{\partial \theta} 
+		\log f(X\mid \theta)\right)
+		= E_\theta\!\left[\left(\frac{\partial}{\partial \theta} 
+		\log f(X\mid \theta)\right)^2\right].
+		\]
+		
+		Now introduce the reparameterization
+		\[
+		\theta = \psi(\mu),
+		\]
+		with $\psi$ differentiable. Under this new parameterization, the density (or p.f.) can be written as
+		\[
+		f(x\mid \mu) := f(x\mid \psi(\mu)).
+		\]
+		The Fisher information in $X$ for the parameter $\mu$ is
+		\[
+		I_1(\mu)
+		= E_\mu\!\left[\left(\frac{\partial}{\partial \mu} 
+		\log f(X\mid \mu)\right)^2\right].
+		\]
+		
+		Compute the derivative using the chain rule:
+		\[
+		\frac{\partial}{\partial \mu} \log f(X\mid \mu)
+		= \frac{\partial}{\partial \mu} \log f(X\mid \psi(\mu))
+		= \frac{\partial}{\partial \theta} \log f(X\mid \theta)
+		\bigg|_{\theta=\psi(\mu)} \cdot \psi'(\mu).
+		\]
+		Hence
+		\[
+		\left(\frac{\partial}{\partial \mu} \log f(X\mid \mu)\right)^2
+		= \bigl[\psi'(\mu)\bigr]^2
+		\left(\frac{\partial}{\partial \theta} \log f(X\mid \theta)
+		\bigg|_{\theta=\psi(\mu)}\right)^2.
+		\]
+		
+		Taking expectation under the distribution with parameter $\mu$
+		(i.e.\ the same as taking expectation under $\theta=\psi(\mu)$), we get
+		\[
+		I_1(\mu)
+		= E_\mu\!\left[\left(\frac{\partial}{\partial \mu} \log f(X\mid \mu)\right)^2\right]
+		= \bigl[\psi'(\mu)\bigr]^2
+		E_{\theta=\psi(\mu)}\!\left[\left(
+		\frac{\partial}{\partial \theta} \log f(X\mid \theta)\right)^2\right].
+		\]
+		But the expectation on the right is precisely $I_0(\theta)$ evaluated at $\theta=\psi(\mu)$:
+		\[
+		E_{\theta=\psi(\mu)}\!\left[\left(
+		\frac{\partial}{\partial \theta} \log f(X\mid \theta)\right)^2\right]
+		= I_0\bigl(\psi(\mu)\bigr).
+		\]
+		Therefore,
+		\[
+		I_1(\mu)
+		= [\psi'(\mu)]^2\, I_0[\psi(\mu)].
+		\]
+		
+		This proves the desired relationship.
+		
+		
+		\clearpage
+		
+		\subsection{Question 13 (8.8.10)}
+		Suppose that \(X_1,\ldots,X_n\) form a random sample from the normal distribution with mean \(0\) and unknown standard deviation \(\sigma>0\). Find the lower bound specified by the information inequality for the variance of any unbiased estimator of \(\log\sigma\).
+		
+		\textbf{Answer}
+		
+		For one observation $X \sim N(0,\sigma^2)$, the density is
+		\[
+		f(x\mid\sigma)
+		= \frac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\frac{x^2}{2\sigma^2}\right),
+		\qquad \sigma>0.
+		\]
+		The log-likelihood for a single observation is
+		\[
+		\ell(\sigma;x)
+		= \log f(x\mid\sigma)
+		= -\log\sigma - \frac12\log(2\pi)
+		- \frac{x^2}{2\sigma^2}.
+		\]
+		Differentiate with respect to $\sigma$:
+		\[
+		\frac{\partial}{\partial\sigma}\ell(\sigma;x)
+		= -\frac{1}{\sigma} + \frac{x^2}{\sigma^3}
+		= \frac{x^2 - \sigma^2}{\sigma^3}.
+		\]
+		Thus, for one observation,
+		\[
+		I_0(\sigma)
+		= \mathbb{E}_\sigma\!\left[
+		\left(\frac{\partial}{\partial\sigma}\ell(\sigma;X)\right)^2
+		\right]
+		= \mathbb{E}_\sigma\!\left[
+		\frac{(X^2 - \sigma^2)^2}{\sigma^6}
+		\right]
+		= \frac{\operatorname{Var}(X^2)}{\sigma^6}.
+		\]
+		If $X\sim N(0,\sigma^2)$, then $\operatorname{Var}(X^2)=2\sigma^4$, so
+		\[
+		I_0(\sigma)
+		= \frac{2\sigma^4}{\sigma^6}
+		= \frac{2}{\sigma^2}.
+		\]
+		For a random sample $X_1,\dots,X_n$, the Fisher information is
+		\[
+		I_0^{(n)}(\sigma) = n\,I_0(\sigma) = \frac{2n}{\sigma^2}.
+		\]
+		
+		Now we reparameterize by
+		\[
+		\phi = \log\sigma
+		\qquad (\text{so } \sigma = \psi(\phi) = e^\phi).
+		\]
+		Then
+		\[
+		\psi'(\phi) = \frac{d}{d\phi}e^\phi = e^\phi = \sigma.
+		\]
+		By the information transformation rule,
+		\[
+		I_1(\phi)
+		= [\psi'(\phi)]^2\,I_0^{(n)}\bigl(\psi(\phi)\bigr)
+		= \sigma^2 \cdot \frac{2n}{\sigma^2}
+		= 2n.
+		\]
+		
+		The Cramer–Rao lower bound for any unbiased estimator of $\log\sigma$
+		is the reciprocal of this Fisher information:
+		\[
+		\operatorname{Var}(\text{any unbiased estimator of }\log\sigma)
+		\;\ge\; \frac{1}{I_1(\phi)}
+		= \frac{1}{2n}.
+		\]
+		
+		Hence, the information inequality gives the lower bound
+		\[
+		\boxed{\frac{1}{2n}}.
+		\]
+		
+		\clearpage
+		
+		\section{8.9}
+		\subsection{Question 14 (8.9.6)}
+		Suppose that \(X_1,\ldots,X_n\) form a random sample from an unknown probability distribution \(P\) on the real line. Let \(A\) be a given subset of the real line, and let \(\theta=P(A)\). Construct an unbiased estimator of \(\theta\), and specify its variance.
+		
+		\textbf{Answer}
+		
+		For each observation $X_i$, define the indicator
+		\[
+		Y_i = \mathbf{1}_{\{X_i \in A\}} =
+		\begin{cases}
+			1, & X_i \in A,\\
+			0, & X_i \notin A.
+		\end{cases}
+		\]
+		Then
+		\[
+		E[Y_i] = P(X_i \in A) = P(A) = \theta,
+		\]
+		so each $Y_i$ is a Bernoulli random variable with parameter $\theta$.
+		
+		Consider the sample mean
+		\[
+		\hat\theta = \frac{1}{n}\sum_{i=1}^n Y_i
+		= \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{\{X_i \in A\}}.
+		\]
+		Its expectation is
+		\[
+		E[\hat\theta]
+		= \frac{1}{n}\sum_{i=1}^n E[Y_i]
+		= \frac{1}{n}\cdot n\theta
+		= \theta,
+		\]
+		so $\hat\theta$ is an unbiased estimator of $\theta$.
+		
+		For the variance,
+		\[
+		\Var(Y_i) = \theta(1-\theta),
+		\]
+		and since $X_1,\dots,X_n$ are i.i.d., the indicators $Y_1,\dots,Y_n$ are i.i.d.\ as well. Thus
+		\[
+		\Var(\hat\theta)
+		= \Var\!\left(\frac{1}{n}\sum_{i=1}^n Y_i\right)
+		= \frac{1}{n^2}\sum_{i=1}^n \Var(Y_i)
+		= \frac{1}{n^2}\cdot n\,\theta(1-\theta)
+		= \frac{\theta(1-\theta)}{n}.
+		\]
+		
+		Therefore, an unbiased estimator of $\theta=P(A)$ is
+		\[
+		\boxed{\hat\theta = \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{\{X_i \in A\}},}
+		\]
+		and its variance is
+		\[
+		\boxed{\Var(\hat\theta) = \frac{\theta(1-\theta)}{n}.}
+		\]
+		
+		
+		
+		
+		
+		\subsection{Question 15 (8.9.8)}
+		Suppose that \(X_1,\ldots,X_{n+1}\) form a random sample from a normal distribution, and let \(\bar X_n=\frac1n\sum_{i=1}^n X_i\) and
+		\[
+		T_n=\left[\frac1n\sum_{i=1}^n (X_i-\bar X_n)^2\right]^{1/2}.
+		\]
+		Determine the constant \(k\) such that \(k(X_{n+1}-\bar X_n)/T_n\) has a \(t\) distribution.
+		
+		\textbf{Answer}
+		
+		Let $X_1,\dots,X_{n+1}$ be i.i.d.\ $N(\mu,\sigma^2)$.
+		Define
+		\[
+		\bar X_n = \frac1n\sum_{i=1}^n X_i,
+		\qquad
+		S_n^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i-\bar X_n)^2,
+		\qquad
+		T_n^2 = \frac{1}{n}\sum_{i=1}^n (X_i-\bar X_n)^2.
+		\]
+		Then
+		\[
+		T_n^2 = \frac{n-1}{n}\,S_n^2
+		\quad\Longrightarrow\quad
+		T_n = \sqrt{\frac{n-1}{n}}\,S_n,
+		\quad
+		S_n = \sqrt{\frac{n}{n-1}}\,T_n.
+		\]
+		
+		Now
+		\[
+		X_{n+1}-\bar X_n \sim N\!\Bigl(0,\sigma^2\bigl(1+\tfrac1n\bigr)\Bigr),
+		\]
+		and
+		\[
+		\frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2_{n-1},
+		\]
+		with $X_{n+1}-\bar X_n$ independent of $S_n^2$ (and hence of $S_n$).
+		
+		Thus
+		\[
+		\frac{X_{n+1}-\bar X_n}{\sigma\sqrt{1+1/n}} \sim N(0,1),
+		\qquad
+		\frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2_{n-1},
+		\]
+		independent, so
+		\[
+		\frac{\dfrac{X_{n+1}-\bar X_n}{\sigma\sqrt{1+1/n}}}
+		{\sqrt{\dfrac{(n-1)S_n^2}{\sigma^2(n-1)}}}
+		= \frac{X_{n+1}-\bar X_n}{S_n\sqrt{1+1/n}}
+		\sim t_{n-1}.
+		\]
+		
+		We want $k$ such that
+		\[
+		k\,\frac{X_{n+1}-\bar X_n}{T_n} \sim t_{n-1}.
+		\]
+		Using $S_n = \sqrt{\frac{n}{n-1}}\,T_n$,
+		\[
+		\frac{X_{n+1}-\bar X_n}{S_n\sqrt{1+1/n}}
+		= \frac{X_{n+1}-\bar X_n}{\sqrt{\frac{n}{n-1}}\,T_n\sqrt{1+1/n}}
+		= \frac{X_{n+1}-\bar X_n}{T_n}\,
+		\sqrt{\frac{n-1}{n}}\,\frac{1}{\sqrt{1+1/n}}.
+		\]
+		But
+		\[
+		\sqrt{\frac{n-1}{n}}\,\frac{1}{\sqrt{1+1/n}}
+		= \sqrt{\frac{n-1}{n}}\cdot \sqrt{\frac{n}{n+1}}
+		= \sqrt{\frac{n-1}{n+1}}.
+		\]
+		Hence
+		\[
+		\frac{X_{n+1}-\bar X_n}{S_n\sqrt{1+1/n}}
+		= \sqrt{\frac{n-1}{n+1}}\,
+		\frac{X_{n+1}-\bar X_n}{T_n}
+		\sim t_{n-1}.
+		\]
+		Therefore
+		\[
+		k = \sqrt{\frac{n-1}{n+1}}
+		\]
+		is the desired constant such that
+		\[
+		k\,\frac{X_{n+1}-\bar X_n}{T_n} \sim t_{n-1}.
+		\]
+		s
+		
+		\clearpage
+		
+		
+		\subsection{Question 16 (8.9.14)}
+		Suppose that \(X_1,\ldots,X_n\) form a random sample from the Poisson distribution with unknown mean \(\theta\), and let \(Y=\sum_{i=1}^n X_i\).
+		\begin{enumerate}
+			\item Determine \(c\) such that the estimator \(e^{-cY}\) is an unbiased estimator of \(e^{-\theta}\).
+			\item Use the information inequality to obtain a lower bound for the variance of the unbiased estimator found in part (a).
+		\end{enumerate}
+	
+	\textbf{Answer}
+	
+	\textbf{(a)}\quad
+	Let $X_1,\ldots,X_n$ be i.i.d.\ $\mathrm{Poisson}(\theta)$ and
+	\[
+	Y = \sum_{i=1}^n X_i.
+	\]
+	Then
+	\[
+	Y \sim \mathrm{Poisson}(n\theta).
+	\]
+	We want $c$ such that $e^{-cY}$ is an unbiased estimator of $e^{-\theta}$, i.e.
+	\[
+	E_\theta\bigl[e^{-cY}\bigr] = e^{-\theta}.
+	\]
+	Using the probability generating function (or mgf) of the Poisson:
+	\[
+	E_\theta\bigl[e^{-cY}\bigr]
+	= E_\theta\bigl[(e^{-c})^Y\bigr]
+	= \exp\!\bigl(n\theta(e^{-c}-1)\bigr).
+	\]
+	We require
+	\[
+	\exp\!\bigl(n\theta(e^{-c}-1)\bigr) = e^{-\theta}
+	\quad\Longrightarrow\quad
+	n\theta(e^{-c}-1) = -\theta.
+	\]
+	Divide both sides by $\theta>0$:
+	\[
+	n(e^{-c}-1) = -1
+	\quad\Longrightarrow\quad
+	e^{-c}-1 = -\frac1n
+	\quad\Longrightarrow\quad
+	e^{-c} = 1-\frac1n.
+	\]
+	Hence
+	\[
+	c = -\log\!\Bigl(1-\frac1n\Bigr).
+	\]
+	Thus
+	\[
+	\boxed{c = -\log\!\Bigl(1-\tfrac1n\Bigr)}
+	\]
+	makes $e^{-cY}$ an unbiased estimator of $e^{-\theta}$.
+	
+	\bigskip
+	
+	\textbf{(b)}\quad
+	We use the Cramér--Rao information inequality for the unbiased estimator
+	of $g(\theta)=e^{-\theta}$.
+	
+	For a single $\mathrm{Poisson}(\theta)$ observation $X$, the log-likelihood is
+	\[
+	\ell(\theta;x) = -\theta + x\log\theta - \log(x!), 
+	\]
+	so
+	\[
+	\frac{\partial}{\partial\theta}\ell(\theta;x)
+	= -1 + \frac{x}{\theta}.
+	\]
+	Then the Fisher information in one observation is
+	\[
+	I_1(\theta)
+	= E_\theta\!\left[\left(\frac{\partial}{\partial\theta}\ell(\theta;X)\right)^2\right]
+	= E_\theta\!\left[\left(-1 + \frac{X}{\theta}\right)^2\right]
+	= \frac{Var_\theta(X)}{\theta^2}
+	= \frac{\theta}{\theta^2}
+	= \frac{1}{\theta}.
+	\]
+	For $n$ i.i.d.\ observations, the total Fisher information is
+	\[
+	I_n(\theta) = n\,I_1(\theta) = \frac{n}{\theta}.
+	\]
+	
+	Now $g(\theta)=e^{-\theta}$, so
+	\[
+	g'(\theta) = -e^{-\theta},
+	\qquad
+	\bigl(g'(\theta)\bigr)^2 = e^{-2\theta}.
+	\]
+	By the information inequality (Cramér--Rao bound), for any unbiased
+	estimator $T(X_1,\dots,X_n)$ of $g(\theta)$,
+	\[
+	Var_\theta(T) \;\ge\; \frac{\bigl(g'(\theta)\bigr)^2}{I_n(\theta)}
+	= \frac{e^{-2\theta}}{n/\theta}
+	= \frac{\theta}{n}\,e^{-2\theta}.
+	\]
+	
+	In particular, for the unbiased estimator $e^{-cY}$ from part (a),
+	the variance satisfies
+	\[
+	\boxed{
+		Var_\theta\bigl(e^{-cY}\bigr) \;\ge\; \frac{\theta}{n}\,e^{-2\theta}.
+	}
+	\]
+	
+		
+		
+		\subsection{Question 17 (8.9.22)}
+		Let $X_1, \ldots, X_n$ be conditionally i.i.d.\ with the uniform distribution on the interval $[0,\theta]$. Let $Y_n = \max\{X_1,\ldots,X_n\}$.
+		
+		\begin{enumerate}
+			\item[a.] Find the p.d.f.\ and the quantile function of $Y_n/\theta$.
+			
+			\item[b.] $Y_n$ is often used as an estimator of $\theta$ even though it has bias. Compute the bias of $Y_n$ as an estimator of $\theta$.
+			
+			\item[c.] Prove that $Y_n/\theta$ is a pivotal.
+			
+			\item[d.] Find a confidence interval for $\theta$ with coefficient $\gamma$.
+		\end{enumerate}
+	
+	\textbf{Answer}
+	
+	\begin{enumerate}
+		\item[a.] Since $X_1,\ldots,X_n \stackrel{\text{i.i.d.}}{\sim} \mathrm{Unif}(0,\theta)$, the c.d.f.\ of
+		\[
+		Y_n = \max\{X_1,\ldots,X_n\}
+		\]
+		is, for $0 \le y \le \theta$,
+		\[
+		F_{Y_n}(y)
+		= \Pr(Y_n \le y)
+		= \Pr(X_1 \le y,\ldots,X_n \le y)
+		= \prod_{i=1}^n \Pr(X_i \le y)
+		= \left(\frac{y}{\theta}\right)^n.
+		\]
+		Thus the p.d.f.\ of $Y_n$ is
+		\[
+		f_{Y_n}(y)
+		= \frac{d}{dy} F_{Y_n}(y)
+		= \frac{n}{\theta^n}\,y^{n-1},\qquad 0<y<\theta.
+		\]
+		
+		Let $Z := Y_n/\theta$. Then for $0\le z\le 1$,
+		\[
+		F_Z(z) = \Pr(Z \le z)
+		= \Pr\Bigl(Y_n \le z\theta\Bigr)
+		= \left(\frac{z\theta}{\theta}\right)^n
+		= z^n,
+		\]
+		so
+		\[
+		f_Z(z) = \frac{d}{dz}F_Z(z) = n z^{n-1},\qquad 0<z<1.
+		\]
+		The quantile function $Q(u)$ of $Z$ solves $u = F_Z(z) = z^n$, hence
+		\[
+		Q(u) = u^{1/n},\qquad 0<u<1.
+		\]
+		
+		\item[b.] The expectation of $Y_n$ is
+		\[
+		E[Y_n]
+		= \int_0^\theta y f_{Y_n}(y)\,dy
+		= \int_0^\theta y \cdot \frac{n}{\theta^n}y^{n-1}\,dy
+		= \frac{n}{\theta^n}\int_0^\theta y^n\,dy
+		= \frac{n}{\theta^n}\cdot \frac{\theta^{n+1}}{n+1}
+		= \frac{n}{n+1}\,\theta.
+		\]
+		Hence the bias of $Y_n$ as an estimator of $\theta$ is
+		\[
+		\operatorname{Bias}(Y_n)
+		= E[Y_n] - \theta
+		= \frac{n}{n+1}\theta - \theta
+		= -\frac{\theta}{n+1}.
+		\]
+		
+		\item[c.] A pivotal quantity is a function of the data and the parameter whose
+		distribution does not depend on the parameter. In part (a) we found that
+		\[
+		Z = \frac{Y_n}{\theta}
+		\]
+		has c.d.f.\ $F_Z(z) = z^n$ and p.d.f.\ $f_Z(z) = n z^{n-1}$ for $0<z<1$, which
+		do not involve $\theta$. Therefore the distribution of $Y_n/\theta$ is
+		independent of $\theta$, so
+		\[
+		\frac{Y_n}{\theta}
+		\]
+		is a pivotal quantity.
+		
+		\item[d.] Let $Z = Y_n/\theta$. For a two–sided confidence interval with
+		confidence coefficient $\gamma$, choose $0<a<b<1$ such that
+		\[
+		\Pr(a \le Z \le b) = \gamma.
+		\]
+		Since $F_Z(z) = z^n$, we have
+		\[
+		\Pr(a \le Z \le b) = F_Z(b) - F_Z(a) = b^n - a^n = \gamma.
+		\]
+		A common choice is to take equal tails, i.e.
+		\[
+		F_Z(a) = a^n = \frac{1-\gamma}{2}, \qquad
+		F_Z(b) = b^n = \frac{1+\gamma}{2},
+		\]
+		so
+		\[
+		a = \Bigl(\tfrac{1-\gamma}{2}\Bigr)^{1/n},
+		\qquad
+		b = \Bigl(\tfrac{1+\gamma}{2}\Bigr)^{1/n}.
+		\]
+		
+		Now
+		\[
+		a \le \frac{Y_n}{\theta} \le b
+		\]
+		is equivalent (for $\theta>0$) to
+		\[
+		a\theta \le Y_n \le b\theta.
+		\]
+		From $a\theta \le Y_n$ we get $\theta \le Y_n/a$; from $Y_n \le b\theta$ we
+		get $\theta \ge Y_n/b$. Hence
+		\[
+		\Pr\!\left(\frac{Y_n}{b} \le \theta \le \frac{Y_n}{a}\right) = \gamma.
+		\]
+		
+		Thus a $(100\gamma)\%$ confidence interval for $\theta$ is
+		\[
+		\boxed{
+			\left[
+			\frac{Y_n}{\Bigl(\frac{1+\gamma}{2}\Bigr)^{1/n}},\;
+			\frac{Y_n}{\Bigl(\frac{1-\gamma}{2}\Bigr)^{1/n}}
+			\right].
+		}
+		\]
+	\end{enumerate}
+	
+		
+	
+	\end{document}
