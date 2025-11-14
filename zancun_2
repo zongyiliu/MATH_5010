@@ -1,1 +1,90 @@
 
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage{bbold}
+
+\begin{document}
+\begin{enumerate}
+  \item (8pt) Let $X$ be a random variable and let $\operatorname{VaR}(\alpha)(X)$ be the value at risk corresponding to $X$. Show that\\
+(a) (4pts) (Translation Invariance)
+\end{enumerate}
+
+
+\begin{equation*}
+\operatorname{VaR}(\alpha)(X+a)=\operatorname{VaR}(\alpha)(X)+a, \quad \forall a \in \mathbb{R} \tag{1}
+\end{equation*}
+
+
+(b) (4pts) Positive Homogeneity:
+
+
+\begin{equation*}
+\operatorname{VaR}(\alpha)(\lambda X)=\lambda \operatorname{VaR}(\alpha)(X), \quad \forall \lambda \geq 0 \tag{2}
+\end{equation*}
+
+
+\begin{enumerate}
+  \setcounter{enumi}{1}
+  \item (8pts) Suppose the return $R$ on a stock satisfies
+\end{enumerate}
+
+$$
+R=\mu+\lambda Y
+$$
+
+where $\mu$ and $\lambda$ are fixed and $Y$ has a $t$-distribution with $\nu$ degrees of freedom.\\
+(a) (4pts) If you hold a position of size $S_{0}$ in this stock, show that for one day
+
+$$
+\operatorname{VaR}(\alpha)=-S_{0}\left(\mu+\lambda t_{\alpha, \nu}\right)
+$$
+
+where $t_{\alpha, \nu}$ is the $\alpha$ th quantile of a $t$-distribution with $\nu$ degrees of freedom. Hint: Recall that $\operatorname{Pr}(L>\operatorname{VaR}(\alpha))=\alpha$ and $L=-S_{0} R$.\\
+(b) ( 4 pts ) If $S_{0}=100,000, \mu=0.4$, and $\lambda=0.01$, compute $\operatorname{VaR}(0.05)$ when $\nu=10$.\\
+3. (9pts) Suppose the daily returns ( $R_{A}, R_{B}$ ) on Stocks A and B have a bivariate normal distribution with
+
+$$
+\boldsymbol{\mu}=\binom{0.0002}{0.0003}, \quad \Sigma=\left(\begin{array}{ll}
+0.0003 & 0.0002 \\
+0.0002 & 0.0004
+\end{array}\right) .
+$$
+
+This implies that
+
+$$
+R_{A} \sim N(0.0002,0.0003), \quad R_{B} \sim N(0.0003,0.0004),
+$$
+
+and for any $a, b$,
+
+$$
+a R_{A}+b R_{B} \sim N\left(0.0002 a+0.0003 b, 0.0003 a^{2}+0.0004 b^{2}+0.0004 a b\right)
+$$
+
+(a) (3pts) Suppose that you hold a $\$ 1000$ position in Stock A (i.e. $S_{0}=1000$ ). Compute $\mathrm{VaR}_{A}(0.05)$.\\
+(b) ( 3 pts) Suppose that you hold a $\$ 1000$ position in Stock B (i.e. $S_{0}=1000$ ). Compute $\mathrm{VaR}_{B}(0.05)$.\\
+(c) (3pts) What is $\operatorname{VaR}(0.05)$ of a portfolio holding $\$ 500$ in Stock A and $\$ 500$ in Stock B?\\
+4. (5pts) Suppose the distribution of $R$ has a pdf $f$. Show that
+
+$$
+\mathrm{ES}(\alpha)=-S_{0} \frac{\int_{-\infty}^{q_{\alpha}} r f(r) d r}{\alpha}
+$$
+
+where $q_{\alpha}$ is the $\alpha$ th quantile of the distribution of $R$.\\
+5. (5pt) Assume $R \sim N\left(\mu, \sigma^{2}\right)$. Show that
+
+$$
+\operatorname{ES}(\alpha)=-S_{0}\left[\mu-\sigma \frac{1}{\alpha \sqrt{2 \pi}} e^{-z_{\alpha}^{2} / 2}\right]
+$$
+
+where $z_{\alpha}$ is the $\alpha$ th quantile of the standard normal distribution $N(0,1)$.
+
+
+\end{document}
