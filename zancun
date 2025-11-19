@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{array}
+\usepackage{array｝
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[version=4]{mhchem}
