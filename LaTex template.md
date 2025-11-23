@@ -1,4 +1,9 @@
 # 整體
+## 在宏包之前
+<code>
+\documentclass[letterpaper, 9pt]{article}
+\linespread{0.85}
+</code>
 ## 使用的包
 <code>
 \documentclass[letterpaper]{article}
