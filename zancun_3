@@ -1,0 +1,262 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+
+\begin{document}
+\begin{enumerate}
+  \item Suppose that the daily log returns on a stock are independent and normally distributed with mean 0.001 and standard deviation 0.015 . Suppose you buy $\$ 1,000$ worth of this stock.\\
+(a) What is the probability that after one trading day your investment is worth less than $\$ 990$ ? (Note: The R function pnorm() will compute a normal CDF, so, for example, pnorm(0.3, mean $=0.1, s d=0.2$ ) is the normal CDF with mean 0.1 and standard deviation 0.2 evaluated at 0.3 .)\\
+(b) What is the probability that after five trading days your investment is worth less than $\$ 990$ ?
+  \item The yearly log returns on a stock are normally distributed with mean 0.1 and standard deviation 0.2. The stock is selling at $\$ 100$ today. What is the probability that 1 year from now it is selling at $\$ 110$ or more?
+  \item The yearly log returns on a stock are normally distributed with mean 0.08 and standard deviation 0.15. The stock is selling at $\$ 80$ today. What is the probability that 2 years from now it is selling at $\$ 90$ or more?
+  \item Suppose the prices of a stock at times 1,2 , and 3 are $P_{1}=95, P_{2}=103$, and $P_{3}=98$. Find $r_{3}(2)$.
+  \item The prices and dividends of a stock are given in the table below.\\
+(a) What is $R_{2}$ ?\\
+(b) What is $R_{4}(3)$ ?\\
+(c) What is $r_{3}$ ?
+\end{enumerate}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+$t$ & $P_{t}$ & $D_{t}$ \\
+\hline
+1 & 52 & 0.2 \\
+2 & 54 & 0.2 \\
+3 & 53 & 0.2 \\
+4 & 59 & 0.25 \\
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \setcounter{enumi}{5}
+  \item The prices and dividends of a stock are given in the table below.\\
+(a) Find $R_{3}(2)$,\\
+(b) Find $r_{4}(3)$.
+\end{enumerate}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+$t$ & $P_{t}$ & $D_{t}$ \\
+\hline
+1 & 82 & 0.1 \\
+2 & 85 & 0.1 \\
+3 & 83 & 0.1 \\
+4 & 87 & 0.125 \\
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \setcounter{enumi}{6}
+  \item Let $r_{t}$ be a log return. Suppose that $r_{1}, r_{2}, \ldots$ are i.i.d. $N(0.06,0.47)$.\\
+(a) What is the distribution of $r_{t}(4)=r_{t}+r_{t-1}+r_{t-2}+r_{t-3}$ ?\\
+(b) What is $P\left\{r_{1}(4)<2\right\}$ ?\\
+(c) What is the covariance between $r_{2}(1)$ and $r_{2}(2)$ ?\\
+(d) What is the conditional distribution of $r_{t}(3)$ given $r_{t-2}=0.6$ ?
+  \item Suppose that $X_{1}, X_{2}, \ldots$ is a lognormal geometric random walk with parameters $\left(\mu, \sigma^{2}\right)$. More specifically, suppose that $X_{k}=X_{0} \exp \left(r_{1}+\cdots+\right. r_{k}$ ), where $X_{0}$ is a fixed constant and $r_{1}, r_{2}, \ldots$ are i.i.d. $N\left(\mu, \sigma^{2}\right)$.\\
+(a) Find $P\left(X_{2}>1.3 X_{0}\right)$.\\
+(b) Use (A.4) to find the density of $X_{1}$.\\
+(c) Find a formula for the 0.9 quantile of $X_{k}$ for all $k$.\\
+(d) What is the expected value of $X_{k}^{2}$ for any $k$ ? (Find a formula giving the expected value as a function of $k$.)\\
+(e) Find the variance of $X_{k}$ for any $k$.
+  \item Suppose that $X_{1}, X_{2}, \ldots$ is a lognormal geometric random walk with parameters $\mu=0.1, \sigma=0.2$.\\
+(a) Find $P\left(X_{3}>1.2 X_{0}\right)$.\\
+(b) Find the conditional variance of $X_{k} / k$ given $X_{0}$ for any $k$.\\
+(c) Find the minimum number of days before the probability is at least 0.9 of doubling one's money, that is, find the small value of $t$ such that $P\left(P_{t} / P_{0} \geq 2\right) \geq 0.9$.
+  \item The daily log returns on a stock are normally distributed with mean 0.0002 and standard deviation 0.03 . The stock price is now $\$ 97$. What is the probability that it will exceed $\$ 100$ after 20 trading days?
+  \item Suppose that daily log-returns are $N(0.0005,0.012)$. Find the smallest value of $t$ such that $P\left(P_{t} / P_{0} \geq 2\right) \geq 0.9$, that is, that after $t$ days the probability the price has doubled is at least $90 \%$.
+  \item Suppose that the forward rate is $r(t)=0.028+0.00042 t$.\\
+(a) What is the yield to maturity of a bond maturing in 20 years?\\
+(b) What is the price of a par $\$ 1,000$ zero-coupon bond maturing in 15 years?
+  \item Suppose that the forward rate is $r(t)=0.04+0.0002 t-0.00003 t^{2}$.\\
+(a) What is the yield to maturity of a bond maturing in 8 years?\\
+(b) What is the price of a par $\$ 1,000$ zero-coupon bond maturing in 5 years?\\
+(c) Plot the forward rate and the yield curve. Describe the two curves. Which are convex and which are concave? How do they differ?\\
+(d) Suppose you buy a 10 -year zero-coupon bond and sell it after 1 year. What will be the return if the forward rate does not change during that year?
+  \item A coupon bond has a coupon rate of $3 \%$ and a current yield of $2.8 \%$.\\
+(a) Is the bond selling above or below par? Why or why not?\\
+(b) Is the yield to maturity above or below $2.8 \%$ ? Why or why not?
+  \item Suppose that the forward rate is $r(t)=0.032+0.001 t+0.0002 t^{2}$.\\
+(a) What is the 5 -year continuously compounded spot rate?\\
+(b) What is the price of a zero-coupon bond that matures in 5 years?
+  \item The $1 / 2-$, $1-, 1.5-$, and 2 -year semiannually compounded spot rates are $0.025,0.028,0.032$, and 0.033 , respectively. A par $\$ 1,000$ coupon bond matures in 2 years and has semiannual coupon payments of $\$ 35$. What is the price of this bond?
+  \item Verify the following equality:
+\end{enumerate}
+
+$$
+\sum_{t=1}^{2 T} \frac{C}{(1+r)^{t}}+\frac{\mathrm{PAR}}{(1+r)^{2 T}}=\frac{C}{r}+\left\{\mathrm{PAR}-\frac{C}{r}\right\}(1+r)^{-2 T}
+$$
+
+\begin{enumerate}
+  \setcounter{enumi}{6}
+  \item One year ago a par $\$ 1,00020$-year coupon bond with semiannual coupon payments was issued. The annual interest rate (that is, the coupon rate) at that time was $8.5 \%$. Now, a year later, the annual interest rate is $7.6 \%$.\\
+(a) What are the coupon payments?\\
+(b) What is the bond worth now? Assume that the second coupon payment was just received, so the bondholder receives an additional 38 coupon payments, the next one in 6 months.\\
+(c) What would the bond be worth if instead the second payment were just about to be received?
+  \item A par $\$ 1,000$ zero-coupon bond that matures in 5 years sells for $\$ 828$. Assume that there is a constant continuously compounded forward rate $r$.\\
+(a) What is $r$ ?\\
+(b) Suppose that 1 year later the forward rate $r$ is still constant but has changed to be 0.042 . Now what is the price of the bond?\\
+(c) If you bought the bond for the original price of $\$ 828$ and sold it 1 year later for the price computed in part (b), then what is the net return?
+  \item A coupon bond with a par value of $\$ 1,000$ and a 10 -year maturity pays semiannual coupons of $\$ 21$.\\
+(a) Suppose the yield for this bond is $4 \%$ per year compounded semiannually. What is the price of the bond?\\
+(b) Is the bond selling above or below par value? Why?
+  \item Suppose that a coupon bond with a par value of $\$ 1,000$ and a maturity of 7 years is selling for $\$ 1,040$. The semiannual coupon payments are $\$ 23$.\\
+(a) Find the yield to maturity of this bond.\\
+(b) What is the current yield on this bond?\\
+(c) Is the yield to maturity less or greater than the current yield? Why?
+  \item Suppose that the continuous forward rate is $r(t)=0.033+0.0012 t$. What is the current value of a par $\$ 100$ zero-coupon bond with a maturity of 15 years?
+  \item Suppose the continuous forward rate is $r(t)=0.04+0.001 t$ when a 8 -year zero coupon bond is purchased. Six months later the forward rate is $r(t)= 0.03+0.0013 t$ and bond is sold. What is the return?
+  \item Suppose that the continuous forward rate is $r(t)=0.03+0.001 t- 0.00021(t-10)_{+}$. What is the yield to maturity on a 20 -year zero-coupon bond? Here $x_{+}$is the positive part function defined by
+\end{enumerate}
+
+$$
+x_{+}= \begin{cases}x, & x>0 \\ 0, & x \leq 0\end{cases}
+$$
+
+\begin{enumerate}
+  \setcounter{enumi}{13}
+  \item An investor is considering the purchase of zero-coupon bonds with maturities of one, three, or 5 years. Currently the spot rates for 1-, 2-, 3-, 4-, and 5 -year zero-coupon bonds are, respectively, $0.031,0.035,0.04,0.042$, and 0.043 per year with semiannual compounding. A financial analyst has advised this investor that interest rates will increase during the next year and the analyst expects all spot rates to increase by the amount 0.005 , so that the 1 -year spot rate will become 0.036 , and so forth. The investor plans to sell the bond at the end of 1 year and wants the greatest return for the year. This problem does the bond math to see which maturity, 1 , 3 , or 5 years, will give the best return under two scenarios: interest rates are unchanged and interest rates increase as forecast by the analyst.\\
+(a) What are the current prices of 1-, 3-, and 5 -year zero-coupon bonds with par values of $\$ 1,000$ ?\\
+(b) What will be the prices of these bonds 1 year from now if spot rates remain unchanged?\\
+(c) What will be the prices of these bonds 1 year from now if spot rates each increase by 0.005 ?\\
+(d) If the analyst is correct that spot rates will increase by 0.005 in 1 year, which maturity, 1,3 , or 5 years, will give the investor the greatest return when the bond is sold after 1 year? Justify your answer.\\
+(e) If instead the analyst is incorrect and spot rates remain unchanged, then which maturity, 1, 3, or 5 years, earns the highest return when the bond is sold after 1 year? Justify your answer.\\
+(f) The analyst also said that if the spot rates remain unchanged, then the bond with the highest spot rate will earn the greatest 1 -year return. Is this correct? Why?\\
+(Hint: Be aware that a bond will not have the same maturity in 1 year as it has now, so the spot rate that applies to that bond will change.)
+  \item Suppose that a bond pays a cash flow $C_{i}$ at time $T_{i}$ for $i=1, \ldots, N$. Then the net present value (NPV) of cash flow $C_{i}$ is
+\end{enumerate}
+
+$$
+\mathrm{NPV}_{i}=C_{i} \exp \left(-T_{i} y_{T_{i}}\right)
+$$
+
+Define the weights
+
+$$
+\omega_{i}=\frac{\mathrm{NPV}_{i}}{\sum_{j=1}^{N} \mathrm{NPV}_{j}}
+$$
+
+and define the duration of the bond to be
+
+$$
+\mathrm{DUR}=\sum_{i=1}^{N} \omega_{i} T_{i}
+$$
+
+which is the weighted average of the times of the cash flows. Show that
+
+$$
+\left.\frac{d}{d \delta} \sum_{i=1}^{N} C_{i} \exp \left\{-T_{i}\left(y_{T_{i}}+\delta\right)\right\}\right|_{\delta=0}=-\mathrm{DUR} \sum_{i=1}^{N} C_{i} \exp \left\{-T_{i} y_{T_{i}}\right\}
+$$
+
+and use this result to verify Eq. (3.31).\\
+16. Assume that the yield curve is $Y_{T}=0.04+0.001 T$.\\
+(a) What is the price of a par- $\$ 1,000$ zero-coupon bond with a maturity of 10 years?\\
+(b) Suppose you buy this bond. If 1 year later the yield curve is $Y_{T}= 0.042+0.001 T$, then what will be the net return on the bond?\\
+17. A coupon bond has a coupon rate of $3 \%$ and a current yield of $2.8 \%$.\\
+(a) Is the bond selling above or below par? Why or why not?\\
+(b) Is the yield to maturity above or below $2.8 \%$ ? Why or why not?\\
+18. Suppose that the forward rate is $r(t)=0.03+0.001 t+0.0002 t^{2}$\\
+(a) What is the 5 -year spot rate?\\
+(b) What is the price of a zero-coupon bond that matures in 5 years?\\
+19. The $1 / 2-, 1-, 1.5-$, and 2 -year spot rates are $0.025,0.029,0.031$, and 0.035 , respectively. A par $\$ 1,000$ coupon bond matures in 2 years and has semiannual coupon payments of $\$ 35$. What is the price of this bond?\\
+20. Par $\$ 1,000$ zero-coupon bonds of maturities of $0.5-, 1-, 1.5-$, and 2 -years are selling at $\$ 980.39, \$ 957.41, \$ 923.18$, and $\$ 888.489$, respectively.\\
+(a) Find the $0.5-$, $1-$, $1.5-$, and 2 -year semiannual spot rates.\\
+(b) A par $\$ 1,000$ coupon bond has a maturity of 2 years. The semiannual coupon payment is $\$ 21$. What is the price of this bond?\\
+21. A par $\$ 1,000$ bond matures in 4 years and pays semiannual coupon payments of $\$ 25$. The price of the bond is $\$ 1,015$. What is the semiannual yield to maturity of this bond?\\
+22. A coupon bond matures in 4 years. Its par is $\$ 1,000$ and it makes eight coupon payments of $\$ 21$, one every one-half year. The continuously compounded forward rate is
+
+$$
+r(t)=0.022+0.005 t-0.004 t^{2}+0.0003 t^{3} .
+$$
+
+(a) Find the price of the bond.\\
+(b) Find the duration of this bond.
+
+\begin{enumerate}
+  \item Suppose that there are two risky assets, A and B , with expected returns equal to $2.3 \%$ and $4.5 \%$, respectively. Suppose that the standard deviations of the returns are $\sqrt{6} \%$ and $\sqrt{11} \%$ and that the returns on the assets have a correlation of 0.17 .\\
+(a) What portfolio of A and B achieves a $3 \%$ rate of expected return?\\
+(b) What portfolios of A and B achieve a $\sqrt{5.5} \%$ standard deviation of return? Among these, which has the largest expected return?
+  \item Suppose there are two risky assets, C and D, the tangency portfolio is $65 \% \mathrm{C}$ and $35 \% \mathrm{D}$, and the expected return and standard deviation of the return on the tangency portfolio are $5 \%$ and $7 \%$, respectively. Suppose also that the risk-free rate of return is $1.5 \%$. If you want the standard deviation of your return to be $5 \%$, what proportions of your capital should be in the risk-free asset, asset C , and asset D ?
+  \item (a) Suppose that stock A shares sell at $\$ 75$ and stock B shares at $\$ 115$. A portfolio has 300 shares of stock A and 100 of stock B . What are the weights $w$ and $1-w$ of stocks A and B in this portfolio?\\
+(b) More generally, if a portfolio has $N$ stocks, if the price per share of the $j$ th stock is $P_{j}$, and if the portfolio has $n_{j}$ shares of stock $j$, then find a formula for $w_{j}$ as a function of $n_{1}, \ldots, n_{N}$ and $P_{1}, \ldots, P_{N}$.
+  \item Let $\mathcal{R}_{P}$ be a return of some type on a portfolio and let $\mathcal{R}_{1}, \ldots, \mathcal{R}_{N}$ be the same type of returns on the assets in this portfolio. Is
+\end{enumerate}
+
+$$
+\mathcal{R}_{P}=w_{1} \mathcal{R}_{1}+\cdots+w_{N} \mathcal{R}_{N}
+$$
+
+true if $\mathcal{R}_{P}$ is a net return? Is this equation true if $\mathcal{R}_{P}$ is a gross return? Is it true if $\mathcal{R}_{P}$ is a log return? Justify your answers.\\
+5. Suppose one has a sample of monthly log returns on two stocks with sample means of 0.0032 and 0.0074 , sample variances of 0.017 and 0.025 , and a sample covariance of 0.0059 . For purposes of resampling, consider these to be the "true population values." A bootstrap resample has sample means of 0.0047 and 0.0065 , sample variances of 0.0125 and 0.023 , and a sample covariance of 0.0058 .\\
+(a) Using the resample, estimate the efficient portfolio of these two stocks that has an expected return of 0.005 ; that is, give the two portfolio weights.\\
+(b) What is the estimated variance of the return of the portfolio in part (a) using the resample variances and covariances?\\
+(c) What are the actual expected return and variance of return for the portfolio in (a) when calculated with the true population values (e.g., with using the original sample means, variances, and covariance)?\\
+6. Stocks 1 and 2 are selling for $\$ 100$ and $\$ 125$, respectively. You own 200 shares of stock 1 and 100 shares of stock 2 . The weekly returns on these stocks have means of 0.001 and 0.0015 , respectively, and standard deviations of 0.03 and 0.04 , respectively. Their weekly returns have a correlation of 0.35 . Find the correlation matrix of the weekly returns on the two stocks and the mean and standard deviation of the weekly returns on the portfolio.
+
+\begin{enumerate}
+  \item What is the beta of a portfolio if $E\left(R_{P}\right)=16 \%, \mu_{f}=5.5 \%$, and $E\left(R_{M}\right)=11 \%$ ?
+  \item Suppose that the risk-free rate of interest is 0.03 and the expected rate of return on the market portfolio is 0.14 . The standard deviation of the market portfolio is 0.12 .\\
+(a) According to the CAPM, what is the efficient way to invest with an expected rate of return of 0.11 ?\\
+(b) What is the risk (standard deviation) of the portfolio in part (a)?
+  \item Suppose that the risk-free interest rate is 0.023 , that the expected return on the market portfolio is $\mu_{M}=0.10$, and that the volatility of the market portfolio is $\sigma_{M}=0.12$.\\
+(a) What is the expected return on an efficient portfolio with $\sigma_{R}=0.05$ ?\\
+(b) Stock A returns have a covariance of 0.004 with market returns. What is the beta of Stock A?\\
+(c) Stock B has beta equal to 1.5 and $\sigma_{\epsilon}=0.08$. Stock C has beta equal to 1.8 and $\sigma_{\epsilon}=0.10$.\\
+i. What is the expected return of a portfolio that is one-half Stock B and one-half Stock C?\\
+ii. What is the volatility of a portfolio that is one-half Stock B and one-half Stock C? Assume that the $\epsilon$ s of Stocks B and C are independent.
+  \item Show that equation (17.16) follows from equation (7.8).
+  \item True or false: The CAPM implies that investors demand a higher return to hold more volatile securities. Explain your answer.
+  \item Suppose that the riskless rate of return is $4 \%$ and the expected market return is $12 \%$. The standard deviation of the market return is $11 \%$. Suppose as well that the covariance of the return on Stock A with the market return is $165 \%^{2} .^{9}$\\
+(a) What is the beta of Stock A?\\
+(b) What is the expected return on Stock A?\\
+(c) If the variance of the return on Stock A is $220 \%^{2}$, what percentage of this variance is due to market risk?
+  \item Suppose there are three risky assets with the following betas and $\sigma_{\epsilon_{j}}^{2}$.
+\end{enumerate}
+
+\begin{center}
+\begin{tabular}{l|c|c}
+$j$ & $\beta_{j}$ & $\sigma_{\epsilon_{j}}^{2}$ \\
+\hline
+1 & 0.9 & 0.010 \\
+2 & 1.1 & 0.015 \\
+3 & 0.6 & 0.011 \\
+\end{tabular}
+\end{center}
+
+Suppose also that the variance of $R_{M t}-\mu_{f t}$ is 0.014 .\\
+(a) What is the beta of an equally weighted portfolio of these three assets?\\
+(b) What is the variance of the excess return on the equally weighted portfolio?\\
+(c) What proportion of the total risk of asset 1 is due to market risk?\\
+8. Suppose there are two risky assets, call them C and D. The tangency portfolio is $60 \% \mathrm{C}$ and $40 \% \mathrm{D}$. The expected yearly returns are $4 \%$ and $6 \%$ for assets C and D . The standard deviations of the yearly returns are $10 \%$ and $18 \%$ for C and D and the correlation between the returns on C and D is 0.5 . The risk-free yearly rate is $1.2 \%$.\\
+(a) What is the expected yearly return on the tangency portfolio?\\
+(b) What is the standard deviation of the yearly return on the tangency portfolio?\\
+(c) If you want an efficient portfolio with a standard deviation of the yearly return equal to $3 \%$, what proportion of your equity should be in the risk-free asset? If there is more than one solution, use the portfolio with the higher expected yearly return.\\
+(d) If you want an efficient portfolio with an expected yearly return equal to $7 \%$, what proportions of your equity should be in asset C, asset D, and the risk-free asset?\\
+9. What is the beta of a portfolio if the expected return on the portfolio is $E\left(R_{P}\right)=15 \%$, the risk-free rate is $\mu_{f}=6 \%$, and the expected return on the market is $E\left(R_{M}\right)=12 \%$ ? Make the usual CAPM assumptions including that the portfolio alpha is zero.\\
+10. Suppose that the risk-free rate of interest is 0.07 and the expected rate of return on the market portfolio is 0.14 . The standard deviation of the market portfolio is 0.12 .\\
+(a) According to the CAPM, what is the efficient way to invest with an expected rate of return of 0.11 ?\\
+(b) What is the risk (standard deviation) of the portfolio in part (a)?\\
+11. Suppose there are three risky assets with the following betas and $\sigma_{\epsilon_{j}}^{2}$ when regressed on the market portfolio.
+
+\begin{center}
+\begin{tabular}{l|c|c}
+$j$ & $\beta_{j}$ & $\sigma_{\epsilon_{j}}^{2}$ \\
+\hline
+1 & 0.7 & 0.010 \\
+2 & 0.8 & 0.025 \\
+3 & 0.6 & 0.012 \\
+\end{tabular}
+\end{center}
+
+Assume $\epsilon_{1}, \epsilon_{2}$, and $\epsilon_{3}$ are uncorrelated. Suppose also that the variance of $R_{M}-\mu_{f}$ is 0.02 .\\
+(a) What is the beta of an equally weighted portfolio of these three assets?\\
+(b) What is the variance of the excess return on the equally weighted portfolio?\\
+(c) What proportion of the total risk of asset 1 is due to market risk?\\
+12. As an analyst, you have constructed 2 possible portfolios. Both portfolios have the same beta and expected return, but portfolio 1 was constructed with only technology companies whereas portfolio 2 was constructed using technology, healthcare, energy, consumer products, and metals and mining companies. Should you be impartial to which portfolio you invest in? Explain why or why not.
+
+
+\end{document}
