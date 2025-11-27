@@ -1,4 +1,6 @@
 # 整體
+## 數學符號
+[列表](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
 ## 在宏包之前
 <code>
 \documentclass[letterpaper, 9pt]{article}
