@@ -1,12 +1,14 @@
-\documentclass[letterpaper]{article} 
+\documentclass[letterpaper, 9pt]{article}
+\linespread{0.85}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{array｝
+\usepackage{array}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage{physics}
 \usepackage[version=4]{mhchem}
 \usepackage{stmaryrd}
 \usepackage[dvipsnames]{xcolor}
@@ -15,6 +17,9 @@
 \definecolor{Mycolor2}{HTML}{00F9DE}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\VaR}{\mathrm{VaR}}
+\DeclareMathOperator{\ES}{\mathrm{ES}}
 \usepackage{graphicx}
 \usepackage{capt-of}
 \usepackage{lipsum}
@@ -39,6 +44,9 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{hyperref} 
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\E}{\mathbb{E}}
+\usepackage[normalem]{ulem}
 \usepackage{xcolor} % For custom colors
 \lstset{
 	language=Python,                % Choose the language (e.g., Python, C, R)
@@ -55,267 +63,167 @@
 }
 \usepackage{float}
 \usepackage[]{amsthm} %lets us use \begin{proof}
-\usepackage[]{amssymb} %gives us the character \varnothing
-
-	\title{Homework 2, MATH 5504}
+	\usepackage[]{amssymb} %gives us the character \varnothing
+	
+	\title{Final Project, STAT 5261}
 	\author{Zongyi Liu}
-	\date{Mon, Nov 10, 2025}
+	\date{Wed, Nov 26, 2025}
+	
 	\begin{document}
 		\maketitle
-		
-		\section{8.1}
-		\subsection{Question 1 (8.1.2)}
-		Suppose that a random sample is to be taken from the normal distribution with unknown mean $\theta$ and standard deviation 2. How large a random sample must be taken in order that $E_\theta(|\bar{X}_n - \theta|^2) \le 0.1$ for every possible value of $\theta$?
-		
-		\textbf{Answer}
-		
-		Since $X_1,\dots,X_n \sim N(\theta, 2^2)$, we have
-		\[
-		Var(\bar X_n)=\frac{4}{n}.
-		\]
-		Because $\bar X_n$ is unbiased for $\theta$,
-		\[
-		E_\theta\!\left[(\bar X_n-\theta)^2\right]=Var(\bar X_n)=\frac{4}{n}.
-		\]
-		We require
-		\[
-		\frac{4}{n} \le 0.1
-		\quad\Longrightarrow\quad
-		n \ge 40.
-		\]
-		Thus, the required sample size is
-		\[
-		n = 40.
-		\]
-		
-		
-		
-		\subsection{Question 2 (8.1.4)}
-		
-		For the conditions of Exercise 2, how large a random sample must be taken in order that $\Pr(|\overline{X}_n-\theta|\le 0.1)\ge 0.95$ for every possible value of $\theta$?
-		
-		\textbf{Answer}
-		
-		Since $X_1,\dots,X_n \sim N(\theta,2^2)$, we have
-		\[
-		\overline{X}_n \sim N\!\left(\theta,\frac{4}{n}\right),
-		\]
-		so
-		\[
-		\frac{\overline{X}_n-\theta}{2/\sqrt{n}} \sim N(0,1).
-		\]
-		We require
-		\[
-		\Pr\big(|\overline{X}_n-\theta|\le 0.1\big)
-		= \Pr\!\left(\left|\frac{\overline{X}_n-\theta}{2/\sqrt{n}}\right|
-		\le \frac{0.1}{2/\sqrt{n}}\right)
-		= \Pr\big(|Z|\le a\big)\ge 0.95,
-		\]
-		where $Z\sim N(0,1)$ and
-		\[
-		a = \frac{0.1\sqrt{n}}{2}.
-		\]
-		Now
-		\[
-		\Pr(|Z|\le a) = 2\Phi(a)-1 \ge 0.95
-		\quad\Longrightarrow\quad
-		\Phi(a)\ge 0.975
-		\quad\Longrightarrow\quad
-		a \ge z_{0.975} \approx 1.96.
-		\]
-		Thus
-		\[
-		\frac{0.1\sqrt{n}}{2} \ge 1.96
-		\quad\Longrightarrow\quad
-		\sqrt{n} \ge \frac{2\cdot 1.96}{0.1} = 39.2
-		\quad\Longrightarrow\quad
-		n \ge 39.2^2 = 1536.64.
-		\]
-		Hence the smallest integer $n$ satisfying the requirement is
-		\[
-		n = 1537
-		\]
-		
-		
-		
-		\clearpage
-		
-		
-		\section{8.2}
-		\subsection{Question 3 (8.2.4)}
-		
-		Suppose that a point $(X, Y)$ is to be chosen at random in the $xy$-plane, where $X$ and $Y$ are independent random variables and each has the standard normal distribution. If a circle is drawn in the $xy$-plane with its center at the origin, what is the radius of the smallest circle that can be chosen in order for there to be probability $0.99$ that the point $(X, Y)$ will lie inside the circle?
-		
-		\textbf{Answer}
-		
-		Since $X$ and $Y$ are independent $N(0,1)$ random variables, the random variable
-		\[
-		R^2 = X^2 + Y^2
-		\]
-		has a chi-square distribution with $2$ degrees of freedom:
-		\[
-		R^2 \sim \chi^2_2.
-		\]
-		It is known that $\chi^2_2$ has the same distribution as an exponential random
-		variable with mean $2$, i.e.\ with rate $\lambda = \tfrac12$. Hence, for $t \ge 0$,
-		\[
-		\Pr(R^2 \le t) = 1 - e^{-t/2}.
-		\]
-		
-		We want the radius $r$ of the circle centered at the origin such that
-		\[
-		\Pr\bigl((X,Y)\ \text{lies inside the circle of radius } r\bigr)
-		= \Pr(X^2 + Y^2 \le r^2) = 0.99.
-		\]
-		That is,
-		\[
-		\Pr(R^2 \le r^2) = 0.99
-		\quad\Longrightarrow\quad
-		1 - e^{-r^2/2} = 0.99.
-		\]
-		Thus
-		\[
-		e^{-r^2/2} = 0.01
-		\quad\Longrightarrow\quad
-		-\frac{r^2}{2} = \ln(0.01)
-		\quad\Longrightarrow\quad
-		r^2 = -2\ln(0.01).
-		\]
-		Note that $0.01 = 10^{-2}$, so
-		\[
-		\ln(0.01) = \ln(10^{-2}) = -2\ln 10,
-		\]
-		which gives
-		\[
-		r^2 = -2(-2\ln 10) = 4\ln 10.
-		\]
-		Therefore
-		\[
-		r = \sqrt{4\ln 10} = 2\sqrt{\ln 10} \approx 3.04.
-		\]
-		
-		So the radius of the smallest circle is
-		\[
-		\boxed{r = 2\sqrt{\ln 10}}.
-		\]
-		
-		
-		
-		\subsection{Question 4 (8.2.10)}
-		
-		Suppose that six random variables $X_1,\ldots,X_6$ form a random sample from the standard normal distribution, and let
-		\[
-		Y=(X_1+X_2+X_3)^2+(X_4+X_5+X_6)^2.
-		\]
-		Determine a value of $c$ such that the random variable $cY$ will have a $\chi^2$ distribution.
-		\clearpage
-		
-		\section{8.3}
-		\subsection{Question 5 (8.3.4)}
-		
-		Suppose that the random variables $X_1, X_2,$ and $X_3$ are i.i.d., and that each has the standard normal distribution. Also, suppose that
-		\[
-		Y_1 = 0.8X_1 + 0.6X_2,\qquad
-		Y_2 = \sqrt{2}\,(0.3X_1 - 0.4X_2 - 0.5X_3),\qquad
-		Y_3 = \sqrt{2}\,(0.3X_1 - 0.4X_2 + 0.5X_3).
-		\]
-		Find the joint distribution of $Y_1, Y_2,$ and $Y_3$.
-		
-		
-		
-		\section{8.4}
-		\subsection{Question 6 (8.4.2)}
-		 Suppose that $X_1,\ldots,X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and unknown standard deviation $\sigma$, and let $\hat\mu$ and $\hat\sigma$ denote the M.L.E.'s of $\mu$ and $\sigma$. For the sample size $n=17$, find a value of $k$ such that
-		\[
-		\Pr(\hat\mu>\mu+k\hat\sigma)=0.95.
-		\]
-		
-		
-		
-		\section{8.5}
-		\subsection{Question 7 (8.5.4)}
-	 Suppose that $X_1,\ldots,X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and known variance $\sigma^2$. How large a random sample must be taken in order that there will be a confidence interval for $\mu$ with confidence coefficient $0.95$ and length less than $0.01\sigma$?
-		
-		
-		
-		\subsection{Question 8 (8.5.6)}
-	Suppose that $X_1, \ldots, X_n$ form a random sample from the exponential distribution with unknown mean $\mu$. Describe a method for constructing a confidence interval for $\mu$ with a specified confidence coefficient $\gamma \ (0 < \gamma < 1)$. \textit{Hint:} Determine constants $c_1$ and $c_2$ such that
-	\[
-	\Pr\!\left[c_1 < (1/\mu)\sum_{i=1}^n X_i < c_2\right] = \gamma .
-	\]
-		
-		\clearpage
-		
-		
-		\section{8.7}
-		\subsection{Question 9 (8.7.4)}
-		Suppose that a random variable \(X\) has the geometric distribution with unknown parameter \(p\). Find a statistic \(\delta(X)\) that will be an unbiased estimator of \(1/p\).
-		
-		
-		
-		\subsection{Question 10 (8.7.10)}
-		Consider an infinite sequence of Bernoulli trials for which the parameter \(p\) is unknown \((0<p<1)\), and suppose that sampling is continued until exactly \(k\) successes have been obtained, where \(k\ge2\) is fixed. Let \(N\) denote the total number of trials needed to obtain the \(k\) successes. Show that the estimator \((k-1)/(N-1)\) is an unbiased estimator of \(p\).
-		
-		
-		
-		
-		\subsection{Question 11 (8.7.12)}
-		Suppose that a certain population of individuals is composed of \(k\) strata \((k\ge2)\) with proportions \(p_i>0\) satisfying \(\sum_{i=1}^k p_i=1\). In stratum \(i\), the characteristic has mean \(\mu_i\) (unknown) and variance \(\sigma_i^2\) (known). A stratified sample is taken: from stratum \(i\), a random sample of \(n_i\) individuals is taken, and \(\bar X_i\) denotes the average of the \(n_i\) measurements from stratum \(i\).
-		\begin{enumerate}
-			\item Show that \(\mu=\sum_{i=1}^k p_i\mu_i\), and also that \(\hat\mu=\sum_{i=1}^k p_i\bar X_i\) is an unbiased estimator of \(\mu\).
-			\item Let \(n=\sum_{i=1}^k n_i\) be the total number of observations. For fixed \(n\), find the values of \(n_1,\ldots,n_k\) that minimize \(\operatorname{Var}(\hat\mu)\).
-		\end{enumerate}
-		\clearpage
-		
-		\section{8.8}
-		\subsection{Question 12 (8.8.6)}
-		Suppose that \(X\) has density or p.f.\ \(f(x\mid \theta)\) with unknown parameter \(\theta\in\Omega\). Let \(I_0(\theta)\) denote the Fisher information in \(X\). Now reparameterize by \(\theta=\psi(\mu)\) with differentiable \(\psi\). Let \(I_1(\mu)\) denote the Fisher information when the parameter is \(\mu\). Show that
-		\[
-		I_1(\mu)=[\psi'(\mu)]^2\, I_0[\psi(\mu)].
-		\]
-		
-		
-		\subsection{Question 13 (8.8.10)}
-		Suppose that \(X_1,\ldots,X_n\) form a random sample from the normal distribution with mean \(0\) and unknown standard deviation \(\sigma>0\). Find the lower bound specified by the information inequality for the variance of any unbiased estimator of \(\log\sigma\).
-		\clearpage
-		
-		\section{8.9}
-		\subsection{Question 14 (8.9.6)}
-		Suppose that \(X_1,\ldots,X_n\) form a random sample from an unknown probability distribution \(P\) on the real line. Let \(A\) be a given subset of the real line, and let \(\theta=P(A)\). Construct an unbiased estimator of \(\theta\), and specify its variance.
-		
-		
-		
-		
-		\subsection{Question 15 (8.9.8)}
-		Suppose that \(X_1,\ldots,X_{n+1}\) form a random sample from a normal distribution, and let \(\bar X_n=\frac1n\sum_{i=1}^n X_i\) and
-		\[
-		T_n=\left[\frac1n\sum_{i=1}^n (X_i-\bar X_n)^2\right]^{1/2}.
-		\]
-		Determine the constant \(k\) such that \(k(X_{n+1}-\bar X_n)/T_n\) has a \(t\) distribution.
-		
-		\clearpage
-		
-		
-		\subsection{Question 16 (8.9.14)}
-		Suppose that \(X_1,\ldots,X_n\) form a random sample from the Poisson distribution with unknown mean \(\theta\), and let \(Y=\sum_{i=1}^n X_i\).
-		\begin{enumerate}
-			\item Determine \(c\) such that the estimator \(e^{-cY}\) is an unbiased estimator of \(e^{-\theta}\).
-			\item Use the information inequality to obtain a lower bound for the variance of the unbiased estimator found in part (a).
-		\end{enumerate}
-		
-		
-		\subsection{Question 17 (8.9.22)}
-		Let $X_1, \ldots, X_n$ be conditionally i.i.d.\ with the uniform distribution on the interval $[0,\theta]$. Let $Y_n = \max\{X_1,\ldots,X_n\}$.
-		
-		\begin{enumerate}
-			\item[a.] Find the p.d.f.\ and the quantile function of $Y_n/\theta$.
-			
-			\item[b.] $Y_n$ is often used as an estimator of $\theta$ even though it has bias. Compute the bias of $Y_n$ as an estimator of $\theta$.
-			
-			\item[c.] Prove that $Y_n/\theta$ is a pivotal.
-			
-			\item[d.] Find a confidence interval for $\theta$ with coefficient $\gamma$.
-		\end{enumerate}
-		
+	\section{Executive Summary}
+	
+	\section{Descriptive Statistics}
+	
+	In this study I used 11 assets with time range from January 1, 2019 to October 31, 2025, and the general descriptive statistics are shown as below:
+	
+	\begin{table}[htbp]
+		\centering
+		\caption{Asset Return Summary Statistics}
+		\begin{tabular}{lccccc}
+			\toprule
+			\textbf{Ticker} & \textbf{Mean} & \textbf{StdDev} & \textbf{Skewness} & \textbf{Kurtosis} & \textbf{Beta} \\
+			\midrule
+			AAPL & 0.026195312 & 0.08011206 & -0.03365191 & -0.77901530 & 1.2191835 \\
+			MSFT & 0.021585828 & 0.06226285 &  0.17017810 & -0.38299882 & 0.9403176 \\
+			AMZN & 0.016557489 & 0.08803682 &  0.33517650 &  0.84931329 & 1.1832620 \\
+			GOOGL & 0.022776095 & 0.07735267 & -0.40264341 & -0.28267538 & 1.0176823 \\
+			META & 0.022983741 & 0.11125480 & -0.37138577 &  0.96845122 & 1.2765125 \\
+			TSLA & 0.057683954 & 0.20737137 &  0.73744639 &  0.51012851 & 2.3441502 \\
+			JNJ & 0.005467106 & 0.04920065 &  0.09613001 & -0.34040990 & 0.5128830 \\
+			PG & 0.006585631 & 0.04864787 &  0.16436558 & -0.36205224 & 0.4273911 \\
+			XOM & 0.009271294 & 0.08846612 &  0.26105313 &  1.41911647 & 0.8535354 \\
+			JPM & 0.016276413 & 0.07468222 & -0.21352673 &  0.73558756 & 1.1483736 \\
+			NVDA & 0.059385595 & 0.13613246 & -0.20986786 & -0.03601573 & 1.7732969 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+  
+  An equity curve for each assets superposed with that of S\&P 500 is generated as below, where we can see a sharp rise of NVIDIA in recent years.
+  
+  \includegraphics[max width=\textwidth, center]{equity_curve}
+  
+  Here I used the ADF (Augmented Dickey--Fuller) test, which is a statistical procedure used to
+  determine whether a time series contains a unit root, which corresponds to
+  non-stationarity. From the result statistics, we can see that except \texttt{GOOGL} and \texttt{META}, all other assets are stationary. As for the normality, I used Shapiro--Wilk normality test, and from the result we can say that \texttt{TSLA} and \texttt{XOM} are not normally distributed, and all other assets are normally distributed. I also used visualization methods such as QQ plot, which can be seen in the appendix, and the results are the same as the normality test.
+  
+  \begin{table}[htbp]
+  	\centering
+  	\caption{Comparison of Outlier Months Detected by Different Methods}
+  	\begin{tabular}{lccc}
+  		\hline
+  		\textbf{Asset} & \textbf{IQR Method} & \textbf{Z-Score Method} & \textbf{MAD Method} \\
+  		\hline
+  		AAPL  & None & None & None \\
+  		MSFT  & None & None & None \\
+  		AMZN  & 16, 40, 43 & None & 16, 40, 43 \\
+  		GOOGL & 40 & None & 40, 74 \\
+  		META  & 38, 46 & 38, 46 & 38, 46, 47, 62 \\
+  		TSLA  & 20 & 20 & 13, 20 \\
+  		JNJ   & None & None & 16 \\
+  		PG    & None & None & 36 \\
+  		XOM   & 14, 15, 16, 26, 37, 46 & 15 & 14, 15, 16, 21, 23, 26, 37, 46 \\
+  		JPM   & 15 & 15 & 15, 23, 42, 46 \\
+  		NVDA  & 40 & None & 5, 40, 53 \\
+  		\hline
+  	\end{tabular}
+  \end{table}
+  
+  
+  \begin{table}[h!]
+  	\centering
+  	\caption{Annualized Sharpe Ratios of Individual Assets}
+  	\label{tab:sharpe}
+  	\begin{tabular}{l r}
+  		\toprule
+  		Asset & Sharpe Ratio \\
+  		\midrule
+  		AAPL  & 1.2389550 \\
+  		MSFT  & 1.2615931 \\
+  		AMZN  & 0.6486593 \\
+  		GOOGL & 1.0833367 \\
+  		META  & 0.7615089 \\
+  		TSLA  & 1.3086380 \\
+  		JNJ   & 0.2793679 \\
+  		PG    & 0.3676322 \\
+  		XOM   & 0.3168737 \\
+  		JPM   & 0.7490568 \\
+  		NVDA  & 2.0744136 \\
+  		\bottomrule
+  	\end{tabular}
+  \end{table}
+
+Table above reports the annualized Sharpe ratios for the eleven assets in the
+sample. The results reveal substantial heterogeneity in risk-adjusted performance across
+sectors.
+
+NVDA exhibits by far the highest Sharpe ratio (2.07), indicating exceptional
+risk-adjusted returns driven by strong mean performance relative to its volatility.
+Other large-cap technology stocks---including TSLA, MSFT, AAPL, and GOOGL---also achieve
+Sharpe ratios above~1, suggesting that these assets delivered highly favorable 
+risk--return tradeoffs over the sample period. In particular, TSLA’s Sharpe ratio (1.31)
+reflects both elevated volatility and periods of unusually strong returns, especially during 
+the post-2019 expansion.
+
+
+
+\section{Asset Allocation}
+  
+  
+	\section{Principle Component Analysis}
+
+	For generating correlation matrix, we get the correlation matrix generated as below:
+
+\begin{table}[htbp]
+	\centering
+	\caption{Correlation Matrix of Assets}
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{lccccccccccc}
+			\toprule
+			& AAPL & MSFT & AMZN & GOOGL & META & TSLA & JNJ & PG & XOM & JPM & NVDA \\
+			\midrule
+			AAPL  & 1.0000000 & 0.5863039 & 0.60825481 & 0.49623262 & 0.34410064 & 0.64668256 & 0.40988295 & 0.36571684 & 0.21676561 & 0.32158080 & 0.53012768 \\
+			MSFT  & 0.5863039 & 1.0000000 & 0.65913657 & 0.55706624 & 0.56945994 & 0.47416466 & 0.24796009 & 0.30849851 & 0.11696617 & 0.33709045 & 0.65147796 \\
+			AMZN  & 0.60825481 & 0.65913657 & 1.0000000 & 0.59683797 & 0.50329704 & 0.58442493 & 0.09341286 & 0.05761213 & 0.06809702 & 0.23987985 & 0.60740706 \\
+			GOOGL & 0.49623262 & 0.55706624 & 0.59683797 & 1.0000000 & 0.39564282 & 0.45825661 & 0.11062309 & 0.05654949 & 0.15590236 & 0.37735126 & 0.49039013 \\
+			META  & 0.34410064 & 0.56945994 & 0.50329704 & 0.39564282 & 1.0000000 & 0.29244560 & 0.18490252 & 0.27500197 & -0.01301193 & 0.35426955 & 0.52086588 \\
+			TSLA  & 0.64668256 & 0.47416466 & 0.58442493 & 0.45825661 & 0.29244560 & 1.0000000 & 0.17291130 & 0.03234005 & 0.05421201 & 0.22991528 & 0.41251101 \\
+			JNJ   & 0.40988295 & 0.24796009 & 0.09341286 & 0.11062309 & 0.18490252 & 0.17291130 & 1.0000000 & 0.43172004 & 0.38737879 & 0.35842446 & 0.05109294 \\
+			PG    & 0.36571684 & 0.30849851 & 0.05761213 & 0.05654949 & 0.27500197 & 0.03234005 & 0.43172004 & 1.0000000 & 0.15928922 & 0.21716270 & 0.08745125 \\
+			XOM   & 0.21676561 & 0.11696617 & 0.06809702 & 0.15590236 & -0.01301193 & 0.05421201 & 0.38737879 & 0.15928922 & 1.0000000 & 0.52309187 & 0.05929966 \\
+			JPM   & 0.32158080 & 0.33709045 & 0.23987985 & 0.37735126 & 0.35426955 & 0.22991528 & 0.35842446 & 0.21716270 & 0.52309187 & 1.0000000 & 0.33439732 \\
+			NVDA  & 0.53012768 & 0.65147796 & 0.60740706 & 0.49039013 & 0.52086588 & 0.41251101 & 0.05109294 & 0.08745125 & 0.05929966 & 0.33439732 & 1.0000000 \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table}
+
+We can see that the highest correlation occurs between \texttt{MSFT} and \texttt{AMZN}, with a correlation of $0.6591$. In contrast, the lowest correlation is observed between \texttt{META} and \texttt{XOM}, with a value of $-0.013$, indicating almost no linear co-movement between these two assets.
+
+\section{Risk Management}
+
+\section{Corpulas}
+
+In this case I tried five types of corpulas, namely, Gaussian, t, Clayton, Gumbel, and Frank corulas. Then I did AIC and BIC tests on it, and results are shown in the table below. Overall the Student-$t$ copula provides the best fit among
+all candidate models.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Model Comparison Using Log-Likelihood, AIC, and BIC}
+	\label{tab:copula_model_selection}
+	\begin{tabular}{lccc}
+		\hline
+		\textbf{Copula Model} & \textbf{Log-Likelihood} & \textbf{AIC} & \textbf{BIC} \\
+		\hline
+		Gaussian & 301.6809 & -471.3619 & -312.5184 \\
+		Student-$t$ & 314.8911 & -495.7822 & -334.5320 \\
+		Clayton & 136.1343 & -270.2687 & -267.8620 \\
+		Gumbel & 105.3848 & -208.7697 & -206.3629 \\
+		Frank & 106.9688 & -211.9376 & -209.5309 \\
+		\hline
+	\end{tabular}
+\end{table}
+
 	
 	\end{document}
+	
