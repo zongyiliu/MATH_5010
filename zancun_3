@@ -1,262 +1,594 @@
-\documentclass[10pt]{article}
+\documentclass[letterpaper, 9pt]{article}
+\linespread{0.85}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{physics}
 \usepackage[version=4]{mhchem}
 \usepackage{stmaryrd}
-
-\begin{document}
-\begin{enumerate}
-  \item Suppose that the daily log returns on a stock are independent and normally distributed with mean 0.001 and standard deviation 0.015 . Suppose you buy $\$ 1,000$ worth of this stock.\\
-(a) What is the probability that after one trading day your investment is worth less than $\$ 990$ ? (Note: The R function pnorm() will compute a normal CDF, so, for example, pnorm(0.3, mean $=0.1, s d=0.2$ ) is the normal CDF with mean 0.1 and standard deviation 0.2 evaluated at 0.3 .)\\
-(b) What is the probability that after five trading days your investment is worth less than $\$ 990$ ?
-  \item The yearly log returns on a stock are normally distributed with mean 0.1 and standard deviation 0.2. The stock is selling at $\$ 100$ today. What is the probability that 1 year from now it is selling at $\$ 110$ or more?
-  \item The yearly log returns on a stock are normally distributed with mean 0.08 and standard deviation 0.15. The stock is selling at $\$ 80$ today. What is the probability that 2 years from now it is selling at $\$ 90$ or more?
-  \item Suppose the prices of a stock at times 1,2 , and 3 are $P_{1}=95, P_{2}=103$, and $P_{3}=98$. Find $r_{3}(2)$.
-  \item The prices and dividends of a stock are given in the table below.\\
-(a) What is $R_{2}$ ?\\
-(b) What is $R_{4}(3)$ ?\\
-(c) What is $r_{3}$ ?
-\end{enumerate}
-
-\begin{center}
-\begin{tabular}{c|c|c}
-$t$ & $P_{t}$ & $D_{t}$ \\
-\hline
-1 & 52 & 0.2 \\
-2 & 54 & 0.2 \\
-3 & 53 & 0.2 \\
-4 & 59 & 0.25 \\
-\end{tabular}
-\end{center}
-
-\begin{enumerate}
-  \setcounter{enumi}{5}
-  \item The prices and dividends of a stock are given in the table below.\\
-(a) Find $R_{3}(2)$,\\
-(b) Find $r_{4}(3)$.
-\end{enumerate}
-
-\begin{center}
-\begin{tabular}{c|c|c}
-$t$ & $P_{t}$ & $D_{t}$ \\
-\hline
-1 & 82 & 0.1 \\
-2 & 85 & 0.1 \\
-3 & 83 & 0.1 \\
-4 & 87 & 0.125 \\
-\end{tabular}
-\end{center}
-
-\begin{enumerate}
-  \setcounter{enumi}{6}
-  \item Let $r_{t}$ be a log return. Suppose that $r_{1}, r_{2}, \ldots$ are i.i.d. $N(0.06,0.47)$.\\
-(a) What is the distribution of $r_{t}(4)=r_{t}+r_{t-1}+r_{t-2}+r_{t-3}$ ?\\
-(b) What is $P\left\{r_{1}(4)<2\right\}$ ?\\
-(c) What is the covariance between $r_{2}(1)$ and $r_{2}(2)$ ?\\
-(d) What is the conditional distribution of $r_{t}(3)$ given $r_{t-2}=0.6$ ?
-  \item Suppose that $X_{1}, X_{2}, \ldots$ is a lognormal geometric random walk with parameters $\left(\mu, \sigma^{2}\right)$. More specifically, suppose that $X_{k}=X_{0} \exp \left(r_{1}+\cdots+\right. r_{k}$ ), where $X_{0}$ is a fixed constant and $r_{1}, r_{2}, \ldots$ are i.i.d. $N\left(\mu, \sigma^{2}\right)$.\\
-(a) Find $P\left(X_{2}>1.3 X_{0}\right)$.\\
-(b) Use (A.4) to find the density of $X_{1}$.\\
-(c) Find a formula for the 0.9 quantile of $X_{k}$ for all $k$.\\
-(d) What is the expected value of $X_{k}^{2}$ for any $k$ ? (Find a formula giving the expected value as a function of $k$.)\\
-(e) Find the variance of $X_{k}$ for any $k$.
-  \item Suppose that $X_{1}, X_{2}, \ldots$ is a lognormal geometric random walk with parameters $\mu=0.1, \sigma=0.2$.\\
-(a) Find $P\left(X_{3}>1.2 X_{0}\right)$.\\
-(b) Find the conditional variance of $X_{k} / k$ given $X_{0}$ for any $k$.\\
-(c) Find the minimum number of days before the probability is at least 0.9 of doubling one's money, that is, find the small value of $t$ such that $P\left(P_{t} / P_{0} \geq 2\right) \geq 0.9$.
-  \item The daily log returns on a stock are normally distributed with mean 0.0002 and standard deviation 0.03 . The stock price is now $\$ 97$. What is the probability that it will exceed $\$ 100$ after 20 trading days?
-  \item Suppose that daily log-returns are $N(0.0005,0.012)$. Find the smallest value of $t$ such that $P\left(P_{t} / P_{0} \geq 2\right) \geq 0.9$, that is, that after $t$ days the probability the price has doubled is at least $90 \%$.
-  \item Suppose that the forward rate is $r(t)=0.028+0.00042 t$.\\
-(a) What is the yield to maturity of a bond maturing in 20 years?\\
-(b) What is the price of a par $\$ 1,000$ zero-coupon bond maturing in 15 years?
-  \item Suppose that the forward rate is $r(t)=0.04+0.0002 t-0.00003 t^{2}$.\\
-(a) What is the yield to maturity of a bond maturing in 8 years?\\
-(b) What is the price of a par $\$ 1,000$ zero-coupon bond maturing in 5 years?\\
-(c) Plot the forward rate and the yield curve. Describe the two curves. Which are convex and which are concave? How do they differ?\\
-(d) Suppose you buy a 10 -year zero-coupon bond and sell it after 1 year. What will be the return if the forward rate does not change during that year?
-  \item A coupon bond has a coupon rate of $3 \%$ and a current yield of $2.8 \%$.\\
-(a) Is the bond selling above or below par? Why or why not?\\
-(b) Is the yield to maturity above or below $2.8 \%$ ? Why or why not?
-  \item Suppose that the forward rate is $r(t)=0.032+0.001 t+0.0002 t^{2}$.\\
-(a) What is the 5 -year continuously compounded spot rate?\\
-(b) What is the price of a zero-coupon bond that matures in 5 years?
-  \item The $1 / 2-$, $1-, 1.5-$, and 2 -year semiannually compounded spot rates are $0.025,0.028,0.032$, and 0.033 , respectively. A par $\$ 1,000$ coupon bond matures in 2 years and has semiannual coupon payments of $\$ 35$. What is the price of this bond?
-  \item Verify the following equality:
-\end{enumerate}
-
-$$
-\sum_{t=1}^{2 T} \frac{C}{(1+r)^{t}}+\frac{\mathrm{PAR}}{(1+r)^{2 T}}=\frac{C}{r}+\left\{\mathrm{PAR}-\frac{C}{r}\right\}(1+r)^{-2 T}
-$$
-
-\begin{enumerate}
-  \setcounter{enumi}{6}
-  \item One year ago a par $\$ 1,00020$-year coupon bond with semiannual coupon payments was issued. The annual interest rate (that is, the coupon rate) at that time was $8.5 \%$. Now, a year later, the annual interest rate is $7.6 \%$.\\
-(a) What are the coupon payments?\\
-(b) What is the bond worth now? Assume that the second coupon payment was just received, so the bondholder receives an additional 38 coupon payments, the next one in 6 months.\\
-(c) What would the bond be worth if instead the second payment were just about to be received?
-  \item A par $\$ 1,000$ zero-coupon bond that matures in 5 years sells for $\$ 828$. Assume that there is a constant continuously compounded forward rate $r$.\\
-(a) What is $r$ ?\\
-(b) Suppose that 1 year later the forward rate $r$ is still constant but has changed to be 0.042 . Now what is the price of the bond?\\
-(c) If you bought the bond for the original price of $\$ 828$ and sold it 1 year later for the price computed in part (b), then what is the net return?
-  \item A coupon bond with a par value of $\$ 1,000$ and a 10 -year maturity pays semiannual coupons of $\$ 21$.\\
-(a) Suppose the yield for this bond is $4 \%$ per year compounded semiannually. What is the price of the bond?\\
-(b) Is the bond selling above or below par value? Why?
-  \item Suppose that a coupon bond with a par value of $\$ 1,000$ and a maturity of 7 years is selling for $\$ 1,040$. The semiannual coupon payments are $\$ 23$.\\
-(a) Find the yield to maturity of this bond.\\
-(b) What is the current yield on this bond?\\
-(c) Is the yield to maturity less or greater than the current yield? Why?
-  \item Suppose that the continuous forward rate is $r(t)=0.033+0.0012 t$. What is the current value of a par $\$ 100$ zero-coupon bond with a maturity of 15 years?
-  \item Suppose the continuous forward rate is $r(t)=0.04+0.001 t$ when a 8 -year zero coupon bond is purchased. Six months later the forward rate is $r(t)= 0.03+0.0013 t$ and bond is sold. What is the return?
-  \item Suppose that the continuous forward rate is $r(t)=0.03+0.001 t- 0.00021(t-10)_{+}$. What is the yield to maturity on a 20 -year zero-coupon bond? Here $x_{+}$is the positive part function defined by
-\end{enumerate}
-
-$$
-x_{+}= \begin{cases}x, & x>0 \\ 0, & x \leq 0\end{cases}
-$$
-
-\begin{enumerate}
-  \setcounter{enumi}{13}
-  \item An investor is considering the purchase of zero-coupon bonds with maturities of one, three, or 5 years. Currently the spot rates for 1-, 2-, 3-, 4-, and 5 -year zero-coupon bonds are, respectively, $0.031,0.035,0.04,0.042$, and 0.043 per year with semiannual compounding. A financial analyst has advised this investor that interest rates will increase during the next year and the analyst expects all spot rates to increase by the amount 0.005 , so that the 1 -year spot rate will become 0.036 , and so forth. The investor plans to sell the bond at the end of 1 year and wants the greatest return for the year. This problem does the bond math to see which maturity, 1 , 3 , or 5 years, will give the best return under two scenarios: interest rates are unchanged and interest rates increase as forecast by the analyst.\\
-(a) What are the current prices of 1-, 3-, and 5 -year zero-coupon bonds with par values of $\$ 1,000$ ?\\
-(b) What will be the prices of these bonds 1 year from now if spot rates remain unchanged?\\
-(c) What will be the prices of these bonds 1 year from now if spot rates each increase by 0.005 ?\\
-(d) If the analyst is correct that spot rates will increase by 0.005 in 1 year, which maturity, 1,3 , or 5 years, will give the investor the greatest return when the bond is sold after 1 year? Justify your answer.\\
-(e) If instead the analyst is incorrect and spot rates remain unchanged, then which maturity, 1, 3, or 5 years, earns the highest return when the bond is sold after 1 year? Justify your answer.\\
-(f) The analyst also said that if the spot rates remain unchanged, then the bond with the highest spot rate will earn the greatest 1 -year return. Is this correct? Why?\\
-(Hint: Be aware that a bond will not have the same maturity in 1 year as it has now, so the spot rate that applies to that bond will change.)
-  \item Suppose that a bond pays a cash flow $C_{i}$ at time $T_{i}$ for $i=1, \ldots, N$. Then the net present value (NPV) of cash flow $C_{i}$ is
-\end{enumerate}
-
-$$
-\mathrm{NPV}_{i}=C_{i} \exp \left(-T_{i} y_{T_{i}}\right)
-$$
-
-Define the weights
-
-$$
-\omega_{i}=\frac{\mathrm{NPV}_{i}}{\sum_{j=1}^{N} \mathrm{NPV}_{j}}
-$$
-
-and define the duration of the bond to be
-
-$$
-\mathrm{DUR}=\sum_{i=1}^{N} \omega_{i} T_{i}
-$$
-
-which is the weighted average of the times of the cash flows. Show that
-
-$$
-\left.\frac{d}{d \delta} \sum_{i=1}^{N} C_{i} \exp \left\{-T_{i}\left(y_{T_{i}}+\delta\right)\right\}\right|_{\delta=0}=-\mathrm{DUR} \sum_{i=1}^{N} C_{i} \exp \left\{-T_{i} y_{T_{i}}\right\}
-$$
-
-and use this result to verify Eq. (3.31).\\
-16. Assume that the yield curve is $Y_{T}=0.04+0.001 T$.\\
-(a) What is the price of a par- $\$ 1,000$ zero-coupon bond with a maturity of 10 years?\\
-(b) Suppose you buy this bond. If 1 year later the yield curve is $Y_{T}= 0.042+0.001 T$, then what will be the net return on the bond?\\
-17. A coupon bond has a coupon rate of $3 \%$ and a current yield of $2.8 \%$.\\
-(a) Is the bond selling above or below par? Why or why not?\\
-(b) Is the yield to maturity above or below $2.8 \%$ ? Why or why not?\\
-18. Suppose that the forward rate is $r(t)=0.03+0.001 t+0.0002 t^{2}$\\
-(a) What is the 5 -year spot rate?\\
-(b) What is the price of a zero-coupon bond that matures in 5 years?\\
-19. The $1 / 2-, 1-, 1.5-$, and 2 -year spot rates are $0.025,0.029,0.031$, and 0.035 , respectively. A par $\$ 1,000$ coupon bond matures in 2 years and has semiannual coupon payments of $\$ 35$. What is the price of this bond?\\
-20. Par $\$ 1,000$ zero-coupon bonds of maturities of $0.5-, 1-, 1.5-$, and 2 -years are selling at $\$ 980.39, \$ 957.41, \$ 923.18$, and $\$ 888.489$, respectively.\\
-(a) Find the $0.5-$, $1-$, $1.5-$, and 2 -year semiannual spot rates.\\
-(b) A par $\$ 1,000$ coupon bond has a maturity of 2 years. The semiannual coupon payment is $\$ 21$. What is the price of this bond?\\
-21. A par $\$ 1,000$ bond matures in 4 years and pays semiannual coupon payments of $\$ 25$. The price of the bond is $\$ 1,015$. What is the semiannual yield to maturity of this bond?\\
-22. A coupon bond matures in 4 years. Its par is $\$ 1,000$ and it makes eight coupon payments of $\$ 21$, one every one-half year. The continuously compounded forward rate is
-
-$$
-r(t)=0.022+0.005 t-0.004 t^{2}+0.0003 t^{3} .
-$$
-
-(a) Find the price of the bond.\\
-(b) Find the duration of this bond.
-
-\begin{enumerate}
-  \item Suppose that there are two risky assets, A and B , with expected returns equal to $2.3 \%$ and $4.5 \%$, respectively. Suppose that the standard deviations of the returns are $\sqrt{6} \%$ and $\sqrt{11} \%$ and that the returns on the assets have a correlation of 0.17 .\\
-(a) What portfolio of A and B achieves a $3 \%$ rate of expected return?\\
-(b) What portfolios of A and B achieve a $\sqrt{5.5} \%$ standard deviation of return? Among these, which has the largest expected return?
-  \item Suppose there are two risky assets, C and D, the tangency portfolio is $65 \% \mathrm{C}$ and $35 \% \mathrm{D}$, and the expected return and standard deviation of the return on the tangency portfolio are $5 \%$ and $7 \%$, respectively. Suppose also that the risk-free rate of return is $1.5 \%$. If you want the standard deviation of your return to be $5 \%$, what proportions of your capital should be in the risk-free asset, asset C , and asset D ?
-  \item (a) Suppose that stock A shares sell at $\$ 75$ and stock B shares at $\$ 115$. A portfolio has 300 shares of stock A and 100 of stock B . What are the weights $w$ and $1-w$ of stocks A and B in this portfolio?\\
-(b) More generally, if a portfolio has $N$ stocks, if the price per share of the $j$ th stock is $P_{j}$, and if the portfolio has $n_{j}$ shares of stock $j$, then find a formula for $w_{j}$ as a function of $n_{1}, \ldots, n_{N}$ and $P_{1}, \ldots, P_{N}$.
-  \item Let $\mathcal{R}_{P}$ be a return of some type on a portfolio and let $\mathcal{R}_{1}, \ldots, \mathcal{R}_{N}$ be the same type of returns on the assets in this portfolio. Is
-\end{enumerate}
-
-$$
-\mathcal{R}_{P}=w_{1} \mathcal{R}_{1}+\cdots+w_{N} \mathcal{R}_{N}
-$$
-
-true if $\mathcal{R}_{P}$ is a net return? Is this equation true if $\mathcal{R}_{P}$ is a gross return? Is it true if $\mathcal{R}_{P}$ is a log return? Justify your answers.\\
-5. Suppose one has a sample of monthly log returns on two stocks with sample means of 0.0032 and 0.0074 , sample variances of 0.017 and 0.025 , and a sample covariance of 0.0059 . For purposes of resampling, consider these to be the "true population values." A bootstrap resample has sample means of 0.0047 and 0.0065 , sample variances of 0.0125 and 0.023 , and a sample covariance of 0.0058 .\\
-(a) Using the resample, estimate the efficient portfolio of these two stocks that has an expected return of 0.005 ; that is, give the two portfolio weights.\\
-(b) What is the estimated variance of the return of the portfolio in part (a) using the resample variances and covariances?\\
-(c) What are the actual expected return and variance of return for the portfolio in (a) when calculated with the true population values (e.g., with using the original sample means, variances, and covariance)?\\
-6. Stocks 1 and 2 are selling for $\$ 100$ and $\$ 125$, respectively. You own 200 shares of stock 1 and 100 shares of stock 2 . The weekly returns on these stocks have means of 0.001 and 0.0015 , respectively, and standard deviations of 0.03 and 0.04 , respectively. Their weekly returns have a correlation of 0.35 . Find the correlation matrix of the weekly returns on the two stocks and the mean and standard deviation of the weekly returns on the portfolio.
-
-\begin{enumerate}
-  \item What is the beta of a portfolio if $E\left(R_{P}\right)=16 \%, \mu_{f}=5.5 \%$, and $E\left(R_{M}\right)=11 \%$ ?
-  \item Suppose that the risk-free rate of interest is 0.03 and the expected rate of return on the market portfolio is 0.14 . The standard deviation of the market portfolio is 0.12 .\\
-(a) According to the CAPM, what is the efficient way to invest with an expected rate of return of 0.11 ?\\
-(b) What is the risk (standard deviation) of the portfolio in part (a)?
-  \item Suppose that the risk-free interest rate is 0.023 , that the expected return on the market portfolio is $\mu_{M}=0.10$, and that the volatility of the market portfolio is $\sigma_{M}=0.12$.\\
-(a) What is the expected return on an efficient portfolio with $\sigma_{R}=0.05$ ?\\
-(b) Stock A returns have a covariance of 0.004 with market returns. What is the beta of Stock A?\\
-(c) Stock B has beta equal to 1.5 and $\sigma_{\epsilon}=0.08$. Stock C has beta equal to 1.8 and $\sigma_{\epsilon}=0.10$.\\
-i. What is the expected return of a portfolio that is one-half Stock B and one-half Stock C?\\
-ii. What is the volatility of a portfolio that is one-half Stock B and one-half Stock C? Assume that the $\epsilon$ s of Stocks B and C are independent.
-  \item Show that equation (17.16) follows from equation (7.8).
-  \item True or false: The CAPM implies that investors demand a higher return to hold more volatile securities. Explain your answer.
-  \item Suppose that the riskless rate of return is $4 \%$ and the expected market return is $12 \%$. The standard deviation of the market return is $11 \%$. Suppose as well that the covariance of the return on Stock A with the market return is $165 \%^{2} .^{9}$\\
-(a) What is the beta of Stock A?\\
-(b) What is the expected return on Stock A?\\
-(c) If the variance of the return on Stock A is $220 \%^{2}$, what percentage of this variance is due to market risk?
-  \item Suppose there are three risky assets with the following betas and $\sigma_{\epsilon_{j}}^{2}$.
-\end{enumerate}
-
-\begin{center}
-\begin{tabular}{l|c|c}
-$j$ & $\beta_{j}$ & $\sigma_{\epsilon_{j}}^{2}$ \\
-\hline
-1 & 0.9 & 0.010 \\
-2 & 1.1 & 0.015 \\
-3 & 0.6 & 0.011 \\
-\end{tabular}
-\end{center}
-
-Suppose also that the variance of $R_{M t}-\mu_{f t}$ is 0.014 .\\
-(a) What is the beta of an equally weighted portfolio of these three assets?\\
-(b) What is the variance of the excess return on the equally weighted portfolio?\\
-(c) What proportion of the total risk of asset 1 is due to market risk?\\
-8. Suppose there are two risky assets, call them C and D. The tangency portfolio is $60 \% \mathrm{C}$ and $40 \% \mathrm{D}$. The expected yearly returns are $4 \%$ and $6 \%$ for assets C and D . The standard deviations of the yearly returns are $10 \%$ and $18 \%$ for C and D and the correlation between the returns on C and D is 0.5 . The risk-free yearly rate is $1.2 \%$.\\
-(a) What is the expected yearly return on the tangency portfolio?\\
-(b) What is the standard deviation of the yearly return on the tangency portfolio?\\
-(c) If you want an efficient portfolio with a standard deviation of the yearly return equal to $3 \%$, what proportion of your equity should be in the risk-free asset? If there is more than one solution, use the portfolio with the higher expected yearly return.\\
-(d) If you want an efficient portfolio with an expected yearly return equal to $7 \%$, what proportions of your equity should be in asset C, asset D, and the risk-free asset?\\
-9. What is the beta of a portfolio if the expected return on the portfolio is $E\left(R_{P}\right)=15 \%$, the risk-free rate is $\mu_{f}=6 \%$, and the expected return on the market is $E\left(R_{M}\right)=12 \%$ ? Make the usual CAPM assumptions including that the portfolio alpha is zero.\\
-10. Suppose that the risk-free rate of interest is 0.07 and the expected rate of return on the market portfolio is 0.14 . The standard deviation of the market portfolio is 0.12 .\\
-(a) According to the CAPM, what is the efficient way to invest with an expected rate of return of 0.11 ?\\
-(b) What is the risk (standard deviation) of the portfolio in part (a)?\\
-11. Suppose there are three risky assets with the following betas and $\sigma_{\epsilon_{j}}^{2}$ when regressed on the market portfolio.
-
-\begin{center}
-\begin{tabular}{l|c|c}
-$j$ & $\beta_{j}$ & $\sigma_{\epsilon_{j}}^{2}$ \\
-\hline
-1 & 0.7 & 0.010 \\
-2 & 0.8 & 0.025 \\
-3 & 0.6 & 0.012 \\
-\end{tabular}
-\end{center}
-
-Assume $\epsilon_{1}, \epsilon_{2}$, and $\epsilon_{3}$ are uncorrelated. Suppose also that the variance of $R_{M}-\mu_{f}$ is 0.02 .\\
-(a) What is the beta of an equally weighted portfolio of these three assets?\\
-(b) What is the variance of the excess return on the equally weighted portfolio?\\
-(c) What proportion of the total risk of asset 1 is due to market risk?\\
-12. As an analyst, you have constructed 2 possible portfolios. Both portfolios have the same beta and expected return, but portfolio 1 was constructed with only technology companies whereas portfolio 2 was constructed using technology, healthcare, energy, consumer products, and metals and mining companies. Should you be impartial to which portfolio you invest in? Explain why or why not.
-
-
-\end{document}
+\usepackage[dvipsnames]{xcolor}
+\colorlet{LightRubineRed}{RubineRed!70}
+\colorlet{Mycolor1}{green!10!orange}
+\definecolor{Mycolor2}{HTML}{00F9DE}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\VaR}{\mathrm{VaR}}
+\DeclareMathOperator{\ES}{\mathrm{ES}}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{lipsum}
+\usepackage{fancyvrb}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./images/} }
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{hyperref} 
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\E}{\mathbb{E}}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor} % For custom colors
+\lstset{
+	language=Python,                % Choose the language (e.g., Python, C, R)
+	basicstyle=\ttfamily\small, % Font size and type
+	keywordstyle=\color{blue},  % Keywords color
+	commentstyle=\color{gray},  % Comments color
+	stringstyle=\color{red},    % String color
+	numbers=left,               % Line numbers
+	numberstyle=\tiny\color{gray}, % Line number style
+	stepnumber=1,               % Numbering step
+	breaklines=true,            % Auto line break
+	backgroundcolor=\color{black!5}, % Light gray background
+	frame=single,               % Frame around the code
+}
+\usepackage{float}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+	\usepackage[]{amssymb} %gives us the character \varnothing
+	
+	\title{Final Project, STAT 5261}
+	\author{Zongyi Liu}
+	\date{Wed, Nov 26, 2025}
+	
+	\begin{document}
+		\maketitle
+		\section{Executive Summary}
+		
+		\section{Descriptive Statistics}
+		
+		\emph{Sample Statistics for Each Data} In this study I used 11 assets with time range from January 1, 2019 to October 31, 2025. The general information of those assets are listed below:
+		
+		\begin{itemize}
+			\item \texttt{AAPL}: Apple Inc., consumer electronics, smartphones, computers, wearables
+			\item \texttt{MSFT}: Microsoft Corporation, software, cloud computing, enterprise technology
+			\item \texttt{AMZN}: Amazon.com Inc., e-commerce, cloud computing (AWS), logistics
+			\item \texttt{GOOGL}: Alphabet Inc.\ (Class A), online advertising, search engine, cloud services
+			\item \texttt{META}: Meta Platforms Inc., social media (Facebook, Instagram), VR/AR technologies
+			\item \texttt{TSLA}: Tesla Inc., electric vehicles, clean energy, autonomous driving
+			\item \texttt{JNJ}: Johnson \& Johnson, pharmaceuticals, medical devices, healthcare products
+			\item \texttt{PG}: Procter \& Gamble, consumer goods, household \& personal care brands
+			\item \texttt{XOM}: Exxon Mobil Corporation, oil \& gas, energy exploration, petrochemicals
+			\item \texttt{JPM}: JPMorgan Chase \& Co., banking, investment management, financial services
+			\item \texttt{NVDA}: NVIDIA Corporation, GPUs, AI hardware, data center computing
+			\item \texttt{GSPC}: S\&P 500 Index (market benchmark), represents 500 large U.S.\ companies
+		\end{itemize}
+	
+	And their descriptive statistics are shown as below:	
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Asset Return Summary Statistics}
+			\begin{tabular}{lccccc}
+				\toprule
+				\textbf{Ticker} & \textbf{Mean} & \textbf{StdDev} & \textbf{Skewness} & \textbf{Kurtosis} & \textbf{Beta} \\
+				\midrule
+				AAPL & 0.026195312 & 0.08011206 & -0.03365191 & -0.77901530 & 1.2191835 \\
+				MSFT & 0.021585828 & 0.06226285 &  0.17017810 & -0.38299882 & 0.9403176 \\
+				AMZN & 0.016557489 & 0.08803682 &  0.33517650 &  0.84931329 & 1.1832620 \\
+				GOOGL & 0.022776095 & 0.07735267 & -0.40264341 & -0.28267538 & 1.0176823 \\
+				META & 0.022983741 & 0.11125480 & -0.37138577 &  0.96845122 & 1.2765125 \\
+				TSLA & 0.057683954 & 0.20737137 &  0.73744639 &  0.51012851 & 2.3441502 \\
+				JNJ & 0.005467106 & 0.04920065 &  0.09613001 & -0.34040990 & 0.5128830 \\
+				PG & 0.006585631 & 0.04864787 &  0.16436558 & -0.36205224 & 0.4273911 \\
+				XOM & 0.009271294 & 0.08846612 &  0.26105313 &  1.41911647 & 0.8535354 \\
+				JPM & 0.016276413 & 0.07468222 & -0.21352673 &  0.73558756 & 1.1483736 \\
+				NVDA & 0.059385595 & 0.13613246 & -0.20986786 & -0.03601573 & 1.7732969 \\
+				\bottomrule
+			\end{tabular}
+		\end{table}
+		
+		\emph{Equity Curve} An equity curve for each assets superposed with that of S\&P 500 is generated as below, where we can see a sharp rise of NVIDIA in recent years.
+		
+		\includegraphics[max width=\textwidth, center]{equity_curve}
+		
+		\emph{Stationary Test} Here I used the ADF (Augmented Dickey--Fuller) test, which is a statistical procedure used to
+		determine whether a time series contains a unit root, which corresponds to
+		non-stationarity. From the result statistics, we can see that except \texttt{GOOGL} and \texttt{META}, all other assets are stationary. 
+		
+		\emph{Normality Test} As for the normality, I used Shapiro--Wilk normality test, and from the result we can say that \texttt{TSLA} and \texttt{XOM} are not normally distributed, and all other assets are normally distributed. I also used visualization methods such as QQ plot, which can be seen in the appendix, and the results are the same as the normality test.
+		
+		\emph{Outlier Test} Then I used three methods to test outliers. The table shows that the three detection methods produce
+		substantially different results across assets.  
+		Stable, low–volatility stocks such as AAPL, MSFT, JNJ, and PG exhibit no
+		outliers under any method.  
+		For more volatile assets---AMZN, META, TSLA, XOM, JPM, and NVDA---the MAD
+		procedure identifies the largest number of outliers, reflecting its robustness
+		to heavy tails and sensitivity to extreme deviations.  
+		The Z--score method is generally the most conservative, often detecting no
+		outliers where IQR and MAD do.  
+		Instances where all three methods agree (e.g., META at months 38 and~46 or JPM
+		at month~15) indicate genuinely atypical return behavior.  
+		Overall, MAD is the most sensitive method, IQR provides moderate detection, and
+		Z--scores tend to underreport outliers in non-Gaussian financial data.
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Comparison of Outlier Months Detected by Different Methods}
+			\begin{tabular}{lccc}
+				\hline
+				\textbf{Asset} & \textbf{IQR Method} & \textbf{Z-Score Method} & \textbf{MAD Method} \\
+				\hline
+				AAPL  & None & None & None \\
+				MSFT  & None & None & None \\
+				AMZN  & 16, 40, 43 & None & 16, 40, 43 \\
+				GOOGL & 40 & None & 40, 74 \\
+				META  & 38, 46 & 38, 46 & 38, 46, 47, 62 \\
+				TSLA  & 20 & 20 & 13, 20 \\
+				JNJ   & None & None & 16 \\
+				PG    & None & None & 36 \\
+				XOM   & 14, 15, 16, 26, 37, 46 & 15 & 14, 15, 16, 21, 23, 26, 37, 46 \\
+				JPM   & 15 & 15 & 15, 23, 42, 46 \\
+				NVDA  & 40 & None & 5, 40, 53 \\
+				\hline
+			\end{tabular}
+		\end{table}
+		
+		
+		\emph{Sharpe Ratio} Table below reports the annualized Sharpe ratios for the eleven assets in the
+		sample. The results reveal substantial heterogeneity in risk-adjusted performance across
+		sectors.
+		
+		NVDA exhibits by far the highest Sharpe ratio (2.07), indicating exceptional
+		risk-adjusted returns driven by strong mean performance relative to its volatility.
+		Other large-cap technology stocks---including TSLA, MSFT, AAPL, and GOOGL---also achieve
+		Sharpe ratios above~1, suggesting that these assets delivered highly favorable 
+		risk--return tradeoffs over the sample period. In particular, TSLA’s Sharpe ratio (1.31)
+		reflects both elevated volatility and periods of unusually strong returns, especially during 
+		the post-2019 expansion.
+		
+		\begin{table}[h!]
+			\centering
+			\caption{Annualized Sharpe Ratios of Individual Assets}
+			\label{tab:sharpe}
+			\begin{tabular}{l r}
+				\toprule
+				Asset & Sharpe Ratio \\
+				\midrule
+				AAPL  & 1.2389550 \\
+				MSFT  & 1.2615931 \\
+				AMZN  & 0.6486593 \\
+				GOOGL & 1.0833367 \\
+				META  & 0.7615089 \\
+				TSLA  & 1.3086380 \\
+				JNJ   & 0.2793679 \\
+				PG    & 0.3676322 \\
+				XOM   & 0.3168737 \\
+				JPM   & 0.7490568 \\
+				NVDA  & 2.0744136 \\
+				\bottomrule
+			\end{tabular}
+		\end{table}
+		
+		\emph{Annualization of the Data} Here is the result of annualized data.
+		
+		\begin{table}[ht]
+			\centering
+			\caption{Annualized Mean Returns and Standard Deviations of Assets}
+			\begin{tabular}{lcc}
+				\toprule
+				\textbf{Asset} & \textbf{Mean (Annual)} & \textbf{Std.~Dev (Annual)} \\
+				\midrule
+				AAPL  & 0.3143 & 0.2775 \\
+				MSFT  & 0.2590 & 0.2157 \\
+				AMZN  & 0.1987 & 0.3050 \\
+				GOOGL & 0.2733 & 0.2680 \\
+				META  & 0.2758 & 0.3854 \\
+				TSLA  & 0.6922 & 0.7184 \\
+				JNJ   & 0.0656 & 0.1704 \\
+				PG    & 0.0790 & 0.1685 \\
+				XOM   & 0.1113 & 0.3065 \\
+				JPM   & 0.1953 & 0.2587 \\
+				NVDA  & 0.7126 & 0.4716 \\
+				\bottomrule
+			\end{tabular}
+		\end{table}
+		
+		
+		
+		\section{Portfolio Theory}
+		
+		\emph{Construct MVP} We constructed the MVP and got its statistics in tables below. The no-short-sale minimum-variance portfolio (MVP) exhibits the characteristics expected from a strictly risk-minimizing allocation. Because short positions are prohibited, the optimizer concentrates weight on the lowest-volatility and most defensive assets in the universe—primarily {PG (39.2\%)}, {JNJ (32.3\%)}, and to a lesser extent {GOOGL} and {XOM}. These assets have relatively low idiosyncratic risk and modest correlations with the broader equity universe, making them natural anchors for variance reduction.
+		
+		In terms of performance, the portfolio achieves:
+		\[
+		\text{Mean}_m = 0.0103,\qquad 
+		\text{SD}_m = 0.0379,\qquad 
+		\text{Sharpe}_a = 0.8488.
+		\]
+		The no short MVP therefore delivers the {lowest volatility} among all portfolios considered, while maintaining a reasonably strong annualized Sharpe ratio. The downside risk metrics further confirm its stability:
+		\[
+		\text{VaR}_{5\%} = -0.0464, \qquad
+		\text{ES}_{5\%} = -0.0618,
+		\]
+		both of which are smaller in magnitude compared with the short-sale and tangency portfolios.
+		
+		Overall, the no-short MVP is highly stable, exhibits minimal exposure to downside tail events, and offers an attractive risk-adjusted profile for investors whose primary objective is {capital preservation} and {low volatility}. However, because the portfolio is dominated by defensive stocks and excludes high-growth names, it sacrifices upside potential relative to the tangency portfolio. Thus, the no short MVP is best interpreted as a conservative core allocation rather than a return-seeking portfolio.
+		
+		\emph{Comparison of MVP and other Assets} We compare the 5\% Value-at-Risk (VaR), Expected Shortfall (ES), and annualized Sharpe ratio for the three portfolios: the minimum-variance portfolio without short-selling, the minimum-variance portfolio with short-selling allowed, and the tangency portfolio. The results are summarized in the second table
+		
+		The results highlight clear differences in risk profiles and reward-to-risk trade-offs:
+		
+		\begin{itemize}
+			\item {Minimum-Variance Portfolio (No Short-Selling)}  
+			achieves the {lowest downside risk}: both its VaR and ES are smallest in magnitude.  
+			Its Sharpe ratio (0.8488) is significantly higher than that of the short-selling MVP, indicating much better risk-adjusted performance.
+			
+			\item {Minimum-Variance Portfolio (With Short-Selling)}  
+			exhibits substantially higher downside risk (\text{VaR} = -0.0910, \text{ES} = -0.1088).  
+			Allowing short positions introduces leveraged exposures that increase tail risk.  
+			Its Sharpe ratio (0.1344) is the lowest among the portfolios, showing that the additional risk does not translate into improved returns.
+			
+			\item {Tangency Portfolio}  
+			delivers the highest expected return and a very strong annualized Sharpe ratio (\text{Sharpe} = 2.1312).  
+			However, this comes with the {largest tail losses}: both VaR and ES are significantly more negative.  
+			This reflects its aggressive nature and reliance on high-return, high-volatility assets.
+		\end{itemize}
+		
+		Overall, the no-short MVP offers the most stable downside protection, the short-selling MVP increases risk without commensurate benefit, and the tangency portfolio maximizes return relative to risk but at the cost of substantial tail exposure.
+		
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Portfolio Weights for MVP (No-Short \& Short) and Tangency Portfolios}
+			\begin{tabular}{lccc}
+				\toprule
+				\textbf{Asset} & \textbf{$w_{\text{MVP,noshort}}$} & \textbf{$w_{\text{MVP,short}}$} & \textbf{$w_{\text{Tangency}}$} \\
+				\midrule
+				AAPL & 0.0000 & -0.1650 & 0.2570 \\
+				MSFT & 0.0512 & 0.1177 & 0.4101 \\
+				AMZN & 0.0566 & 0.1564 & -0.9761 \\
+				GOOGL & 0.1217 & 0.1422 & 0.3640 \\
+				META & 0.0000 & -0.0769 & -0.0607 \\
+				TSLA & 0.0000 & -0.0196 & 0.1878 \\
+				JNJ  & 0.3225 & 0.3659 & -0.1525 \\
+				PG   & 0.3921 & 0.4195 & 0.1348 \\
+				XOM  & 0.0435 & 0.0177 & 0.1087 \\
+				JPM  & 0.0124 & 0.0434 & -0.0227 \\
+				NVDA & 0.0000 & -0.0012 & 0.7494 \\
+				\bottomrule
+			\end{tabular}
+		\end{table}
+		
+		
+		
+		\begin{table}[h!]
+			\centering
+			\caption{Portfolio Performance: MVP (No Short), MVP (Short Allowed), and Tangency Portfolio}
+			\begin{tabular}{lccccccc}
+				\toprule
+				Portfolio & mean\_m & sd\_m & mean\_a & sd\_a & VaR\_5\_m & ES\_5\_m & Sharpe\_a \\
+				\midrule
+				MVP\_noshort & 0.0103 & 0.0379 & 0.1315 & 0.1314 & -0.0464 & -0.0618 & 0.8488 \\
+				MVP\_short   & 0.0039 & 0.0593 & 0.0476 & 0.2055 & -0.0910 & -0.1088 & 0.1344 \\
+				Tangency     & 0.0556 & 0.1211 & 0.9139 & 0.4194 & -0.1263 & -0.1799 & 2.1312 \\
+				\bottomrule
+			\end{tabular}
+		\end{table}
+		
+		\section{Asset Allocation}
+		
+		In this case we applied the theory of asset allocation in two scenarios, one is to invest in only risky assests, and another is to combine the risky and risk free assests together.
+		
+		The comparison between the risky-only efficient portfolio and the T-bill + tangency allocation shows a clear trade-off between risk exposure and reliance on the risk-free asset. The risky-only portfolio places all capital in equities and achieves a monthly mean return of approximately 0.98\%, exceeding the target but at the cost of substantial volatility (3.73\% per month). This high volatility is reflected in its downside risk: for a \$100{,}000 investment, the 5\% historical VaR and ES are about \$4{,}860 and \$6{,}164, respectively, indicating significant losses in adverse months. In contrast, the T-bill + tangency approach invests only about 9\% of wealth in the tangency portfolio and the remaining 91\% in T-bills, resulting in a portfolio that meets the same return target (0.5\% per month) but with drastically lower volatility (0.75\% per month). Consequently, its tail losses are much smaller, with historical VaR of about \$838 and ES around \$1{,}146. This comparison highlights a fundamental implication of mean–variance theory: when a risk-free asset is available, combining it with the tangency portfolio is far more effective at reducing risk for a given target return than relying solely on risky assets, especially in a no-short-sales environment where the feasible risky-only set is more constrained and generally less efficient.
+		
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Risk and Performance Metrics for Different Portfolio Constructions}
+			\begin{tabular}{lccc}
+				\toprule
+				& \textbf{No-Short Efficient} & \textbf{Tangency Portfolio} & \textbf{T-Bill + Tangency} \\
+				\midrule
+				Monthly Mean Return 
+				& 0.00977 
+				& 0.03890 
+				& 0.00500 \\
+				
+				Monthly Standard Deviation 
+				& 0.03726 
+				& 0.08357 
+				& 0.00751 \\
+				
+				\midrule
+				{Historical 5\% VaR (\$100k)} 
+				& 4860.04 
+				& --- 
+				& 838.06 \\
+				
+				{Historical 5\% ES (\$100k)} 
+				& 6164.47 
+				& --- 
+				& 1145.96 \\
+				
+				\midrule
+				{Normal 5\% VaR (\$100k)} 
+				& 5152.52 
+				& --- 
+				& 735.75 \\
+				
+				{Normal 5\% ES (\$100k)} 
+				& -8662.66 
+				& --- 
+				& -2049.68 \\
+				
+				\midrule
+				Weight in Tangency Portfolio ($y^*$) 
+				& --- & --- & 0.08990 \\
+				Weight in Risk-Free Asset 
+				& --- & --- & 0.91010 \\
+				\bottomrule
+			\end{tabular}
+		\end{table}
+		
+		
+		\section{Principle Component Analysis}
+		
+		
+		\emph{Correlation matrix} For generating correlation matrix, we get the correlation matrix generated as below:
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Correlation Matrix of Assets}
+			\resizebox{\textwidth}{!}{
+				\begin{tabular}{lccccccccccc}
+					\toprule
+					& AAPL & MSFT & AMZN & GOOGL & META & TSLA & JNJ & PG & XOM & JPM & NVDA \\
+					\midrule
+					AAPL  & 1.0000000 & 0.5863039 & 0.60825481 & 0.49623262 & 0.34410064 & 0.64668256 & 0.40988295 & 0.36571684 & 0.21676561 & 0.32158080 & 0.53012768 \\
+					MSFT  & 0.5863039 & 1.0000000 & 0.65913657 & 0.55706624 & 0.56945994 & 0.47416466 & 0.24796009 & 0.30849851 & 0.11696617 & 0.33709045 & 0.65147796 \\
+					AMZN  & 0.60825481 & 0.65913657 & 1.0000000 & 0.59683797 & 0.50329704 & 0.58442493 & 0.09341286 & 0.05761213 & 0.06809702 & 0.23987985 & 0.60740706 \\
+					GOOGL & 0.49623262 & 0.55706624 & 0.59683797 & 1.0000000 & 0.39564282 & 0.45825661 & 0.11062309 & 0.05654949 & 0.15590236 & 0.37735126 & 0.49039013 \\
+					META  & 0.34410064 & 0.56945994 & 0.50329704 & 0.39564282 & 1.0000000 & 0.29244560 & 0.18490252 & 0.27500197 & -0.01301193 & 0.35426955 & 0.52086588 \\
+					TSLA  & 0.64668256 & 0.47416466 & 0.58442493 & 0.45825661 & 0.29244560 & 1.0000000 & 0.17291130 & 0.03234005 & 0.05421201 & 0.22991528 & 0.41251101 \\
+					JNJ   & 0.40988295 & 0.24796009 & 0.09341286 & 0.11062309 & 0.18490252 & 0.17291130 & 1.0000000 & 0.43172004 & 0.38737879 & 0.35842446 & 0.05109294 \\
+					PG    & 0.36571684 & 0.30849851 & 0.05761213 & 0.05654949 & 0.27500197 & 0.03234005 & 0.43172004 & 1.0000000 & 0.15928922 & 0.21716270 & 0.08745125 \\
+					XOM   & 0.21676561 & 0.11696617 & 0.06809702 & 0.15590236 & -0.01301193 & 0.05421201 & 0.38737879 & 0.15928922 & 1.0000000 & 0.52309187 & 0.05929966 \\
+					JPM   & 0.32158080 & 0.33709045 & 0.23987985 & 0.37735126 & 0.35426955 & 0.22991528 & 0.35842446 & 0.21716270 & 0.52309187 & 1.0000000 & 0.33439732 \\
+					NVDA  & 0.53012768 & 0.65147796 & 0.60740706 & 0.49039013 & 0.52086588 & 0.41251101 & 0.05109294 & 0.08745125 & 0.05929966 & 0.33439732 & 1.0000000 \\
+					\bottomrule
+				\end{tabular}
+			}
+		\end{table}
+		
+		From the correlation matrix, the strongest linear relationship is observed
+		between MSFT and AMZN ($\rho = 0.6591$), indicating that these two large-cap
+		technology firms tend to move together closely.  
+		Such a high correlation implies limited diversification benefits when holding
+		both assets simultaneously, since their returns respond similarly to market and
+		sector-specific shocks.
+		
+		In contrast, the weakest correlation occurs between META and XOM
+		($\rho = -0.0130$), effectively indicating no linear co-movement.  
+		Because META is a high-growth technology stock while XOM is an energy company,
+		their fundamentals are driven by distinct economic forces.  
+		This near-zero correlation provides strong diversification value: combining
+		assets whose returns are largely independent reduces overall portfolio
+		volatility without materially sacrificing expected return.
+		
+		Overall, the correlation structure shows that technology stocks are highly
+		interrelated, while defensive and commodity-based assets (JNJ, PG, XOM) offer the
+		most diversification potential relative to the tech-heavy portion of the
+		portfolio.
+		
+		
+		\emph{Perform PCA} After performing PCA, we have:
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{PCA Loadings for the First Three Principal Components}
+			\resizebox{0.3\textwidth}{!}{
+				\begin{tabular}{lccc}
+					\toprule
+					\textbf{Asset} & \textbf{PC1} & \textbf{PC2} & \textbf{PC3} \\
+					\midrule
+					AAPL & 0.377 & -0.053 & -0.096 \\
+					MSFT & 0.388 & 0.089 & -0.155 \\
+					AMZN & 0.370 & 0.263 & 0.061 \\
+					GOOGL & 0.335 & 0.144 & 0.255 \\
+					META & 0.308 & 0.085 & -0.276 \\
+					TSLA & 0.315 & 0.174 & 0.111 \\
+					JNJ  & 0.184 & -0.522 & -0.178 \\
+					PG   & 0.161 & -0.398 & -0.621 \\
+					XOM  & 0.131 & -0.510 & 0.505 \\
+					JPM  & 0.259 & -0.350 & 0.369 \\
+					NVDA & 0.347 & 0.220 & 0.028 \\
+					\bottomrule
+				\end{tabular}
+			}
+		\end{table}
+		
+		And:
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Importance of Principal Components}
+			\resizebox{\textwidth}{!}{
+				\begin{tabular}{lccccccccccc}
+					\toprule
+					& \textbf{PC1} & \textbf{PC2} & \textbf{PC3} & \textbf{PC4} & \textbf{PC5} & 
+					\textbf{PC6} & \textbf{PC7} & \textbf{PC8} & \textbf{PC9} & \textbf{PC10} & \textbf{PC11} \\
+					\midrule
+					\textbf{Standard deviation} 
+					& 2.1458 & 1.3269 & 1.04017 & 0.95869 & 0.73010 
+					& 0.70475 & 0.67358 & 0.62469 & 0.54867 & 0.51643 & 0.43890 \\
+					\textbf{Proportion of Variance} 
+					& 0.4186 & 0.1601 & 0.09836 & 0.08355 & 0.04846 
+					& 0.04515 & 0.04125 & 0.03548 & 0.02737 & 0.02425 & 0.01751 \\
+					\textbf{Cumulative Proportion}
+					& 0.4186 & 0.5786 & 0.67699 & 0.76054 & 0.80900 
+					& 0.85415 & 0.89540 & 0.93088 & 0.95824 & 0.98249 & 1.00000 \\
+					\bottomrule
+				\end{tabular}
+			}
+		\end{table}
+	
+	The PCA results in those tables indicate that the first principal component (PC1) explains 41.9\% of the total
+	variation in asset returns, with all assets loading positively.  
+	This pattern reflects a broad market factor: large technology stocks (AAPL,
+	MSFT, AMZN, NVDA) have the highest positive loadings, while defensive stocks
+	(JNJ, PG, XOM) load more weakly.  
+	Thus PC1 captures the common market movement dominated by the tech sector.
+	
+	PC2 explains an additional 16.0\% of the variance and represents a clear
+	sectoral contrast.  
+	Technology stocks load mildly positive on PC2, whereas defensive and value
+	oriented stocks (JNJ, PG, XOM, JPM) load strongly negative.  
+	This component therefore reflects rotation between growth/tech and
+	defensive/value sectors.
+	
+	PC3 accounts for a further 9.8\% of the variation and appears to separate energy
+	(XOM), financials (JPM), and communication services (GOOGL) from META and
+	consumer staples (PG), based on the opposing loading signs.  
+	This factor captures more specific industry-level dynamics not explained by the
+	first two components.
+	
+	The cumulative variance explained by the first three components is 67.7\%,
+	indicating that the majority of movements across these assets can be summarized
+	by a market-wide factor (PC1), a growth–value contrast (PC2), and a
+	sector-specific factor (PC3).
+	
+		
+		
+		\emph{Factor Analysis} We run the factor analysis, and get results as below:
+		
+		
+		\includegraphics[max width=0.9\linewidth]{factoranalysis}
+		
+		
+		The parallel analysis compares the eigenvalues from the actual correlation matrix 
+		with those obtained from randomly generated data of the same dimension. 
+		As shown in the figure, only the first two factors have eigenvalues 
+		that exceed the corresponding simulated eigenvalues. This indicates that these 
+		two factors represent systematic covariance in the data, while the remaining 
+		factors fall below the random-data threshold and are therefore attributable 
+		to noise. Consequently, a two-factor structure is appropriate for subsequent 
+		factor analysis.
+		
+		\section{Risk Management}
+		
+		\emph{Normal and Non-parameteric} We get the results as below:
+		\begin{table}[htbp]
+			\centering
+			\caption{Comparison of 5\% VaR and ES under Normal and Historical Methods}
+			\resizebox{0.5\textwidth}{!}{
+				\begin{tabular}{lrrrr}
+					\toprule
+					\textbf{Asset} & 
+					\textbf{VaR\_norm} & \textbf{ES\_norm} & 
+					\textbf{VaR\_hist} & \textbf{ES\_hist} \\
+					\midrule
+					AAPL & 10557.730 & 13905.286 & 10225.654 & 11802.921 \\
+					MSFT & 8082.745  & 10684.455 & 6857.783  & 8554.580  \\
+					AMZN & 12825.019 & 16503.718 & 10670.958 & 13987.338 \\
+					GOOGL& 10445.772 & 13678.024 & 11537.464 & 14394.635 \\
+					META & 16001.412 & 20650.296 & 13724.029 & 22233.791 \\
+					TSLA & 28341.159 & 37006.362 & 21517.881 & 26585.838 \\
+					JNJ  & 7546.077  & 9601.971  & 7470.793  & 8242.128  \\
+					PG   & 7343.300  & 9376.096  & 7786.454  & 8447.463  \\
+					XOM  & 13624.252 & 17320.890 & 11812.892 & 16585.209 \\
+					JPM  & 10656.490 & 13777.155 & 9076.518  & 14222.861 \\
+					NVDA & 16453.238 & 22141.658 & 16889.412 & 22495.241 \\
+					\bottomrule
+			\end{tabular}}
+		\end{table}
+	
+	
+	Using both the normal and historical methods, we observe clear differences in
+	downside risk across the assets:
+	
+	TSLA exhibits by far the largest risk measures:
+	\[
+	\text{VaR}_{0.05}^{\text{norm}} = 28{,}341,\qquad
+	\text{ES}_{0.05}^{\text{norm}} = 37{,}006,
+	\]
+	\[
+	\text{VaR}_{0.05}^{\text{hist}} = 21{,}518,\qquad
+	\text{ES}_{0.05}^{\text{hist}} = 26{,}586.
+	\]
+	These values greatly exceed those of any other asset, indicating extremely high tail risk and volatility. NVDA and META also show relatively large VaR and ES, but remain well below TSLA.
+	
+	The assets PG, JNJ, and MSFT consistently have the smallest risk measures:
+	\[
+	\text{VaR}_{0.05}^{\text{norm}}(\text{PG}) = 7{,}343,\qquad
+	\text{ES}_{0.05}^{\text{norm}}(\text{PG}) = 9{,}376,
+	\]
+	\[
+	\text{VaR}_{0.05}^{\text{hist}}(\text{MSFT}) = 6{,}858,\qquad
+	\text{ES}_{0.05}^{\text{hist}}(\text{JNJ}) = 8{,}242.
+	\]
+	These defensive, lower-volatility stocks exhibit much smaller expected losses
+	during severe downside events.
+	
+	TSLA’s extremely high VaR and ES reflect its role as a highly volatile growth
+	stock with heavy tail behavior. In contrast, PG, JNJ, and MSFT behave like
+	defensive or stable large-cap firms, providing significantly lower downside
+	risk. From a portfolio-construction perspective, combining low-risk assets with
+	high-risk assets may improve diversification, but concentration in TSLA or
+	META would substantially increase portfolio tail risk.
+	
+		
+		
+		\section{Corpulas}
+		
+		In this case I tried five types of corpulas, namely, Gaussian, t, Clayton, Gumbel, and Frank corulas. Then I did AIC and BIC tests on them, and results are shown in the table below. Overall the Student-$t$ copula provides the best fit among
+		all candidate models.
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{Model Comparison Using Log-Likelihood, AIC, and BIC}
+			\label{tab:copula_model_selection}
+			\begin{tabular}{lccc}
+				\hline
+				\textbf{Copula Model} & \textbf{Log-Likelihood} & \textbf{AIC} & \textbf{BIC} \\
+				\hline
+				Gaussian & 301.6809 & -471.3619 & -312.5184 \\
+				Student-$t$ & 314.8911 & -495.7822 & -334.5320 \\
+				Clayton & 136.1343 & -270.2687 & -267.8620 \\
+				Gumbel & 105.3848 & -208.7697 & -206.3629 \\
+				Frank & 106.9688 & -211.9376 & -209.5309 \\
+				\hline
+			\end{tabular}
+		\end{table}
+		
+		
+	\end{document}
+	
