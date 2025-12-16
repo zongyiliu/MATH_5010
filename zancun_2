@@ -6,7 +6,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{array}
-\usepackage{booktabs}
+\usepackage{booktabs} 
 \usepackage{hyperref}
 \usepackage{physics}
 \usepackage[version=4]{mhchem}
