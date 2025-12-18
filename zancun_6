@@ -1,0 +1,1307 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage{bbold}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./images/} }
+\usepackage{caption}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=cyan,}
+\urlstyle{same}
+
+\title{GR5504: Statistical Inference \\
+ Estimation* }
+
+\author{Bodhisattva Sen}
+\date{}
+
+
+%New command to display footnote whose markers will always be hidden
+\let\svthefootnote\thefootnote
+\newcommand\blfootnotetext[1]{%
+  \let\thefootnote\relax\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \let\thefootnote\svthefootnote%
+}
+
+%Overriding the \footnotetext command to hide the marker if its value is `0`
+\let\svfootnotetext\footnotetext
+\renewcommand\footnotetext[2][?]{%
+  \if\relax#1\relax%
+    \ifnum\value{footnote}=0\blfootnotetext{#2}\else\svfootnotetext{#2}\fi%
+  \else%
+    \if?#1\ifnum\value{footnote}=0\blfootnotetext{#2}\else\svfootnotetext{#2}\fi%
+    \else\svfootnotetext[#1]{#2}\fi%
+  \fi
+}
+
+\begin{document}
+\maketitle
+\captionsetup{singlelinecheck=false}
+October 30, 2025
+
+\section*{1 Motivation}
+Statistical inference is concerned with making probabilistic statements about random variables encountered in the analysis of data.
+
+Examples: means, median, variances ...\\
+Example 1.1. A company sells a certain kind of electronic component. The company is interested in knowing about how long a component is likely to last on average.
+
+They can collect data on many such components that have been used under typical conditions.
+
+They choose to use the family of exponential distributions ${ }^{1}$ to model the length of time (in years) from when a component is put into service until it fails.
+
+The company believes that, if they knew the failure rate $\theta$, then $\mathbf{X}_{n}=\left(X_{1}, X_{2}, \ldots, X_{n}\right)$ would be $n$ i.i.d random variables having the exponential distribution with parameter $\theta$. We may ask the following questions:
+
+\begin{enumerate}
+  \item Can we estimate $\theta$ from this data? If so, what is a reasonable estimator?
+  \item Can we quantify the uncertainty in the estimation procedure, i.e., can we construct confidence interval for $\theta$ ?
+\end{enumerate}
+
+\footnotetext{*Notes for Chapter 7 of DeGroot and Schervish.\\
+${ }^{1} X$ has an exponential distribution with (failure) rate $\theta>0$, i.e., $X \sim \operatorname{Exp}(\theta)$, if the p.d.f of $X$ is given by
+
+$$
+f_{\theta}(x)=\theta e^{-\theta x} \mathbf{1}_{[0, \infty)}(x), \quad \text { for } x \in \mathbb{R} .
+$$
+
+The mean (or expected value) of $X$ is given by $\mathbb{E}(X)=\theta^{-1}$, and the variance of $X$ is $\operatorname{Var}(X)=\theta^{-2}$.
+}\subsection*{1.1 Recap: Some results from probability}
+Definition 1 (Sample mean). Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are $n$ i.i.d r.v's with (unknown) mean $\mu \in \mathbb{R}$ (i.e., $\mathbb{E}\left(X_{1}\right)=\mu$ ) and variance $\sigma^{2}<\infty$. A natural "estimator" of $\mu$ is the sample mean (or average) defined as
+
+$$
+\bar{X}_{n}:=\frac{1}{n}\left(X_{1}+\ldots+X_{n}\right)=\frac{1}{n} \sum_{i=1}^{n} X_{i} .
+$$
+
+Lemma 1.2. $\mathbb{E}\left(\bar{X}_{n}\right)=\mu$ and $\operatorname{Var}\left(\bar{X}_{n}\right)=\sigma^{2} / n$.
+
+Proof. Observe that
+
+$$
+\mathbb{E}\left(\bar{X}_{n}\right)=\frac{1}{n} \sum_{i=1}^{n} \mathbb{E}\left(X_{i}\right)=\frac{1}{n} \cdot n \mu=\mu .
+$$
+
+Also,
+
+$$
+\operatorname{Var}\left(\bar{X}_{n}\right)=\frac{1}{n^{2}} \operatorname{Var}\left(\sum_{i=1}^{n} X_{i}\right)=\frac{1}{n^{2}} \cdot n \sigma^{2}=\frac{\sigma^{2}}{n} .
+$$
+
+Theorem 1.3 (Weak law of large numbers). Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are $n$ i.i.d $r$.v's with finite mean $\mu$. Then for any $\epsilon>0$, we have
+
+$$
+\mathbb{P}\left(\left|\frac{1}{n} \sum_{i=1}^{n} X_{i}-\mathbb{E}(X)\right|>\epsilon\right) \rightarrow 0 \quad \text { as } n \rightarrow \infty .
+$$
+
+This says that if we take the sample average of $n$ i.i.d r.v's the sample average will be close to the true population average. Figure 1 illustrates the result: The left panel shows the density of the data generating distribution (in this example we took $X_{1}, \ldots, X_{n}$ i.i.d. $\left.\operatorname{Exp}(10)\right)$; the middle and right panels show the distribution (histogram obtained from 1000 replicates) of $\bar{X}_{n}$ for $n=100$ and $n=1000$, respectively. We see that as the sample size increases, the distribution of the sample mean concentrates around $\mathbb{E}\left(X_{1}\right)=1 / 10$ (i.e., $\bar{X}_{n} \xrightarrow{\mathbb{P}} 10^{-1}$ as $n \rightarrow \infty$ ).
+
+Definition 2 (Convergence in probability). In the above, we say that the sample mean $\frac{1}{n} \sum_{i=1}^{n} X_{i}$ converges in probability to the true (population) mean.
+
+More generally, we say that the sequence of r.v's $\left\{Z_{n}\right\}_{n=1}^{\infty}$ converges to $Z$ in probability, and write
+
+$$
+Z_{n} \xrightarrow{\mathbb{P}} Z,
+$$
+
+if for every $\epsilon>0$,
+
+$$
+\mathbb{P}\left(\left|Z_{n}-Z\right|>\epsilon\right) \rightarrow 0 \quad \text { as } n \rightarrow \infty .
+$$
+
+This is equivalent to saying that for every $\epsilon>0$,
+
+$$
+\lim _{n \rightarrow \infty} \mathbb{P}\left(\left|Z_{n}-Z\right| \leq \epsilon\right)=1
+$$
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[max width=\textwidth]{62fa1b15-b86f-49bf-b0ef-e725a0f06af4-03}
+\captionsetup{labelformat=empty}
+\caption{Figure 1: The plots illustrate the convergence (in probability) of the sample mean to the population mean.}
+\end{center}
+\end{figure}
+
+Definition 3 (Convergence in distribution). We say a sequence of r.v's $\left\{Z_{n}\right\}_{i=1}^{n}$ with c.d.f's $F_{n}(\cdot)$ converges in distribution to $F$ if
+
+$$
+\lim _{n \rightarrow \infty} F_{n}(u)=F(u)
+$$
+
+for all $u$ such that $F$ is continuous ${ }^{2}$ at $u$ (here $F$ is itself a c.d.f).
+
+The second fundamental result in probability theory, after the law of large numbers (LLN), is the Central limit theorem (CLT), stated below. The CLT gives us the approximate (asymptotic) distribution of $\bar{X}_{n}$
+
+Theorem 1.4 (Central limit theorem). If $X_{1}, X_{2} \ldots$ are i.i.d with mean zero and variance 1, then
+
+$$
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n} X_{i} \xrightarrow{d} N(0,1),
+$$
+
+where $N(0,1)$ is the standard normal distribution. More generally, the usual rescaling tell us that, for $X_{1}, X_{2}, \ldots$ are i.i.d with mean $\mu$ and variance $\sigma^{2}<\infty$
+
+$$
+\sqrt{n}\left(\bar{X}_{n}-\mu\right) \equiv \frac{1}{\sqrt{n}} \sum_{i=1}^{n}\left(X_{i}-\mu\right) \xrightarrow{d} N\left(0, \sigma^{2}\right) .
+$$
+
+\footnotetext{${ }^{2}$ Explain why do we need to restrict our attention to continuity points of $F$. (Hint: think of the following sequence of distributions: $F_{n}(u)=I(u \geq 1 / n)$, where the "indicator" function of a set $A$ is one if $x \in A$ and zero otherwise.)
+
+It's worth emphasizing that convergence in distribution - because it only looks at the c.d.f. - is in fact weaker than convergence in probability. For example, if $p_{X}$ is symmetric, then the sequence $X,-X, X,-X, \ldots$ trivially converges in distribution to $X$, but obviously doesn't converge in probability.
+
+Also, if $U \sim \operatorname{Unif}(0,1)$, then the sequence
+
+$$
+U, 1-U, U, 1-U, \ldots
+$$
+
+converge in distribution to a uniform distribution. But obviously they do not converge in probability.
+}\begin{figure}[h]
+\begin{center}
+  \includegraphics[max width=\textwidth]{62fa1b15-b86f-49bf-b0ef-e725a0f06af4-04}
+\captionsetup{labelformat=empty}
+\caption{Figure 2: The plots illustrate the convergence (in distribution) of the sample mean to a normal distribution.}
+\end{center}
+\end{figure}
+
+The following plots illustrate the CLT: The left, center and right panels of Figure 2 show the (scaled) histograms of $\bar{X}_{n}$ when $n=10,30$ and 100 , respectively (as before, in this example we took $X_{1}, \ldots, X_{n}$ i.i.d. $\operatorname{Exp}(10)$; the histograms are obtained from 5000 independent replicates). We also overplot the normal density with mean 0.1 and variance $10^{-1} / \sqrt{n}$. The remarkable agreement between the two densities illustrates the power of the CLT. Observe that the original distribution of the $X_{i}$ 's is skewed and highly nor-normal $(\operatorname{Exp}(10))$, but even for $n=10$, the distribution of $\bar{X}_{10}$ is quite close to being normal.
+
+Another class of useful results we will use very much in this course go by the name "continuous mapping theorem". Here are two such results.
+
+Theorem 1.5. If $Z_{n} \xrightarrow{\mathbb{P}} b$ and if $g(\cdot)$ is a function that is continuous at $b$, then
+
+$$
+g\left(Z_{n}\right) \xrightarrow{\mathbb{P}} g(b) .
+$$
+
+Theorem 1.6. If $Z_{n} \xrightarrow{d} Z$ and if $g(\cdot)$ is a function that is continuous, then
+
+$$
+g\left(Z_{n}\right) \xrightarrow{d} g(Z) .
+$$
+
+\subsection*{1.2 Back to Example 1.1}
+In the first example we have the following results:
+
+\begin{itemize}
+  \item by the LLN, the sample mean $\bar{X}_{n}$ converges in probability to the expectation $1 / \theta$ (failure rate), i.e.,
+\end{itemize}
+
+$$
+\bar{X}_{n} \xrightarrow{\mathbb{P}} \frac{1}{\theta} ;
+$$
+
+\begin{itemize}
+  \item by the continuous mapping theorem (see Theorem 1.5) $\bar{X}_{n}^{-1}$ converges in probability to $\theta$, i.e.,
+\end{itemize}
+
+$$
+\bar{X}_{n}^{-1} \xrightarrow{\mathbb{P}} \theta ;
+$$
+
+\begin{itemize}
+  \item by the CLT, we know that
+\end{itemize}
+
+$$
+\sqrt{n}\left(\bar{X}_{n}-\theta^{-1}\right) \xrightarrow{d} N\left(0, \theta^{-2}\right)
+$$
+
+where $\operatorname{Var}\left(X_{1}\right)=\theta^{-2}$;
+
+\begin{itemize}
+  \item But how does one find an approximation to the distribution of $\bar{X}_{n}^{-1}$ ?
+\end{itemize}
+
+\subsection*{1.3 Delta method}
+The first thing to note is that if $\left\{Z_{n}\right\}_{i=1}^{n}$ converges in distribution (or probability) to a constant $\theta$, then $g\left(Z_{n}\right) \xrightarrow{d} g(\theta)$, for any continuous function $g(\cdot)$.
+
+We can also "zoom in" to look at the asymptotic distribution (not just the limit point) of the sequence of r.v's $\left\{g\left(Z_{n}\right)\right\}_{i=1}^{n}$, whenever $g(\cdot)$ is sufficiently smooth.\\
+Theorem 1.7. Let $Z_{1}, Z_{2}, \ldots, Z_{n}$ be a sequence of r.v's and let $Z$ be a r.v with a continuous c.d.f $F^{*}$. Let $\theta \in \mathbb{R}$, and let $a_{1}, a_{2}, \ldots$, be a sequence such that $a_{n} \rightarrow \infty$. Suppose that
+
+$$
+a_{n}\left(Z_{n}-\theta\right) \xrightarrow{d} F^{*} .
+$$
+
+Let $g(\cdot)$ be a function with a continuous derivative such that $g^{\prime}(\theta) \neq 0$. Then
+
+$$
+a_{n} \frac{g\left(Z_{n}\right)-g(\theta)}{g^{\prime}(\theta)} \xrightarrow{d} F^{*}
+$$
+
+Proof. We will only give an outline of the proof (think $a_{n}=n^{1 / 2}$, if $Z_{n}$ as the sample mean). As $a_{n} \rightarrow \infty, Z_{n}$ must get close to $\theta$ with high probability as $n \rightarrow \infty$.
+
+As $g(\cdot)$ is continuous, $g\left(Z_{n}\right)$ will be close to $g(\theta)$ with high probability.\\
+Let's say $g(\cdot)$ has a Taylor expansion around $\theta$, i.e.,
+
+$$
+g\left(Z_{n}\right) \approx g(\theta)+g^{\prime}(\theta)\left(Z_{n}-\theta\right),
+$$
+
+where we have ignored all terms involving $\left(Z_{n}-\theta\right)^{2}$ and higher powers.\\
+Then if
+
+$$
+a_{n}\left(Z_{n}-\theta\right) \xrightarrow{d} Z,
+$$
+
+for some limit distribution $F^{*}$ and a sequence of constants $a_{n} \rightarrow \infty$, then
+
+$$
+a_{n} \frac{g\left(Z_{n}\right)-g(\theta)}{g^{\prime}(\theta)} \approx a_{n}\left(Z_{n}-\theta\right) \xrightarrow{d} F^{*} .
+$$
+
+In other words, limit distributions are passed through functions in a pretty simple way. This is called the delta method (I suppose because of the deltas and epsilons involved in this kind of limiting argument), and we'll be using it a lot.
+
+The main application is when we've already proven a CLT for $Z_{n}$,
+
+$$
+\frac{\sqrt{n}\left(Z_{n}-\mu\right)}{\sigma} \xrightarrow{d} N(0,1)
+$$
+
+in which case
+
+$$
+\sqrt{n}\left(g\left(Z_{n}\right)-g(\mu)\right) \xrightarrow{d} N\left(0, \sigma^{2}\left(g^{\prime}(\mu)\right)^{2}\right) .
+$$
+
+Exercise 1: Assume $n^{1 / 2} Z_{n} \xrightarrow{d} N(0,1)$. What is the asymptotic distribution of
+
+\begin{enumerate}
+  \item $g\left(Z_{n}\right)=\left(Z_{n}-1\right)^{2}$ ?
+  \item What about $g\left(Z_{n}\right)=Z_{n}^{2}$ ? Does anything go wrong when applying the delta method in this case? Can you fix this problem?
+\end{enumerate}
+
+\subsection*{1.4 Back to Example 1.1}
+By the delta method, we can show that
+
+$$
+\sqrt{n}\left(\bar{X}_{n}^{-1}-\theta\right) \xrightarrow{d} N\left(0,\left(\theta^{2}\right)^{2} \theta^{-2}\right)
+$$
+
+where we have considered $g(x)=\frac{1}{x} ; g^{\prime}(x)=-\frac{1}{x^{2}}$ (observe that $g$ is continuous on $(0, \infty)$ ). Note that the variance of $X_{1}$ is $\operatorname{Var}\left(X_{1}\right)=\theta^{-2}$.
+
+\section*{2 Statistical Inference}
+Definition 4 (Statistical model). A statistical model is
+
+\begin{itemize}
+  \item an identification of random variables of interest,
+  \item a specification of a joint distribution or a family of possible joint distributions for the observable random variables,
+  \item the identification of any parameters of those distributions that are assumed unknown,
+  \item (Bayesian approach, if desired) a specification for a (joint) distribution for the unknown parameter(s).
+\end{itemize}
+
+Definition 5 (Statistical Inference). Statistical inference is a procedure that produces a probabilistic statement about some or all parts of a statistical model.
+
+Definition 6 (Parameter space). In a problem of statistical inference, a characteristic or combination of characteristics that determine the joint distribution for the random variables of interest is called a parameter of the distribution.
+
+The set $\Omega$ of all possible values of a parameter $\theta$ or of a vector of parameters $\theta=\left(\theta_{1}, \ldots, \theta_{k}\right)$ is called the parameter space.
+
+Examples:
+
+\begin{itemize}
+  \item The family of binomial distributions has parameters $n$ and $p$.
+  \item The family of normal distributions is parameterized by the mean $\mu$ and variance $\sigma^{2}$ of each distribution (so $\theta=\left(\mu, \sigma^{2}\right)$ can be considered a pair of parameters, and $\Omega=\mathbb{R} \times \mathbb{R}^{+}$).
+  \item The family of exponential distributions is parameterized by the rate parameter $\theta$ (the failure rate must be positive: $\Omega$ will be the set of all positive numbers).
+\end{itemize}
+
+The parameter space $\Omega$ must contain all possible values of the parameters in a given problem.
+
+Example 2.1. Suppose that $n$ patients are going to be given a treatment for a condition and that we will observe for each patient whether or not they recover from the condition.
+
+For each patient $i=1,2, \ldots$, let $X_{i}=1$ if patient $i$ recovers, and let $X_{i}=0$ if not. As a collection of possible distributions for $X_{1}, X_{2}, \ldots$, we could choose to say that the $X_{i}$ 's are i.i.d. having the Bernoulli distribution with parameter $p$, for $0 \leq p \leq 1$.
+
+In this case, the parameter $p$ is known to lie in the closed interval $[0,1]$, and this interval could be taken as the parameter space. Notice also that by the LLN, $p$ is the limit as $n \rightarrow \infty$ of the proportion of the first $n$ patients who recover.
+
+Definition 7 (Statistic). Suppose that the observable random variables of interest are $X_{1}, \ldots, X_{n}$. Let $\varphi$ be a real-valued function of $n$ real variables. Then the random variable $T=\varphi\left(X_{1}, \ldots, X_{n}\right)$ is called a statistic.
+
+Examples:
+
+\begin{itemize}
+  \item the sample mean $\bar{X}_{n}=\frac{1}{n} \sum_{i=1}^{n} X_{i}$;
+  \item the maximum $X_{(n)}$ of the values $X_{1}, \ldots, X_{n}$;
+  \item the sample variance $S_{n}^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}$ of the values $X_{1}, \ldots, X_{n}$.
+\end{itemize}
+
+Definition 8 (Estimator/Estimate). Let $X_{1}, \ldots, X_{n}$ be observable data whose joint distribution is indexed by a parameter $\theta$ taking values in a subset $\Omega$ of the real line.\\
+An estimator $\widehat{\theta}_{n}$ of the parameter $\theta$ is a real-valued function $\widehat{\theta}_{n}=\varphi\left(X_{1}, \ldots, X_{n}\right)$.\\
+If $\left\{X_{1}=x_{1}, \ldots, X_{n}=x_{n}\right\}$ is observed, then $\varphi\left(x_{1}, \ldots, x_{n}\right)$ is called the estimate of $\theta$.\\
+Definition 9 (Estimator/Estimate). Let $X_{1}, \ldots, X_{n}$ be observable data whose joint distribution is indexed by a parameter $\theta$ taking values in a subset $\Omega$ of $d$-dimensional space, i.e., $\Omega \subset \mathbb{R}^{d}$.
+
+Let $h: \Omega \rightarrow \mathbb{R}^{d}$, be a function from $\Omega$ into d-dimensional space. Define $\psi=h(\theta)$.\\
+An estimator of $\psi$ is a function $g\left(X_{1}, \ldots, X_{n}\right)$ that takes values in $d$-dimensional space. If $\left\{X_{1}=x_{1}, \ldots, X_{n}=x_{n}\right\}$ are observed, then $g\left(x_{1}, \ldots, x_{n}\right)$ is called the estimate of $\psi$.
+
+When $g$ in Definition 9 is the identity function $g(\theta)=\theta$, then $\psi=\theta$ and we are estimating the original parameter $\theta$. When $g(\theta)$ is one coordinate of $\theta$, then the $\psi$ that we are estimating is just that one coordinate.
+
+Definition 10 (Consistent (in probability) estimator). A sequence of estimators $\widehat{\theta}_{n}$ that converges in probability to the unknown value of the parameter $\theta$ being estimated is called a consistent sequence of estimators, i.e., $\widehat{\theta}_{n}$ is consistent if and only if for every $\epsilon>0$,
+
+$$
+\mathbb{P}\left(\left|\widehat{\theta}_{n}-\theta\right|>\epsilon\right) \rightarrow 0, \quad \text { as } n \rightarrow \infty .
+$$
+
+In this Chapter we shall discuss three types of estimators:
+
+\begin{itemize}
+  \item Method of moments estimators,
+  \item Maximum likelihood estimators, and
+  \item Bayes estimators.
+\end{itemize}
+
+\section*{3 Method of Moments estimators}
+The method of moments (MOM) is an intuitive method for estimating parameters when other, more attractive, methods may be too difficult (to implement/compute).
+
+Example 3.1. To motivate the MOM estimation strategy consider the setting of Example 1.1 where we had i.i.d data $X_{1}, \ldots, X_{n}$ from $\operatorname{Exp}(\theta)$, where $\theta>0$ is the unknown parameter to be estimated. Note that in this example $\mathbb{E}_{\theta}\left[X_{1}\right]=\theta^{-1}$.
+
+Although estimating $\theta$ directly can be at first thought non-trivial, we can always use $\bar{X}_{n}=\frac{1}{n} \sum_{i=1}^{n} X_{i}$ to estimate $\mathbb{E}_{\theta}\left[X_{1}\right]$, i.e., $\bar{X}_{n}$ is a natural estimator of $\theta^{-1}$. This leads us to estimating $\theta$ by $\frac{1}{\bar{X}_{n}}$ - this is the main idea of the MOM. The following discussion makes this heuristic more formal.
+
+Definition 11 (Method of moments estimator). Assume that $X_{1}, \ldots, X_{n}$ form a random sample from a distribution that is indexed by a $k$-dimensional parameter $\theta$ and that has at least $k$ finite moments. For $j=1, \ldots, k$, let
+
+$$
+\mu_{j}(\theta):=\mathbb{E}_{\theta}\left(X_{1}^{j}\right) .
+$$
+
+Suppose that the function $\mu(\theta)=\left(\mu_{1}(\theta), \ldots, \mu_{k}(\theta)\right)$ is a one-to-one function of $\theta$. Let $M\left(\mu_{1}, \ldots, \mu_{k}\right)$ denote the inverse function, that is, for all $\theta$,
+
+$$
+\theta=M\left(\mu_{1}, \ldots, \mu_{k}\right) .
+$$
+
+Define the sample moments as
+
+$$
+\hat{\mu}_{j}:=\frac{1}{n} \sum_{i=1}^{n} X_{i}^{j} \quad \text { for } j=1, \ldots, k
+$$
+
+The method of moments estimator of $\theta$ is $M\left(\hat{\mu}_{1}, \ldots, \hat{\mu}_{k}\right)$.
+
+The usual way of implementing the method of moments is to set up the $k$ equations
+
+$$
+\hat{\mu}_{j}=\mu_{j}(\theta), \quad \text { for } j=1, \ldots, k
+$$
+
+and then solve for $\theta$.
+
+Example 3.2. Let $X_{1}, X_{2}, \ldots, X_{n}$ be from a $N\left(\mu, \sigma^{2}\right)$ distribution. Thus $\theta=\left(\mu, \sigma^{2}\right)$. What is the MOM estimator of $\theta$ ?
+
+Solution: Consider $\mu_{1}=\mathbb{E}\left(X_{1}\right)$ and $\mu_{2}=\mathbb{E}\left(X_{1}^{2}\right)$. Clearly, the parameter $\theta$ can be expressed as a function of the first two population moments, since
+
+$$
+\mu=\mu_{1}, \sigma^{2}=\mu_{2}-\mu_{1}^{2}
+$$
+
+To get MOM estimates of $\mu$ and $\sigma^{2}$ we are going to plug in the sample moments. Thus
+
+$$
+\hat{\mu}=\hat{\mu}_{1}=\bar{X}
+$$
+
+and
+
+$$
+\hat{\sigma}^{2}=\frac{1}{n} \sum_{j=1}^{n} X_{j}^{2}-\bar{X}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}
+$$
+
+where we have used the fact that $\hat{\mu}_{2}=n^{-1} \sum_{j=1}^{n} X_{j}^{2}$.
+
+Example 3.3. Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are i.i.d Gamma $(\alpha, \beta), \alpha, \beta>0$. Thus, $\theta=(\alpha, \beta) \in \Omega:=\mathbb{R}_{+} \times \mathbb{R}_{+}$. The first two moments of this distribution are:
+
+$$
+\mu_{1}(\theta)=\frac{\alpha}{\beta}, \quad \mu_{2}(\theta)=\frac{\alpha(\alpha+1)}{\beta^{2}}
+$$
+
+which implies that
+
+$$
+\alpha=\frac{\mu_{1}^{2}}{\mu_{2}-\mu_{1}^{2}}, \quad \beta=\frac{\mu_{1}}{\mu_{2}-\mu_{1}^{2}}
+$$
+
+The MOM says that we replace the right-hand sides of these equations by the sample moments and then solve for $\alpha$ and $\beta$. In this case, we get
+
+$$
+\hat{\alpha}=\frac{\hat{\mu}_{1}^{2}}{\hat{\mu}_{2}-\hat{\mu}_{1}^{2}}, \quad \hat{\beta}=\frac{\hat{\mu}_{1}}{\hat{\mu}_{2}-\hat{\mu}_{1}^{2}}
+$$
+
+MOM can thus be thought of as "plug-in" estimates; to get an estimate $\hat{\theta}$ of $\theta= M\left(\mu_{1}, \mu_{2}, \ldots, \mu_{k}\right)$, we plug-in estimates of the $\mu_{i}$ 's, which are the $\hat{\mu}_{i}$ 's, to get $\hat{\theta}$.
+
+Result: If $M$ is continuous, then the fact that $m_{i}$ converges in probability to $\mu_{i}$, for every $i=1, \ldots, k$, entails that
+
+$$
+\hat{\theta}=M\left(\hat{\mu}_{1}, \hat{\mu}_{2}, \ldots, \hat{\mu}_{k}\right) \xrightarrow{\mathbb{P}} M\left(\mu_{1}, \mu_{2}, \ldots, \mu_{k}\right)=\theta .
+$$
+
+Thus MOM estimators are consistent under mild assumptions.
+
+Proof. LLN: the sample moments converge in probability to the population moments $\mu_{1}(\theta), \ldots, \mu_{k}(\theta)$.
+
+The generalization of the continuous mapping theorem (Theorem 6.2.5 in the book) to functions of $k$ variables implies that $M(\cdot)$ evaluated at the sample moments converges in probability to $\theta$, i.e., the MOM estimator converges in probability to $\theta$.
+
+Remark: In general, we might be interested in estimating $\Psi(\theta)$ where $\Psi(\theta)$ is some (known) function of $\theta$; in such a case, the MOM estimate of $\Psi(\theta)$ is $\Psi(\hat{\theta})$ where $\hat{\theta}$ is the MOM estimate of $\theta$.
+
+Example 3.4. Let $X_{1}, X_{2}, \ldots, X_{n}$ be the indicators of $n$ Bernoulli trials with success probability $\theta$. We are going to find a MOM estimator of $\theta$.
+
+Solution: Note that $\theta$ is the probability of success and satisifes,
+
+$$
+\theta=\mathbb{E}\left(X_{1}\right), \theta=\mathbb{E}\left(X_{1}^{2}\right) .
+$$
+
+Thus we can get MOMs of $\theta$ based on both the first and the second moments. Thus,
+
+$$
+\hat{\theta}_{M O M}=\bar{X}
+$$
+
+and
+
+$$
+\hat{\theta}_{M O M}=\frac{1}{n} \sum_{j=1}^{n} X_{j}^{2}=\frac{1}{n} \sum_{j=1}^{n} X_{j}=\bar{X}
+$$
+
+Example 3.5. Let $X_{1}, X_{2}, \ldots, X_{n}$ be i.i.d. Poisson( $\lambda$ ), $\lambda>0$. Find the MOM estimator of $\lambda$.
+
+Solution: We know that,
+
+$$
+\mathbb{E}\left(X_{1}\right)=\mu_{1}=\lambda
+$$
+
+and $\operatorname{Var}\left(X_{1}\right)=\mu_{2}-\mu_{1}^{2}=\lambda$. Thus
+
+$$
+\mu_{2}=\lambda+\lambda^{2} .
+$$
+
+Now, a MOM estimate of $\lambda$ is clearly given by $\hat{\lambda}=\hat{\mu}_{1}=\bar{X}$; thus a MOM estimate of $\mu_{2}=\lambda^{2}+\lambda$ is given by $\bar{X}^{2}+\bar{X}$.
+
+On the other hand, the obvious MOM estimate of $\hat{\mu}_{2}$ is $\hat{\mu}_{2}=\frac{1}{n} \sum_{j=1}^{n} X_{j}^{2}$. However these two estimates are not necessarily equal; in other words, it is not necessarily the case that $\bar{X}^{2}+\bar{X}=(1 / n) \sum_{j=1}^{n} X_{j}^{2}$.
+
+This illustrates one of the disadvantages of MOM estimates - they may not be uniquely defined.
+
+Example 3.6. Consider $n$ systems with failure times $X_{1}, X_{2}, \ldots, X_{n}$ assumed to be i.i.d $\operatorname{Exp}(\lambda), \lambda>0$. Find the MOM estimators of $\lambda$.
+
+Solution: It is not difficult to show that
+
+$$
+\mathbb{E}\left(X_{1}\right)=\frac{1}{\lambda}, \mathbb{E}\left(X_{1}^{2}\right)=\frac{2}{\lambda^{2}} .
+$$
+
+Therefore
+
+$$
+\lambda=\frac{1}{\mu_{1}}=\sqrt{\frac{2}{\mu_{2}}} .
+$$
+
+The above equations lead to two different MOM estimators for $\lambda$; the estimate based on the first moment is
+
+$$
+\hat{\lambda}_{M O M}=\frac{1}{\hat{\mu}_{1}},
+$$
+
+and the estimate based on the second moment is
+
+$$
+\hat{\lambda}_{M O M}=\sqrt{\frac{2}{\hat{\mu}_{2}}}
+$$
+
+Once again, note the non-uniqueness of the estimates.
+
+We finish up this section by some key observations about method of moments estimates.\\
+(i) The MOM principle generally leads to procedures that are easy to compute and which are therefore valuable as preliminary estimates.\\
+(ii) For large sample sizes, these estimates are likely to be close to the value being estimated (consistency).\\
+(iii) The prime disadvantage is that they do not provide a unique estimate and this has been illustrated before with examples.
+
+\section*{4 Method of Maximum Likelihood}
+As before, we have i.i.d observations $X_{1}, X_{2}, \ldots, X_{n}$ with common probability density (or mass function) $f(x, \theta)$, where $\theta \in \Omega \subseteq \mathbb{R}^{k}$ is a Euclidean parameter indexing the class of distributions being considered.
+
+The goal is to estimate $\theta$ or some $\Psi(\theta)$ where $\Psi$ is some known function of $\theta$.\\
+Definition 12 (Likelihood function). The likelihood function for the sample $\mathbf{X}_{n}= \left(X_{1}, X_{2}, \ldots, X_{n}\right)$ is
+
+$$
+L_{n}(\theta) \equiv L_{n}\left(\theta, \mathbf{X}_{n}\right):=\prod_{i=1}^{n} f\left(X_{i}, \theta\right)
+$$
+
+This is simply the joint density (or mass function) but we now think of this as a function of $\theta$ for a fixed $\mathbf{X}_{n}$; namely the $\mathbf{X}_{n}$ that is realized.
+
+Intuition: Suppose for the moment that $X_{i}$ 's are discrete, so that $f$ is actually a p.m.f. Then $L_{n}(\theta)$ is exactly the probability that the observed data is realized or "happens".
+
+We now seek to obtain that $\theta \in \Omega$ for which $L_{n}(\theta)$ is maximized. Call this $\hat{\theta}_{n}$ (assume that it exists). Thus $\hat{\theta}_{n}$ is that value of the parameter that maximizes the likelihood function, or in other words, makes the observed data most likely.
+
+It makes sense to pick $\hat{\theta}_{n}$ as a guess for $\theta$.\\
+When the $X_{i}$ 's are continuous and $f(x, \theta)$ is in fact a density we do the same thing maximize the likelihood function as before and prescribe the maximizer as an estimate of $\theta$.
+
+For obvious reasons, $\hat{\theta}_{n}$ is called an maximum likelihood estimate (MLE).
+
+Note that $\hat{\theta}_{n}$ is itself a deterministic function of $\mathbf{X}_{n}=\left(X_{1}, X_{2}, \ldots, X_{n}\right)$ and is therefore a random variable. Of course there is nothing that guarantees that $\hat{\theta}_{n}$ is unique, even if it exists.
+
+Sometimes, in the case of multiple maximizers, we choose one which is more desirable according to some "sensible" criterion.
+
+Example 4.1. Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Poisson}(\theta), \theta>0$. Find the MLE of $\theta$.
+
+Solution: In this case, it is easy to see that
+
+$$
+L_{n}(\theta)=\prod_{i=1}^{n} \frac{e^{-\theta} \theta^{X_{i}}}{X_{i}!}=C\left(\mathbf{X}_{n}\right) e^{-n \theta} \theta^{\sum_{i=1}^{n} X_{i}}
+$$
+
+To maximize this expression, we set
+
+$$
+\frac{\partial}{\partial \theta} \log L_{n}(\theta)=0
+$$
+
+This yields that
+
+$$
+\frac{\partial}{\partial \theta}\left[-n \theta+\left(\sum_{i=1}^{n} X_{i}\right) \log \theta\right]=0
+$$
+
+i.e.,
+
+$$
+-n+\frac{\sum_{i=1}^{n} X_{i}}{\theta}=0
+$$
+
+showing that
+
+$$
+\hat{\theta}_{n}=\bar{X}
+$$
+
+It can be checked (by computing the second derivative at $\hat{\theta}_{n}$ ) that the stationary point indeed gives (a unique) maximum (or by noting that the log-likelihood is a (strictly) concave function).
+
+Exercise 2: Let $X_{1}, X_{2}, \ldots, X_{n}$ be i.i.d $\operatorname{Ber}(\theta)$ where $0 \leq \theta \leq 1$. What is the MLE of $\theta$ ?
+
+Example 4.2. Suppose $X_{1}, X_{2}, \ldots, X_{n}$ are i.i.d Uniform( $[0, \theta]$ ) random variables, where $\theta>0$. We want to obtain the MLE of $\theta$.
+
+Solution: The likelihood function is given by,
+
+$$
+\begin{aligned}
+L_{n}(\theta) & =\prod_{i=1}^{n} \frac{1}{\theta} I_{[0, \theta]}\left(X_{i}\right) \\
+& =\frac{1}{\theta^{n}} \prod_{i=1}^{n} I_{\left[X_{i}, \infty\right)}(\theta) \\
+& =\frac{1}{\theta^{n}} I_{\left[\max _{i=1, \ldots, n} X_{i}, \infty\right)}(\theta)
+\end{aligned}
+$$
+
+It is then clear that $L_{n}(\theta)$ is constant and equals $1 / \theta^{n}$ for $\theta \geq \max _{i=1, \ldots, n} X_{i}$ and is 0 otherwise. By plotting the graph of this function, you can see that
+
+$$
+\hat{\theta}_{n}=\max _{i=1, \ldots, n} X_{i}
+$$
+
+Here, differentiation will not help you to get the MLE because the likelihood function is not differentiable at the point where it hits the maximum.
+
+Example 4.3. Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are i.i.d $N\left(\mu, \sigma^{2}\right)$. We want to find the MLEs of the mean $\mu$ and the variance $\sigma^{2}$.
+
+Solution: We write down the likelihood function first. This is,
+
+$$
+L_{n}\left(\mu, \sigma^{2}\right)=\frac{1}{(2 \pi)^{n / 2} \sigma^{n}} \exp \left(-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\mu\right)^{2}\right)
+$$
+
+It is easy to see that,
+
+$$
+\begin{aligned}
+\log L_{n}\left(\mu, \sigma^{2}\right) & =-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\mu\right)^{2}+\text { constant } \\
+& =-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}-\frac{n}{2 \sigma^{2}}\left(\bar{X}_{n}-\mu\right)^{2}
+\end{aligned}
+$$
+
+To maximize the above expression w.r.t $\mu$ and $\sigma^{2}$ we proceed as follows. For any $\left(\mu, \sigma^{2}\right)$ we have,
+
+$$
+\log L_{n}\left(\mu, \sigma^{2}\right) \leq \log L_{n}\left(\bar{X}_{n}, \sigma^{2}\right)
+$$
+
+showing that we can choose $\hat{\mu}_{M L E}=\bar{X}_{n}$.\\
+It then remains to maximize $\log L_{n}\left(\bar{X}_{n}, \sigma^{2}\right)$ with respect to $\sigma^{2}$ to find $\hat{\sigma}_{M L E}^{2}$.\\
+Now,
+
+$$
+\log L_{n}\left(\bar{X}_{n}, \sigma^{2}\right)=-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}
+$$
+
+Differentiating the left-side w.r.t $\sigma^{2}$ gives,
+
+$$
+-\frac{n}{2 \sigma^{2}}+\frac{1}{2\left(\sigma^{2}\right)^{2}} n \hat{\sigma}^{2}=0
+$$
+
+where $\hat{\sigma}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}$. The above equation leads to,
+
+$$
+\hat{\sigma}_{M L E}^{2}=\hat{\sigma}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}
+$$
+
+The fact that this actually gives a global maximizer follows from the fact that the second derivative at $\hat{\sigma}^{2}$ is negative.
+
+Note that, once again, the MOM estimates coincide with the MLEs.
+
+Exercise 3: We now tweak the above situation a bit. Suppose now that we restrict the parameter space, so that $\mu$ has to be non-negative, i.e., $\mu \geq 0$.
+
+Thus we seek to maximize $\log L_{n}\left(\mu, \sigma^{2}\right)$ but subject to the constraint that $\mu \geq 0$ and $\sigma^{2}>0$. Find the MLEs in this scenario.
+
+Example 4.4 (non-uniqueness of MLE). Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from the uniform distribution on the interval $[\theta, \theta+1]$, where $\theta \in \mathbb{R}$ is unknown. We want to find the MLE of $\theta$. Show that it is possible to select as an MLE any value of $\theta$ in the interval $\left[X_{(n)}-1, X_{(1)}\right]$, and thus the MLE is not unique.
+
+Example 4.5 (MLEs might not exist). Consider a random variable $X$ that can come with equal probability either from a $N(0,1)$ or from $N\left(\mu, \sigma^{2}\right)$, where both $\mu$ and $\sigma$ are unknown.
+
+Thus, the p.d.f. $f\left(\cdot, \mu, \sigma^{2}\right)$ of $X$ is given by
+
+$$
+f\left(x, \mu, \sigma^{2}\right)=\frac{1}{2}\left[\frac{1}{\sqrt{2 \pi}} e^{-x^{2} / 2}+\frac{1}{\sqrt{2 \pi} \sigma} e^{-(x-\mu)^{2} /\left(2 \sigma^{2}\right)}\right]
+$$
+
+Suppose now that $X_{1}, \ldots, X_{n}$ form a random sample from this distribution. As usual, the likelihood function
+
+$$
+L_{n}\left(\mu, \sigma^{2}\right)=\prod_{i=1}^{n} f\left(X_{i}, \mu, \sigma^{2}\right)
+$$
+
+We want to find the MLE of $\theta=\left(\mu, \sigma^{2}\right)$.\\
+Let $X_{k}$ denote one of the observed values. Note that
+
+$$
+\max _{\mu \in \mathbb{R}, \sigma^{2}>0} L_{n}\left(\mu, \sigma^{2}\right) \geq L_{n}\left(X_{k}, \sigma^{2}\right) \geq \frac{1}{2^{n}}\left[\frac{1}{\sqrt{2 \pi} \sigma}\right] \prod_{i \neq k} \frac{1}{\sqrt{2 \pi}} e^{-X_{i}^{2} / 2}
+$$
+
+Thus, if we let $\mu=X_{k}$ and let $\sigma^{2} \rightarrow 0$ then the factor $f\left(X_{k}, \mu, \sigma^{2}\right)$ will grow large without bound, while each factor $f\left(X_{i}, \mu, \sigma^{2}\right)$, for $i \neq k$, will approach the value
+
+$$
+\frac{1}{2 \sqrt{2 \pi}} e^{-X_{i}^{2} / 2}
+$$
+
+Hence, when $\mu=X_{k}$ and $\sigma^{2} \rightarrow 0$, we find that $L_{n}\left(\mu, \sigma^{2}\right) \rightarrow \infty$.\\
+Note that 0 is not a permissible estimate of $\sigma^{2}$, because we know in advance that $\sigma>0$. Since the likelihood function can be made arbitrarily large by choosing $\mu=X_{k}$ and choosing $\sigma^{2}$ arbitrarily close to 0 , it follows that the MLE does not exist.
+
+\subsection*{4.1 Properties of MLEs}
+\subsection*{4.1.1 Invariance}
+Theorem 4.6 (Invariance property of MLEs). If $\widehat{\theta}_{n}$ is the MLE of $\theta$ and if $\Psi$ is any function, then $\Psi\left(\widehat{\theta}_{n}\right)$ is the MLE of $\Psi(\theta)$.
+
+See Theorem 7.6.2 and Example 7.6.3 in the text book.\\
+Thus if $X_{1}, \ldots, X_{n}$ be i.i.d $\mathrm{N}\left(\mu, \sigma^{2}\right)$, then the MLE of $\mu^{2}$ is $\bar{X}_{n}^{2}$.
+
+\subsection*{4.1.2 Consistency}
+Consider an estimation problem in which a random sample is to be taken from a distribution involving a parameter $\theta$.
+
+Then, under certain conditions, which are typically satisfied in practical problems, the sequence of MLEs is consistent, i.e.,
+
+$$
+\hat{\theta}_{n} \xrightarrow{\mathbb{P}} \theta, \quad \text { as } n \rightarrow \infty .
+$$
+
+\subsection*{4.2 Computational methods for approximating MLEs}
+Example: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d from a Gamma distribution for which the p.d.f is as follows:
+
+$$
+f(x, \alpha)=\frac{1}{\Gamma(\alpha)} x^{\alpha-1} e^{-x}, \quad \text { for } x>0
+$$
+
+The likelihood function is
+
+$$
+L_{n}(\alpha)=\frac{1}{\Gamma(\alpha)^{n}}\left(\prod_{i=1}^{n} X_{i}\right)^{\alpha-1} e^{-\sum_{i=1}^{n} X_{i}}
+$$
+
+and thus the log-likelihood is
+
+$$
+\ell_{n}(\alpha) \equiv \log L_{n}(\alpha)=-n \log \Gamma(\alpha)+(\alpha-1) \sum_{i=1}^{n} \log \left(X_{i}\right)-\sum_{i=1}^{n} X_{i}
+$$
+
+The MLE of $\alpha$ will be the value of $\alpha$ that satisfies the equation
+
+$$
+\begin{gathered}
+\frac{\partial}{\partial \alpha} \ell_{n}(\alpha)=-n \frac{\Gamma^{\prime}(\alpha)}{\Gamma(\alpha)}+\sum_{i=1}^{n} \log \left(X_{i}\right)=0 \\
+\text { i.e., } \frac{\Gamma^{\prime}(\alpha)}{\Gamma(\alpha)}=\frac{1}{n} \sum_{i=1}^{n} \log \left(X_{i}\right)
+\end{gathered}
+$$
+
+\subsection*{4.2.1 Newton's Method}
+Let $f(x)$ be a real-valued function of a real variable, and suppose that we wish to solve the equation
+
+$$
+f(x)=0
+$$
+
+Let $x_{1}$ be an initial guess at the solution.\\
+Newton's method replaces the initial guess with the updated guess
+
+$$
+x_{2}=x_{1}-\frac{f\left(x_{1}\right)}{f^{\prime}\left(x_{1}\right)}
+$$
+
+The rationale behind the Newton's method is: approximate the curve by a line tangent to the curve passing through the point $\left(x_{1}, f\left(x_{1}\right)\right)$. The approximating line crosses the horizontal axis at the revised guess $x_{2}$. [Draw a figure!]
+
+Typically, one replaces the initial guess with the revised guess and iterates Newton's method until the results stabilize (see e.g., \href{http://en.wikipedia.org/wiki/Newton's_method}{http://en.wikipedia.org/wiki/Newton's\_method}).
+
+\subsection*{4.2.2 The EM Algorithm}
+Read Section 7.6 of the text-book. I will cover this later, if time permits.
+
+\section*{5 Principles of estimation}
+Setup: Our data $X_{1}, X_{2}, \ldots X_{n}$ are i.i.d observations from the distribution $P_{\theta}$ where $\theta \in \Omega$, the parameter space ( $\Omega$ is assumed to be the $k$-dimensional Euclidean space). We assume identifiability of the parameter, i.e. $\theta_{1} \neq \theta_{2} \Rightarrow P_{\theta_{1}} \neq P_{\theta_{2}}$.
+
+Estimation problem: Consider now, the problem of estimating $g(\theta)$ where $g$ is some function of $\theta$.
+
+In many cases $g(\theta)=\theta$ itself.\\
+Generally $g(\theta)$ will describe some important aspect of the distribution $P_{\theta}$.\\
+Our estimator of $g(\theta)$ will be some function of our observed data $\mathbf{X}_{n}=\left(X_{1}, X_{2}, \ldots, X_{n}\right)$.
+
+In general there will be several different estimators of $g(\theta)$ which may all seem reasonable from different perspectives - the question then becomes one of finding the most optimal one.
+
+This requires an objective measure of performance of an estimator.\\
+If $T_{n}$ estimates $g(\theta)$ a criterion that naturally suggests itself is the distance of $T_{n}$ from $g(\theta)$. Good estimators are those for which $\left|T_{n}-g(\theta)\right|$ is generally small.
+
+Since $T_{n}$ is a random variable no deterministic statement can be made about the absolute deviation; however what we can expect of a good estimator is a high chance of remaining close to $g(\theta)$.
+
+Also as $n$, the sample size, increases we get hold of more information and hence expect to be able to do a better job of estimating $g(\theta)$.
+
+These notions when coupled together give rise to the consistency requirement for a sequence of estimators $T_{n}$; as $n$ increases, $T_{n}$ ought to converge in probability to $g(\theta)$ (under the probability distribution $P_{\theta}$ ). In other words, for any $\epsilon>0$,
+
+$$
+\mathbb{P}_{\theta}\left(\left|T_{n}-g(\theta)\right|>\epsilon\right) \rightarrow 0
+$$
+
+The above is clearly a large sample property; what it says is that with probability increasing to 1 (as the sample size grows), $T_{n}$ estimates $g(\theta)$ to any pre-determined level of accuracy.
+
+However, the consistency condition alone, does not tell us anything about how well we are performing for any particular sample size, or the rate at which the above probability is going to 0 .
+
+Question: For a fixed sample size $n$, how do we measure the performance of an estimator?
+
+\subsection*{5.1 Statistical decision theory}
+Let $\left\{P_{\theta}: \theta \in \Omega\right\}$ be a model with data $\mathbf{X}_{n}=\left(X_{1}, \ldots, X_{n}\right)$ on $\mathcal{X}$ where $X_{i} \stackrel{\text { i.i.d }}{\sim} P_{\theta}$. Suppose that the gal is to estimate the unknown $\theta \in \Omega$. An estimator (decision rule) $\delta: \mathcal{X} \rightarrow \mathcal{A}$ maps data to actions (typically $\mathcal{A}=\Omega \subset \mathbb{R}^{k}$ ).
+
+Definition 13 (Loss function). $A$ loss $L: \Omega \times \mathcal{A} \rightarrow[0, \infty)$ evaluates the error of action a when the truth is $\theta$.
+
+A loss function $L: \Theta \times \mathcal{A} \rightarrow[0, \infty)$ assigns a numerical penalty to taking action $a \in \mathcal{A}$ when the true state is $\theta \in \Theta$. It encodes the stakes of being wrong.
+
+Common losses: squared error $L(\theta, a)=\|\theta-a\|^{2}$ (penalizes large errors strongly), absolute error $|\theta-a|, 0-1$ loss $\mathbf{1}\{\theta \neq a\}$ (discrete $\Omega$ ), asymmetric losses, etc.
+
+The loss of estimating $\theta$ by an estimator $\delta\left(\mathbf{X}_{n}\right)$ is $L\left(\delta\left(\mathbf{X}_{n}\right), \theta\right)$. Ideally we would like to choose an estimator $\delta(\cdot)$ such that the loss $L\left(\delta\left(\mathbf{X}_{n}\right), \theta\right)$ is "small".
+
+However, as the data is random, $L\left(\delta\left(\mathbf{X}_{n}\right), \theta\right)$ is also random. One way out of this difficulty is to obtain an average measure of the error, or in other words, average out $L(\delta, \theta)$ over all possible realizations of the data $\mathbf{X}_{n}$. This motivates the the following definition.
+
+Definition 14 (Risk function). The risk of $\delta$ at $\theta$ is
+
+$$
+R(\theta, \delta)=\mathbb{E}_{\theta}\left[L\left(\theta, \delta\left(\mathbf{X}_{n}\right)\right)\right]
+$$
+
+The resulting quantity is then still a function of $\theta$ but no longer random. When $L(\theta, a)=|a-\theta|$, then $R(\theta, \delta)$ is called the mean absolute error and can be written compactly (using acronym) as:
+
+$$
+\operatorname{MAD}(\theta, \delta):=\mathbb{E}_{\theta}\left[\left|\delta\left(\mathbf{X}_{n}\right)-\theta\right|\right]
+$$
+
+However, it is more common to avoid absolute deviations and work with the square of the deviation, integrated out as before over the distribution of $\delta\left(\mathbf{X}_{n}\right)$. This is called the mean squared error (MSE), or the risk under the squared error loss, and is defined as (if $\Omega \subset \mathbb{R}$ ),
+
+
+\begin{equation*}
+\operatorname{MSE}(\theta, \delta):=\mathbb{E}_{\theta}\left[\left(\delta\left(\mathbf{X}_{n}\right)-\theta\right)^{2}\right] . \tag{1}
+\end{equation*}
+
+
+Of course, this is meaningful, only if the above quantity is finite for all $\theta$. Good estimators are those for which the MSE is generally not too high, whatever be the value of $\theta$.
+
+For most of this course we will focus on the risk function under the squared error loss function, i.e., the MSE. There is a standard decomposition of the MSE that helps us understand its components.
+
+Theorem 5.1. For any estimator $T_{n} \equiv T_{n}\left(\mathbf{X}_{n}\right)$ of $g(\theta)$, we have
+
+$$
+\operatorname{MSE}\left(T_{n}, g(\theta)\right)=\operatorname{Var}_{\theta}\left(T_{n}\right)+b\left(T_{n}, g(\theta)\right)^{2}
+$$
+
+where $b\left(T_{n}, g(\theta)\right)=\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)$ is the bias of $T_{n}$ as an estimator of $g(\theta)$.
+
+Proof. We have,
+
+$$
+\begin{aligned}
+\operatorname{MSE}\left(T_{n}, g(\theta)\right) & =\mathbb{E}_{\theta}\left[\left(T_{n}-g(\theta)\right)^{2}\right] \\
+& =\mathbb{E}_{\theta}\left[\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)+\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)\right)^{2}\right] \\
+& =\mathbb{E}_{\theta}\left[\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)\right)^{2}\right]+\left(\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)\right)^{2} \\
+& \quad+2 \mathbb{E}_{\theta}\left[\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)\right)\left(\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)\right)\right] \\
+& =\operatorname{Var}_{\theta}\left(T_{n}\right)+b\left(T_{n}, g(\theta)\right)^{2},
+\end{aligned}
+$$
+
+where
+
+$$
+b\left(T_{n}, g(\theta)\right):=\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)
+$$
+
+is the bias of $T_{n}$ as an estimator of $g(\theta)$.\\
+The cross product term in the above display vanishes since $\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)$ is a constant and $\mathbb{E}_{\theta}\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)\right)=0$.
+
+The bias measures, on an average, by how much $T_{n}$ overestimate or underestimate $g(\theta)$. If we think of the expectation $\mathbb{E}_{\theta}\left(T_{n}\right)$ as the center of the distribution of $T_{n}$, then the bias measures by how much the center deviates from the target.
+
+The variance of $T_{n}$, of course, measures how closely $T_{n}$ is clustered around its center. Ideally one would like to minimize both simultaneously, but unfortunately this is rarely possible.
+
+Why risk alone rarely yields a single "best" estimator? For two estimators $\delta_{1}, \delta_{2}$, it is common that $R\left(\theta, \delta_{1}\right)<R\left(\theta, \delta_{2}\right)$ for some $\theta$ and the reverse for others. Thus, no uniform ordering.
+
+Example 5.2 (Risk curves that cross: Normal mean with known variance). Suppose that $X_{1}, \ldots, X_{n} \stackrel{\text { iid }}{\sim} N\left(\theta, \sigma^{2}\right)$. Consider the following estimator of $\theta: \delta_{c}\left(\mathbf{X}_{n}\right)=c \bar{X}_{n}$, for $c>0$. Show that $R\left(\theta, \delta_{c}\right)=c^{2} \sigma^{2} / n+(1-c)^{2} \theta^{2}$. Of course, the natural estimator is $\bar{X}_{n} \equiv \delta_{1}$.\\
+\includegraphics[max width=\textwidth, center]{62fa1b15-b86f-49bf-b0ef-e725a0f06af4-21}
+
+For small $|\theta|$, biased shrinkers ( $c<1$ ) beat $\bar{X}$; for large $|\theta|, \bar{X}_{n}$ eventually dominates. No single rule minimizes risk for all $\theta \in \mathbb{R}$.
+
+\begin{itemize}
+  \item $\delta_{0}\left(\mathbf{X}_{n}\right) \equiv 0: \quad R\left(\theta, \delta_{0}\right)=\theta^{2}$.
+  \item $M L E \delta_{M L E}=\bar{X}_{n}: \quad R\left(\theta, \bar{X}_{n}\right)=\sigma^{2} / n$ (flat).
+  \item Scaled mean $\delta_{c}=c \bar{X}_{n}: \quad R\left(\theta, \delta_{c}\right)=c^{2} \sigma^{2} / n+(1-c)^{2} \theta^{2}$.
+\end{itemize}
+
+Two estimators $T_{n}$ and $S_{n}$ can be compared on the basis of their MSEs. Under parameter value $\theta, T_{n}$ dominates $S_{n}$ as an estimator if
+
+$$
+\operatorname{MSE}\left(T_{n}, \theta\right) \leq \operatorname{MSE}\left(S_{n}, \theta\right) \quad \text { for all } \theta \in \Omega .
+$$
+
+In this situation we say that $S_{n}$ is inadmissible in the presence of $T_{n}$.\\
+The use of the term "inadmissible" hardly needs explanation. If, for all possible values of the parameter, we incur less error using $T_{n}$ instead of $S_{n}$ as an estimate of $g(\theta)$, then clearly there is no point in considering $S_{n}$ as an estimator at all.
+
+Continuing along this line of thought, is there an estimate that improves all others? In other words, is there an estimator that makes every other estimator inadmissible? The answer is no, except in certain pathological situations.
+
+As we have noted before, it is generally not possible to find a universally best estimator.
+
+One way to try to construct optimal estimators is to restrict oneself to a subclass of estimators and try to find the best possible estimator in this subclass. One arrives at subclasses of estimators by constraining them to meet some desirable requirements. One such requirement is that of unbiasedness. Below, we provide a formal definition.
+
+Definition 15 (Unbiased estimator). An estimator $T_{n} \equiv T_{n}\left(\mathbf{X}_{n}\right)$ of $g(\theta)$ is said to be unbiased if $\mathbb{E}_{\theta}\left(T_{n}\right)=g(\theta)$ for all possible values of $\theta$; i.e.,
+
+$$
+b\left(T_{n}, g(\theta)\right)=0 \quad \text { for all } \theta \in \Omega .
+$$
+
+Thus, unbiased estimators, on an average, hit the target, for all parameter values. This seems to be a reasonable constraint to impose on an estimator and indeed produces meaningful estimates in a variety of situations.
+
+Note that for an unbiased estimator $T_{n}$, the MSE under $\theta$ is simply the variance of $T_{n}$ under $\theta$.
+
+In a large class of models, it is possible to find an unbiased estimator of $g(\theta)$ that has the smallest possible variance among all possible unbiased estimators. Such an estimate is called an minimum variance unbiased estimator (MVUE). Here is a formal definition.
+
+Definition 16 (Minimum variance unbiased estimator). We call $S_{n}$ an MVUE of $g(\theta)$ if
+
+$$
+\text { (i) } \mathbb{E}_{\theta}\left(S_{n}\right)=g(\theta) \quad \text { for all } \theta \in \Omega
+$$
+
+and (ii) if $T_{n}$ is an unbiased estimate of $g(\theta)$, then $\operatorname{Var}_{\theta}\left(S_{n}\right) \leq \operatorname{Var}_{\theta}\left(T_{n}\right)$.
+
+Here are a few examples to illustrate some of the various concepts discussed above.\\
+(a) Consider $X_{1}, \ldots, X_{n}$ i.i.d $N\left(\mu, \sigma^{2}\right)$.
+
+A natural unbiased estimator of $g_{1}(\theta)=\mu$ is $\bar{X}_{n}$, the sample mean. It is also consistent for $\mu$ by the WLLN. It can be shown that this is also the MVUE of $\mu$.
+
+In other words, any other unbiased estimate of $\mu$ will have a larger variance than $\bar{X}_{n}$. Recall that the variance of $\bar{X}_{n}$ is simply $\sigma^{2} / n$.\\
+Consider now, the estimation of $\sigma^{2}$. Two estimates of this that we have considered in the past are
+
+$$
+(i) \hat{\sigma}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2} \quad \text { and } \quad \text { (ii) } s^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2} \text {. }
+$$
+
+Out of these $\hat{\sigma}^{2}$ is not unbiased for $\sigma^{2}$ but $s^{2}$ is. In fact $s^{2}$ is the MVUE of $\sigma^{2}$.\\
+(b) Let $X_{1}, X_{2}, \ldots, X_{n}$ be i.i.d from some underlying density function or mass function $f(x, \theta)$. Let $g(\theta)=\mathbb{E}_{\theta}\left(X_{1}\right)$.\\
+Then the sample mean $\bar{X}_{n}$ is always an unbiased estimate of $g(\theta)$. Whether it is MVUE or not depends on the underlying structure of the model.\\
+(c) Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ be i.i.d $\operatorname{Ber}(\theta)$. It can be shown that $\bar{X}_{n}$ is the MVUE of $\theta$.
+
+Now define $g(\theta)=\theta /(1-\theta)$. This is a quantity of interest because it is precisely the odds in favor of Heads. It can be shown that there is no unbiased estimator of $g(\theta)$ in this model (Why?).
+
+However an intuitively appealing estimate of $g(\theta)$ is $T_{n} \equiv \bar{X}_{n} /\left(1-\bar{X}_{n}\right)$. It is not unbiased for $g(\theta)$; however it does converge in probability to $g(\theta)$.
+
+This example illustrates an important point - unbiased estimators may not always exist. Hence imposing unbiasedness as a constraint may not be meaningful in all situations.\\
+(d) Unbiased estimators are not always better than biased estimators.
+
+Remember, it is the MSE that gauges the performance of the estimator and a biased estimator may actually outperform an unbiased one owing to a significantly smaller variance.
+
+Example 5.3. Consider $X_{1}, X_{2}, \ldots, X_{n}$ i.i.d Uniform $([0, \theta]) ; \theta>0$. Here $\Omega= (0, \infty)$.
+
+A natural estimate of $\theta$ is the maximum of the $X_{i}$ 's, which we denote by $X_{(n)}$.
+
+Another estimate of $\theta$ is obtained by observing that $\bar{X}_{n}$ is an unbiased estimate of $\theta / 2$, the common mean of the $X_{i}$ 's; hence $2 \bar{X}_{n}$ is an unbiased estimate of $\theta$.
+
+Show that $X_{(n)}$ in the sense of MSE outperforms $2 \bar{X}_{n}$ by an order of magnitude.\\
+The best unbiased estimator (MVUE) of $\theta$ is $\left(1+n^{-1}\right) X_{(n)}$.
+
+Solution: We can show that
+
+$$
+\begin{aligned}
+\operatorname{MSE}\left(2 \bar{X}_{n}, \theta\right) & =\frac{\theta^{2}}{3 n}=\operatorname{Var}\left(2 \bar{X}_{n}\right) \\
+\operatorname{MSE}\left(\left(1+n^{-1}\right) X_{(n)}, \theta\right) & =\frac{\theta^{2}}{n(n+2)}=\operatorname{Var}\left(\left(1+n^{-1}\right) X_{(n)}\right) \\
+\operatorname{MSE}\left(X_{(n)}, \theta\right) & =\frac{\theta^{2}}{n(n+2)} \cdot \frac{n^{2}}{(n+1)^{2}}+\frac{\theta^{2}}{(n+1)^{2}}
+\end{aligned}
+$$
+
+where in the last equality we have two terms - the variance and the squared bias.
+
+\section*{6 Sufficient Statistics}
+In some problems, there may not be any MLE, or there may be more than one. Even when an MLE is unique, it may not be a suitable estimator (as in the $\operatorname{Unif}(0, \theta)$ example, where the MLE always underestimates the value of $\theta$ ).
+
+In such problems, the search for a good estimator must be extended beyond the methods that have been introduced thus far.
+
+In this section, we shall define the concept of a sufficient statistic, which can be used to simplify the search for a good estimator in many problems.
+
+Suppose that in a specific estimation problem, two statisticians A and B must estimate the value of the parameter $\theta$.
+
+Statistician A can observe the values of the observations $X_{1}, X_{2}, \ldots, X_{n}$ in a random sample, and statistician B cannot observe the individual values of $X_{1}, X_{2}, \ldots, X_{n}$ but can learn the value of a certain statistic $T=\varphi\left(X_{1}, \ldots, X_{n}\right)$.
+
+In this case, statistician A can choose any function of the observations $X_{1}, X_{2}, \ldots, X_{n}$ as an estimator of $\theta$ (including a function of $T$ ). But statistician B can use only a function of $T$. Hence, it follows that A will generally be able to find a better estimator than will B .
+
+In some problems, however, B will be able to do just as well as A . In such a problem, the single function $T=\varphi\left(X_{1}, \ldots, X_{n}\right)$ will in some sense summarize all the information contained in the random sample about $\theta$, and knowledge of the individual values of $X_{1}, \ldots, X_{n}$ will be irrelevant in the search for a good estimator of $\theta$.
+
+A statistic $T$ having this property is called a sufficient statistic.
+
+A statistic is sufficient with respect to a statistical model $P_{\theta}$ and its associated unknown parameter $\theta$ if it provides "all" the information on $\theta$; .e.g., if "no other statistic that can be calculated from the same sample provides any additional information as to the value of the parameter".
+
+Definition 17 (Sufficient statistic). Let $X_{1}, X_{2}, \ldots, X_{n}$ be a random sample from a distribution indexed by a parameter $\theta \in \Omega$. Let $T$ be a statistic. Suppose that, for every $\theta \in \Omega$ and every possible value $t$ of $T$, the conditional joint distribution of $X_{1}, X_{2}, \ldots, X_{n}$ given that $T=t$ (at $\theta$ ) depends only on $t$ but not on $\theta$.
+
+That is, for each $t$, the conditional distribution of $X_{1}, X_{2}, \ldots, X_{n}$ given $T=t$ is the same for all $\theta$. Then we say that $T$ is a sufficient statistic for the parameter $\theta$.
+
+So, if $T$ is sufficient, and one observed only $T$ instead of $\left(X_{1}, \ldots, X_{n}\right)$, one could, at least in principle, simulate random variables $\left(X_{1}^{\prime}, \ldots, X_{n}^{\prime}\right)$ with the same joint distribution.
+
+In this sense, $T$ is sufficient for obtaining as much information about $\theta$ as one could get from $\left(X_{1}, \ldots, X_{n}\right)$.
+
+Example 6.1. Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Poisson}(\theta)$, where $\theta>0$. Show that $T=\sum_{i=1}^{n} X_{i}$ is sufficient.
+
+Note that
+
+$$
+\mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x} \mid T(\mathbf{X})=t)=\frac{\mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x}, T(\mathbf{X})=t)}{\mathbb{P}_{\theta}(T=t)}
+$$
+
+But,
+
+$$
+\mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x}, T(\mathbf{X})=t)= \begin{cases}0 & T(\boldsymbol{x}) \neq t \\ \mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x}) & T(\boldsymbol{x})=t\end{cases}
+$$
+
+As
+
+$$
+\mathbb{P}(\mathbf{X}=\boldsymbol{x})=\frac{e^{-n \theta} \theta^{T(\boldsymbol{x})}}{\prod_{i=1}^{n} x_{i}!}
+$$
+
+Also,
+
+$$
+\mathbb{P}_{\theta}(T(\mathbf{X})=t)=\frac{e^{-n \theta}(n \theta)^{t}}{t!}
+$$
+
+Hence,
+
+$$
+\frac{\mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x})}{\mathbb{P}_{\theta}(T(\mathbf{X})=t(\boldsymbol{x}))}=\frac{t!}{\prod_{i=1}^{n} x_{i}!n^{t}},
+$$
+
+which does not depend on $\theta$. So $T=\sum_{i=1}^{n} X_{i}$ is a sufficient statistic for $\theta$.\\
+Other sufficient statistics are: $T=3.7 \sum_{i=1}^{n} X_{i}, T=\left(\sum_{i=1}^{n} X_{i}, X_{4}\right)$, and $T= \left(X_{1}, \ldots, X_{n}\right)$.
+
+We shall now present a simple method for finding a sufficient statistic that can be applied in many problems.\\
+Theorem 6.2 (Factorization criterion). Let $X_{1}, X_{2}, \ldots, X_{n}$ form a random sample from either a continuous distribution or a discrete distribution for which the p.d.f or the p.m.f is $f(x, \theta)$, where the value of $\theta$ is unknown and belongs to a given parameter space $\Omega$.
+
+A statistic $T=r\left(X_{1}, X_{2}, \ldots, X_{n}\right)$ is a sufficient statistic for $\theta$ if and only if the joint p.d.f or the joint p.m.f $f_{n}(\boldsymbol{x}, \theta)$ of $\left(X_{1}, X_{2}, \ldots, X_{n}\right)$ can be factored as follows for all values of $\boldsymbol{x}=\left(x_{1}, \ldots, x_{n}\right) \in \mathbb{R}^{n}$ and all values of $\theta \in \Omega$ :
+
+$$
+f_{n}(\boldsymbol{x}, \theta)=u(\boldsymbol{x}) \nu(r(\boldsymbol{x}), \theta), \quad \text { where }
+$$
+
+\begin{itemize}
+  \item $u$ and $\nu$ are both non-negative,
+  \item the function $u$ may depend on $\boldsymbol{x}$ but does not depend on $\theta$,
+  \item the function $\nu$ will depend on $\theta$ but depends on the observed value $\boldsymbol{x}$ only through the value of the statistic $r(\boldsymbol{x})$.
+\end{itemize}
+
+Example: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Poi}(\theta), \theta>0$. Thus, for every nonnegative integers $x_{1}, \ldots, x_{n}$, the joint p.m.f $f_{n}(\boldsymbol{x}, \theta)$ of ( $X_{1}, \ldots, X_{n}$ ) is
+
+$$
+f_{n}(\boldsymbol{x}, \theta)=\prod_{i=1}^{n} \frac{e^{-\theta} \theta^{x_{i}}}{x_{i}!}=\frac{1}{\prod_{i=1}^{n} x_{i}!} e^{-n \theta} \theta^{\sum_{i=1}^{n} x_{i}}
+$$
+
+Thus, we can take $u(\boldsymbol{x})=1 /\left(\prod_{i=1}^{n} x_{i}!\right), r(\boldsymbol{x})=\sum_{i=1}^{n} x_{i}, \nu(t, \theta)=e^{-n \theta} \theta^{t}$. It follows that $T=\sum_{i=1}^{n} X_{i}$ is a sufficient statistic for $\theta$.
+
+Exercise: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Gamma}(\alpha, \beta), \alpha, \beta>0$, where $\alpha$ is known, and $\beta$ is unknown. The joint p.d.f is
+
+$$
+f_{n}(\boldsymbol{x}, \beta)=\left\{[\Gamma(\alpha)]^{-n}\left(\prod_{i=1}^{n} x_{i}\right)^{\alpha-1}\right\} \times\left\{\beta^{n \alpha} \exp (-\beta t)\right\}, \quad \text { where } t=\sum_{i=1}^{n} x_{i}
+$$
+
+The sufficient statistics is $T_{n}=\sum_{i=1}^{n} X_{i}$.
+
+Exercise: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Gamma}(\alpha, \beta), \alpha, \beta>0$, where $\alpha$ is unknown, and $\beta$ is known.
+
+The joint p.d.f in this exercise is the same as that given in the previous exercise. However, since the unknown parameter is now $\alpha$ instead of $\beta$, the appropriate factorization is now
+
+$$
+f_{n}(\boldsymbol{x}, \alpha)=\left\{\exp \left(-\beta \sum_{i=1}^{n} x_{i}\right)\right\} \times\left\{\frac{\beta^{n \alpha}}{[\Gamma(\alpha)]^{n}} t^{\alpha-1}\right\}, \quad \text { where } t=\prod_{i=1}^{n} x_{i} .
+$$
+
+The sufficient statistics is $T_{n}=\prod_{i=1}^{n} X_{i}$.
+
+Exercise: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Unif}([0, \theta]), \theta>0$ is the unknown parameter.
+
+Show that $T=\max \left\{X_{1}, \ldots, X_{n}\right\}$ is the sufficient statistic.
+
+\section*{7 Bayesian paradigm}
+\section*{Frequentist versus Bayesian statistics:}
+Frequentist:
+
+\begin{itemize}
+  \item Data are a repeatable random sample - there is a frequency.
+  \item Parameters are fixed.
+  \item Underlying parameters remain constant during this repeatable process.
+\end{itemize}
+
+Bayesian:
+
+\begin{itemize}
+  \item Parameters are unknown and described probabilistically.
+  \item Analysis is done conditioning on the observed data; i.e., data is treated as fixed.
+\end{itemize}
+
+\subsection*{7.1 Prior distribution}
+Definition 18 (Prior distribution). Suppose that one has a statistical model with parameter $\theta$. If one treats $\theta$ as random, then the distribution that one assigns to $\theta$ before observing the data is called its prior distribution.
+
+Thus, now $\theta$ is random and will be denoted by $\Theta$ (note the change of notation).\\
+We will assume that if the prior distribution of $\Theta$ is continuous, then its p.d.f is called the prior p.d.f of $\Theta$.
+
+Example: Let $\Theta$ denote the probability of obtaining a head when a certain coin is tossed.
+
+\begin{itemize}
+  \item Case 1: Suppose that it is known that the coin either is fair or has a head on each side. Then $\Theta$ only takes two values, namely $1 / 2$ and 1 . If the prior probability that the coin is fair is 0.8 , then the prior p.m.f of $\Theta$ is $\xi(1 / 2)=0.8$ and $\xi(1)=0.2$.
+  \item Case 2: Suppose that $\Theta$ can take any value between $(0,1)$ with a prior distribution given by a Beta distribution with parameters $(1,1)$.
+\end{itemize}
+
+Suppose that the observable data $X_{1}, X_{2}, \ldots, X_{n}$ are modeled as random sample from a distribution indexed by $\theta$. Suppose $f(\cdot \mid \theta)$ denote the p.m.f/p.d.f of a single random variable under the distribution indexed by $\theta$.
+
+When we treat the unknown parameter $\Theta$ as random, then the joint distribution of the observable random variables (i.e., data) indexed by $\theta$ is understood as the conditional distribution of the data given $\Theta=\theta$.
+
+Thus, in general we will have $X_{1}, \ldots, X_{n} \mid \Theta=\theta$ are i.i.d with p.d.f/p.m.f $f(\cdot \mid \theta)$, and that $\Theta \sim \xi$, i.e.,
+
+$$
+f_{n}(\boldsymbol{x} \mid \theta)=f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right)
+$$
+
+where $f_{n}$ is the joint conditional distribution of $\mathbf{X}=\left(X_{1}, \ldots, X_{n}\right)$ given $\Theta=\theta$.
+
+\subsection*{7.2 Posterior distribution}
+Definition 19 (Posterior distribution). Consider a statistical inference problem with parameter $\theta$ and random variables $X_{1}, \ldots, X_{n}$ to be observed. The conditional distribution of $\Theta$ given $X_{1}, \ldots, X_{n}$ is called the posterior distribution of $\theta$.
+
+The conditional p.m.f/p.d.f of $\Theta$ given $X_{1}=x_{1}, \ldots, X_{n}=x_{n}$ is called the posterior p.m.f/p.d.f of $\theta$ and is usually denoted by $\xi\left(\cdot \mid x_{1}, \ldots, x_{n}\right)$.
+
+Theorem 7.1. Suppose that the $n$ random variables $X_{1}, \ldots, X_{n}$ form a random sample from a distribution for which the p.d.f/p.m.f is $f(\cdot \mid \theta)$. Suppose also that the value of the parameter $\theta$ is unknown and the prior p.d.f/p.m.f of $\Theta$ is $\xi(\cdot)$. Then the posterior p.d.f/p.m.f of $\Theta$, given the data $\left(X_{1}, \ldots, X_{n}\right)=\left(x_{1}, \ldots, x_{n}\right) \equiv \boldsymbol{x}$, is
+
+$$
+\xi(\theta \mid \boldsymbol{x})=\frac{f\left(x_{1} \mid \theta\right) \cdots f\left(x_{n} \mid \theta\right) \xi(\theta)}{g_{n}(\boldsymbol{x})}, \quad \text { for } \theta \in \Omega
+$$
+
+where $g_{n}$ is the marginal joint p.d.f/p.m.f of $X_{1}, \ldots, X_{n}$, i.e.,
+
+$$
+g_{n}(\boldsymbol{x})=\int f\left(x_{1} \mid \theta\right) \cdots f\left(x_{n} \mid \theta\right) \xi(\theta) d \theta
+$$
+
+if $\xi(\cdot)$ is a p.d.f.
+
+\subsection*{7.3 Sampling from a Bernoulli distribution}
+Theorem 7.2. Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from the Bernoulli distribution with mean $\theta>0$, where $0<\theta<1$ is unknown. Suppose that the prior distribution of $\Theta$ is $\operatorname{Beta}(\alpha, \beta)$, where $\alpha, \beta>0$.
+
+Then the posterior distribution of $\Theta$ given $X_{i}=x_{i}$, for $i=1, \ldots, n$, is $\operatorname{Beta}(\alpha+ \left.\sum_{i=1}^{n} x_{i}, \beta+n-\sum_{i=1}^{n} x_{i}\right)$.
+
+Proof. The joint p.m.f of the data is
+
+$$
+f_{n}(\boldsymbol{x} \mid \theta)=f\left(x_{1} \mid \theta\right) \cdots f\left(x_{n} \mid \theta\right)=\prod_{i=1}^{n} \theta^{x_{i}}(1-\theta)^{1-x_{i}}=\theta^{\sum_{i=1}^{n} x_{i}}(1-\theta)^{n-\sum_{i=1}^{n} x_{i}}
+$$
+
+Therefore the posterior density of $\Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n}$ is given by
+
+$$
+\begin{aligned}
+\xi(\theta \mid \boldsymbol{x}) & \propto \theta^{\alpha-1}(1-\theta)^{\beta-1} \cdot \theta^{\sum_{i=1}^{n} x_{i}}(1-\theta)^{n-\sum_{i=1}^{n} x_{i}} \\
+& =\theta^{\sum_{i=1}^{n} x_{i}+\alpha-1}(1-\theta)^{\beta+n-\sum_{i=1}^{n} x_{i}-1}
+\end{aligned}
+$$
+
+for $\theta \in(0,1)$. Thus,
+
+$$
+\Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n} \sim \operatorname{Beta}\left(\alpha+\sum_{i=1}^{n} x_{i}, \beta+n-\sum_{i=1}^{n} x_{i}\right) .
+$$
+
+\subsection*{7.4 Sampling from a Poisson distribution}
+Theorem 7.3. Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from the Poisson distribution with mean $\theta>0$, where $\theta$ is unknown. Suppose that the prior distribution of $\Theta$ is $\operatorname{Gamma}(\alpha, \beta)$, where $\alpha, \beta>0$.
+
+Then the posterior distribution of $\Theta$ given $X_{i}=x_{i}$, for $i=1, \ldots, n$, is $\operatorname{Gamma}(\alpha+ \left.\sum_{i=1}^{n} x_{i}, \beta+n\right)$.
+
+Definition (Conjugate family of distributions): Let $X_{1}, X_{2}, \ldots$, be conditionally i.i.d given $\Theta=\theta$ with common p.m.f/p.d.f $f(\cdot \mid \theta)$, where $\theta \in \Omega$.
+
+Let $\Psi$ be a family of possible distributions over the parameter space $\Omega$. Suppose that no matter which prior distribution $\xi$ we choose from $\Psi$, no matter how many observations $\mathbf{X}_{n}=\left(X_{1}, \ldots, X_{n}\right)$ we observe, and no matter what are their observed values $\boldsymbol{x}=\left(x_{1}, \ldots, x_{n}\right)$, the posterior distribution $\xi(\cdot \mid \boldsymbol{x})$ is a member of $\Psi$.
+
+Then $\Psi$ is called a conjugate family of prior distributions for samples from the distributions $f(\cdot \mid \theta)$.
+
+\subsection*{7.5 Sampling from an Exponential distribution}
+Example: Suppose that the distribution of the lifetime of fluorescent tubes of a certain type is the exponential distribution with parameter $\theta$. Suppose that $X_{1}, \ldots, X_{n}$ is a random sample of lamps of this type.
+
+Also suppose that $\Theta \sim \operatorname{Gamma}(\alpha, \beta)$, for known $\alpha, \beta$.\\
+Then
+
+$$
+f_{n}(\boldsymbol{x} \mid \theta)=\prod_{i=1}^{n} \theta e^{-\theta x_{i}}=\theta^{n} e^{-\theta \sum_{i=1}^{n} x_{i}}
+$$
+
+Then the posterior distribution of $\Theta$ given the data is
+
+$$
+\xi(\theta \mid \boldsymbol{x}) \propto \theta^{n} e^{-\theta \sum_{i=1}^{n} x_{i}} \cdot \theta^{\alpha-1} e^{-\beta \theta}=\theta^{n+\alpha-1} e^{-\left(\beta+\sum_{i=1}^{n} x_{i}\right) \theta}
+$$
+
+Therefore, $\Theta \mid \mathbf{X}_{n}=\boldsymbol{x} \sim \operatorname{Gamma}\left(\alpha+n, \beta+\sum_{i=1}^{n} x_{i}\right)$.
+
+\section*{8 Bayes Estimator}
+Recall that an estimator $\hat{\theta}$ of a parameter $\theta$ is some function of the data that we hope is close to the parameter, i.e., $\hat{\theta} \approx \theta$.
+
+Let $X_{1}, \ldots, X_{n}$ be i.i.d data with p.d.f/p.m.f $f(\cdot \mid \theta)$ where $\theta \in \Omega$. Let $\delta \equiv \delta\left(X_{1}, \ldots, X_{n}\right) \equiv \delta\left(\mathbf{X}_{n}\right)$ be an estimator of $\theta$.
+
+Definition: A loss function is a real-valued function of two variables, $L(\theta, a)$, where $\theta \in \Omega$ and $a \in \mathbb{R}$.
+
+The interpretation is that the statistician loses $L(\theta, a)$ if the parameter equals $\theta$ and the estimate equals $a$.
+
+Examples: (Squared error loss) $L(\theta, a)=(\theta-a)^{2} ; \quad$ (absolute error loss) $L(\theta, a)=|\theta-a|$.
+
+Accordingly, an estimator $\delta$ is judged by its average loss or risk function $R(\cdot, \cdot)$, defined as ${ }^{3}$
+
+
+\begin{equation*}
+R(\theta, \delta):=\mathbb{E}_{\theta}\left[L\left(\theta, \delta\left(\mathbf{X}_{n}\right)\right]=\int L\left(\theta, \delta\left(x_{1}, \ldots, x_{n}\right)\right) f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) d x_{n} \ldots d x_{1}\right. \tag{2}
+\end{equation*}
+
+
+As mentioned earlier, a comparison of two estimators from their risk functions will be inconclusive whenever the graphs of these functions cross. This difficulty will not arise if the performance of an estimator is measured with a single number.
+
+In a Bayesian approach to inference the performance of an estimator $\delta$ is judged by a weighted average of the risk function (also called the Bayes risk), specifically by
+
+
+\begin{equation*}
+\mathbb{E}\left[L\left(\Theta, \delta\left(\mathbf{X}_{n}\right)\right)\right]=\int R(\theta, \delta) \xi(\theta) d \theta \tag{3}
+\end{equation*}
+
+
+where $\xi(\cdot)$ is a specified prior distribution on the parameter space $\Omega$ (here we have assumed that $\xi(\cdot)$ is a p.d.f).
+
+\footnotetext{${ }^{3}$ Recall that mean squared error (MSE) is just the risk function under squared error loss.
+}The weighted average (3) arises as expected loss using $\delta$ in a Bayesian probability model in which both the unknown parameter and data are viewed as random.
+
+Definition: Suppose now that the statistician can observe the value $\boldsymbol{x}$ of the data $\mathbf{X}_{n}$ before estimating $\theta$, and let $\xi(\cdot \mid \boldsymbol{x})$ denote the posterior p.d.f of $\theta \in \Omega$. For each value $a$ that the statistician might use, her expected loss in this case will be
+
+
+\begin{equation*}
+\mathbb{E}[L(\Theta, a) \mid \boldsymbol{x}]=\int_{\Omega} L(\theta, a) \xi(\theta \mid \boldsymbol{x}) d \theta \tag{4}
+\end{equation*}
+
+
+Hence, the statistician should now choose an estimate $a$ for which the above expectation is minimum.
+
+For each possible value $\boldsymbol{x}$ of $\mathbf{X}_{n}$, let $\delta^{*}(\boldsymbol{x})$ denote a value of the estimate $a$ for which the expected loss (4) is minimum, i.e.,
+
+$$
+\delta^{*}(\boldsymbol{x})=\min _{a} \mathbb{E}[L(\Theta, a) \mid \boldsymbol{x}] .
+$$
+
+Then the function $\delta^{*}\left(\mathbf{X}_{n}\right)$ is called the Bayes estimator of $\theta$.\\
+Thus, a Bayes estimator is an estimator that is chosen to minimize the posterior mean of some measure of how far the estimator is from the parameter.
+
+Note that the Bayes estimator minimizes the Bayes risk (3). To see this let $\delta$ be an arbitrary estimator. Then, from the definition of the Bayes estimator (which minimizes (4)), we have
+
+$$
+\begin{aligned}
+\mathbb{E}\left[L\left(\Theta, \delta\left(\mathbf{X}_{n}\right)\right)\right] & =\mathbb{E}\left[\mathbb{E}\left[L\left(\Theta, \delta\left(\mathbf{X}_{n}\right)\right) \mid \mathbf{X}_{n}\right]\right] \\
+& \geq \mathbb{E}\left[\mathbb{E}\left[L\left(\Theta, \delta^{*}\left(\mathbf{X}_{n}\right)\right) \mid \mathbf{X}_{n}\right]\right] \\
+& =\mathbb{E}\left[L\left(\Theta, \delta^{*}\left(\mathbf{X}_{n}\right)\right)\right] .
+\end{aligned}
+$$
+
+Corollary 8.1. Let $\theta \in \Omega \subset \mathbb{R}$. Suppose that the squared error loss function is used. Then the Bayes estimator of $\Theta$ is the posterior mean of $\Theta$ given $\mathbf{X}_{n}$, i.e.,
+
+$$
+\delta^{*}\left(\mathbf{X}_{n}\right)=\mathbb{E}\left[\Theta \mid \mathbf{X}_{n}\right] .
+$$
+
+Example 8.2. (Bernoulli distribution with Beta prior) Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from the Bernoulli distribution with mean $\theta>0$, where $0<\theta<1$ is unknown. Suppose that the prior distribution of $\Theta$ is $\operatorname{Beta}(\alpha, \beta)$, where $\alpha, \beta>0$.
+
+Recall that $\Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n} \sim \operatorname{Beta}\left(\alpha+\sum_{i=1}^{n} x_{i}, \beta+n-\sum_{i=1}^{n} x_{i}\right)$. Thus,
+
+$$
+\delta^{*}\left(\mathbf{X}_{n}\right)=\frac{\alpha+\sum_{i=1}^{n} X_{i}}{\alpha+\beta+n}
+$$
+
+\subsection*{8.1 Sampling from a normal distribution}
+Theorem 8.3. Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from $N\left(\theta, \sigma^{2}\right)$, where $\theta$ is unknown and the value of the variance $\sigma^{2}>0$ is known. Suppose that $\Theta \sim N\left(\mu_{0}, v_{0}^{2}\right)$. Then
+
+$$
+\Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n} \sim N\left(\mu_{1}, v_{1}^{2}\right),
+$$
+
+where
+
+$$
+\mu_{1}=\frac{\sigma^{2} \mu_{0}+n v_{0}^{2} \bar{x}_{n}}{\sigma^{2}+n v_{0}^{2}} \quad \text { and } \quad v_{1}^{2}=\frac{\sigma^{2} v_{0}^{2}}{\sigma^{2}+n v_{0}^{2}} .
+$$
+
+Proof. The joint density has the form
+
+$$
+f_{n}(\boldsymbol{x} \mid \theta) \propto \exp \left[-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(x_{i}-\theta\right)^{2}\right] .
+$$
+
+The method of completing the squares tells us that
+
+$$
+\sum_{i=1}^{n}\left(x_{i}-\theta\right)^{2}=n\left(\theta-\bar{x}_{n}\right)^{2}+\sum_{i=1}^{n}\left(x_{i}-\bar{x}_{n}\right)^{2} .
+$$
+
+Thus, by omitting the factor that involves $x_{1}, \ldots, x_{n}$ but does depend on $\theta$, we may rewrite $f_{n}(\boldsymbol{x} \mid \theta)$ as
+
+$$
+f_{n}(\boldsymbol{x} \mid \theta) \propto \exp \left[-\frac{n}{2 \sigma^{2}}\left(\theta-\bar{x}_{n}\right)^{2}\right] .
+$$
+
+Since the prior density has the form
+
+$$
+\xi(\theta) \propto \exp \left[-\frac{1}{2 v_{0}^{2}}\left(\theta-\mu_{0}\right)^{2}\right],
+$$
+
+it follows that the posterior p.d.f $\xi(\theta \mid \boldsymbol{x})$ satisfies
+
+$$
+\xi(\theta \mid \boldsymbol{x}) \propto \exp \left[-\frac{n}{2 \sigma^{2}}\left(\theta-\bar{x}_{n}\right)^{2}-\frac{1}{2 v_{0}^{2}}\left(\theta-\mu_{0}\right)^{2}\right] .
+$$
+
+Completing the squares again establishes the following identity:
+
+$$
+\frac{n}{\sigma^{2}}\left(\theta-\bar{x}_{n}\right)^{2}+\frac{1}{v_{0}^{2}}\left(\theta-\mu_{0}\right)^{2}=\frac{1}{v_{1}^{2}}\left(\theta-\mu_{1}\right)^{2}+\frac{n}{\sigma^{2}+n v_{0}^{2}}\left(\bar{x}_{n}-\mu_{0}\right)^{2} .
+$$
+
+The last term on the right side does not involve on $\theta$. Thus,
+
+$$
+\xi(\theta \mid \boldsymbol{x}) \propto \exp \left[-\frac{1}{2 v_{1}^{2}}\left(\theta-\mu_{1}\right)^{2}\right] .
+$$
+
+Thus,
+
+$$
+\delta^{*}\left(\mathbf{X}_{n}\right)=\frac{\sigma^{2} \mu_{0}+n v_{0}^{2} \bar{X}_{n}}{\sigma^{2}+n v_{0}^{2}} .
+$$
+
+Corollary 8.4. Let $\theta \in \Omega \subset \mathbb{R}$. Suppose that the absolute error loss function is used. Then the Bayes estimator of $\theta \delta^{*}\left(\mathbf{X}_{n}\right)$ equals the median of the posterior distribution of $\Theta$.
+
+
+\end{document}
