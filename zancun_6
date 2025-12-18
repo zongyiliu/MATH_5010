@@ -66,37 +66,37 @@ The company believes that, if they knew the failure rate $\theta$, then $\mathbf
 \footnotetext{*Notes for Chapter 7 of DeGroot and Schervish.\\
 ${ }^{1} X$ has an exponential distribution with (failure) rate $\theta>0$, i.e., $X \sim \operatorname{Exp}(\theta)$, if the p.d.f of $X$ is given by
 
-$$
+$
 f_{\theta}(x)=\theta e^{-\theta x} \mathbf{1}_{[0, \infty)}(x), \quad \text { for } x \in \mathbb{R} .
-$$
+$
 
 The mean (or expected value) of $X$ is given by $\mathbb{E}(X)=\theta^{-1}$, and the variance of $X$ is $\operatorname{Var}(X)=\theta^{-2}$.
 }\subsection*{1.1 Recap: Some results from probability}
 Definition 1 (Sample mean). Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are $n$ i.i.d r.v's with (unknown) mean $\mu \in \mathbb{R}$ (i.e., $\mathbb{E}\left(X_{1}\right)=\mu$ ) and variance $\sigma^{2}<\infty$. A natural "estimator" of $\mu$ is the sample mean (or average) defined as
 
-$$
+$
 \bar{X}_{n}:=\frac{1}{n}\left(X_{1}+\ldots+X_{n}\right)=\frac{1}{n} \sum_{i=1}^{n} X_{i} .
-$$
+$
 
 Lemma 1.2. $\mathbb{E}\left(\bar{X}_{n}\right)=\mu$ and $\operatorname{Var}\left(\bar{X}_{n}\right)=\sigma^{2} / n$.
 
 Proof. Observe that
 
-$$
+$
 \mathbb{E}\left(\bar{X}_{n}\right)=\frac{1}{n} \sum_{i=1}^{n} \mathbb{E}\left(X_{i}\right)=\frac{1}{n} \cdot n \mu=\mu .
-$$
+$
 
 Also,
 
-$$
+$
 \operatorname{Var}\left(\bar{X}_{n}\right)=\frac{1}{n^{2}} \operatorname{Var}\left(\sum_{i=1}^{n} X_{i}\right)=\frac{1}{n^{2}} \cdot n \sigma^{2}=\frac{\sigma^{2}}{n} .
-$$
+$
 
 Theorem 1.3 (Weak law of large numbers). Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are $n$ i.i.d $r$.v's with finite mean $\mu$. Then for any $\epsilon>0$, we have
 
-$$
+$
 \mathbb{P}\left(\left|\frac{1}{n} \sum_{i=1}^{n} X_{i}-\mathbb{E}(X)\right|>\epsilon\right) \rightarrow 0 \quad \text { as } n \rightarrow \infty .
-$$
+$
 
 This says that if we take the sample average of $n$ i.i.d r.v's the sample average will be close to the true population average. Figure 1 illustrates the result: The left panel shows the density of the data generating distribution (in this example we took $X_{1}, \ldots, X_{n}$ i.i.d. $\left.\operatorname{Exp}(10)\right)$; the middle and right panels show the distribution (histogram obtained from 1000 replicates) of $\bar{X}_{n}$ for $n=100$ and $n=1000$, respectively. We see that as the sample size increases, the distribution of the sample mean concentrates around $\mathbb{E}\left(X_{1}\right)=1 / 10$ (i.e., $\bar{X}_{n} \xrightarrow{\mathbb{P}} 10^{-1}$ as $n \rightarrow \infty$ ).
 
@@ -104,21 +104,21 @@ Definition 2 (Convergence in probability). In the above, we say that the sample 
 
 More generally, we say that the sequence of r.v's $\left\{Z_{n}\right\}_{n=1}^{\infty}$ converges to $Z$ in probability, and write
 
-$$
+$
 Z_{n} \xrightarrow{\mathbb{P}} Z,
-$$
+$
 
 if for every $\epsilon>0$,
 
-$$
+$
 \mathbb{P}\left(\left|Z_{n}-Z\right|>\epsilon\right) \rightarrow 0 \quad \text { as } n \rightarrow \infty .
-$$
+$
 
 This is equivalent to saying that for every $\epsilon>0$,
 
-$$
+$
 \lim _{n \rightarrow \infty} \mathbb{P}\left(\left|Z_{n}-Z\right| \leq \epsilon\right)=1
-$$
+$
 
 \begin{figure}[h]
 \begin{center}
@@ -130,9 +130,9 @@ $$
 
 Definition 3 (Convergence in distribution). We say a sequence of r.v's $\left\{Z_{n}\right\}_{i=1}^{n}$ with c.d.f's $F_{n}(\cdot)$ converges in distribution to $F$ if
 
-$$
+$
 \lim _{n \rightarrow \infty} F_{n}(u)=F(u)
-$$
+$
 
 for all $u$ such that $F$ is continuous ${ }^{2}$ at $u$ (here $F$ is itself a c.d.f).
 
@@ -140,15 +140,15 @@ The second fundamental result in probability theory, after the law of large numb
 
 Theorem 1.4 (Central limit theorem). If $X_{1}, X_{2} \ldots$ are i.i.d with mean zero and variance 1, then
 
-$$
+$
 \frac{1}{\sqrt{n}} \sum_{i=1}^{n} X_{i} \xrightarrow{d} N(0,1),
-$$
+$
 
 where $N(0,1)$ is the standard normal distribution. More generally, the usual rescaling tell us that, for $X_{1}, X_{2}, \ldots$ are i.i.d with mean $\mu$ and variance $\sigma^{2}<\infty$
 
-$$
+$
 \sqrt{n}\left(\bar{X}_{n}-\mu\right) \equiv \frac{1}{\sqrt{n}} \sum_{i=1}^{n}\left(X_{i}-\mu\right) \xrightarrow{d} N\left(0, \sigma^{2}\right) .
-$$
+$
 
 \footnotetext{${ }^{2}$ Explain why do we need to restrict our attention to continuity points of $F$. (Hint: think of the following sequence of distributions: $F_{n}(u)=I(u \geq 1 / n)$, where the "indicator" function of a set $A$ is one if $x \in A$ and zero otherwise.)
 
@@ -156,9 +156,9 @@ It's worth emphasizing that convergence in distribution - because it only looks 
 
 Also, if $U \sim \operatorname{Unif}(0,1)$, then the sequence
 
-$$
+$
 U, 1-U, U, 1-U, \ldots
-$$
+$
 
 converge in distribution to a uniform distribution. But obviously they do not converge in probability.
 }\begin{figure}[h]
@@ -175,15 +175,15 @@ Another class of useful results we will use very much in this course go by the n
 
 Theorem 1.5. If $Z_{n} \xrightarrow{\mathbb{P}} b$ and if $g(\cdot)$ is a function that is continuous at $b$, then
 
-$$
+$
 g\left(Z_{n}\right) \xrightarrow{\mathbb{P}} g(b) .
-$$
+$
 
 Theorem 1.6. If $Z_{n} \xrightarrow{d} Z$ and if $g(\cdot)$ is a function that is continuous, then
 
-$$
+$
 g\left(Z_{n}\right) \xrightarrow{d} g(Z) .
-$$
+$
 
 \subsection*{1.2 Back to Example 1.1}
 In the first example we have the following results:
@@ -192,25 +192,25 @@ In the first example we have the following results:
   \item by the LLN, the sample mean $\bar{X}_{n}$ converges in probability to the expectation $1 / \theta$ (failure rate), i.e.,
 \end{itemize}
 
-$$
+$
 \bar{X}_{n} \xrightarrow{\mathbb{P}} \frac{1}{\theta} ;
-$$
+$
 
 \begin{itemize}
   \item by the continuous mapping theorem (see Theorem 1.5) $\bar{X}_{n}^{-1}$ converges in probability to $\theta$, i.e.,
 \end{itemize}
 
-$$
+$
 \bar{X}_{n}^{-1} \xrightarrow{\mathbb{P}} \theta ;
-$$
+$
 
 \begin{itemize}
   \item by the CLT, we know that
 \end{itemize}
 
-$$
+$
 \sqrt{n}\left(\bar{X}_{n}-\theta^{-1}\right) \xrightarrow{d} N\left(0, \theta^{-2}\right)
-$$
+$
 
 where $\operatorname{Var}\left(X_{1}\right)=\theta^{-2}$;
 
@@ -224,51 +224,51 @@ The first thing to note is that if $\left\{Z_{n}\right\}_{i=1}^{n}$ converges in
 We can also "zoom in" to look at the asymptotic distribution (not just the limit point) of the sequence of r.v's $\left\{g\left(Z_{n}\right)\right\}_{i=1}^{n}$, whenever $g(\cdot)$ is sufficiently smooth.\\
 Theorem 1.7. Let $Z_{1}, Z_{2}, \ldots, Z_{n}$ be a sequence of r.v's and let $Z$ be a r.v with a continuous c.d.f $F^{*}$. Let $\theta \in \mathbb{R}$, and let $a_{1}, a_{2}, \ldots$, be a sequence such that $a_{n} \rightarrow \infty$. Suppose that
 
-$$
+$
 a_{n}\left(Z_{n}-\theta\right) \xrightarrow{d} F^{*} .
-$$
+$
 
 Let $g(\cdot)$ be a function with a continuous derivative such that $g^{\prime}(\theta) \neq 0$. Then
 
-$$
+$
 a_{n} \frac{g\left(Z_{n}\right)-g(\theta)}{g^{\prime}(\theta)} \xrightarrow{d} F^{*}
-$$
+$
 
 Proof. We will only give an outline of the proof (think $a_{n}=n^{1 / 2}$, if $Z_{n}$ as the sample mean). As $a_{n} \rightarrow \infty, Z_{n}$ must get close to $\theta$ with high probability as $n \rightarrow \infty$.
 
 As $g(\cdot)$ is continuous, $g\left(Z_{n}\right)$ will be close to $g(\theta)$ with high probability.\\
 Let's say $g(\cdot)$ has a Taylor expansion around $\theta$, i.e.,
 
-$$
+$
 g\left(Z_{n}\right) \approx g(\theta)+g^{\prime}(\theta)\left(Z_{n}-\theta\right),
-$$
+$
 
 where we have ignored all terms involving $\left(Z_{n}-\theta\right)^{2}$ and higher powers.\\
 Then if
 
-$$
+$
 a_{n}\left(Z_{n}-\theta\right) \xrightarrow{d} Z,
-$$
+$
 
 for some limit distribution $F^{*}$ and a sequence of constants $a_{n} \rightarrow \infty$, then
 
-$$
+$
 a_{n} \frac{g\left(Z_{n}\right)-g(\theta)}{g^{\prime}(\theta)} \approx a_{n}\left(Z_{n}-\theta\right) \xrightarrow{d} F^{*} .
-$$
+$
 
 In other words, limit distributions are passed through functions in a pretty simple way. This is called the delta method (I suppose because of the deltas and epsilons involved in this kind of limiting argument), and we'll be using it a lot.
 
 The main application is when we've already proven a CLT for $Z_{n}$,
 
-$$
+$
 \frac{\sqrt{n}\left(Z_{n}-\mu\right)}{\sigma} \xrightarrow{d} N(0,1)
-$$
+$
 
 in which case
 
-$$
+$
 \sqrt{n}\left(g\left(Z_{n}\right)-g(\mu)\right) \xrightarrow{d} N\left(0, \sigma^{2}\left(g^{\prime}(\mu)\right)^{2}\right) .
-$$
+$
 
 Exercise 1: Assume $n^{1 / 2} Z_{n} \xrightarrow{d} N(0,1)$. What is the asymptotic distribution of
 
@@ -280,9 +280,9 @@ Exercise 1: Assume $n^{1 / 2} Z_{n} \xrightarrow{d} N(0,1)$. What is the asympto
 \subsection*{1.4 Back to Example 1.1}
 By the delta method, we can show that
 
-$$
+$
 \sqrt{n}\left(\bar{X}_{n}^{-1}-\theta\right) \xrightarrow{d} N\left(0,\left(\theta^{2}\right)^{2} \theta^{-2}\right)
-$$
+$
 
 where we have considered $g(x)=\frac{1}{x} ; g^{\prime}(x)=-\frac{1}{x^{2}}$ (observe that $g$ is continuous on $(0, \infty)$ ). Note that the variance of $X_{1}$ is $\operatorname{Var}\left(X_{1}\right)=\theta^{-2}$.
 
@@ -340,9 +340,9 @@ When $g$ in Definition 9 is the identity function $g(\theta)=\theta$, then $\psi
 
 Definition 10 (Consistent (in probability) estimator). A sequence of estimators $\widehat{\theta}_{n}$ that converges in probability to the unknown value of the parameter $\theta$ being estimated is called a consistent sequence of estimators, i.e., $\widehat{\theta}_{n}$ is consistent if and only if for every $\epsilon>0$,
 
-$$
+$
 \mathbb{P}\left(\left|\widehat{\theta}_{n}-\theta\right|>\epsilon\right) \rightarrow 0, \quad \text { as } n \rightarrow \infty .
-$$
+$
 
 In this Chapter we shall discuss three types of estimators:
 
@@ -361,29 +361,29 @@ Although estimating $\theta$ directly can be at first thought non-trivial, we ca
 
 Definition 11 (Method of moments estimator). Assume that $X_{1}, \ldots, X_{n}$ form a random sample from a distribution that is indexed by a $k$-dimensional parameter $\theta$ and that has at least $k$ finite moments. For $j=1, \ldots, k$, let
 
-$$
+$
 \mu_{j}(\theta):=\mathbb{E}_{\theta}\left(X_{1}^{j}\right) .
-$$
+$
 
 Suppose that the function $\mu(\theta)=\left(\mu_{1}(\theta), \ldots, \mu_{k}(\theta)\right)$ is a one-to-one function of $\theta$. Let $M\left(\mu_{1}, \ldots, \mu_{k}\right)$ denote the inverse function, that is, for all $\theta$,
 
-$$
+$
 \theta=M\left(\mu_{1}, \ldots, \mu_{k}\right) .
-$$
+$
 
 Define the sample moments as
 
-$$
+$
 \hat{\mu}_{j}:=\frac{1}{n} \sum_{i=1}^{n} X_{i}^{j} \quad \text { for } j=1, \ldots, k
-$$
+$
 
 The method of moments estimator of $\theta$ is $M\left(\hat{\mu}_{1}, \ldots, \hat{\mu}_{k}\right)$.
 
 The usual way of implementing the method of moments is to set up the $k$ equations
 
-$$
+$
 \hat{\mu}_{j}=\mu_{j}(\theta), \quad \text { for } j=1, \ldots, k
-$$
+$
 
 and then solve for $\theta$.
 
@@ -391,49 +391,49 @@ Example 3.2. Let $X_{1}, X_{2}, \ldots, X_{n}$ be from a $N\left(\mu, \sigma^{2}
 
 Solution: Consider $\mu_{1}=\mathbb{E}\left(X_{1}\right)$ and $\mu_{2}=\mathbb{E}\left(X_{1}^{2}\right)$. Clearly, the parameter $\theta$ can be expressed as a function of the first two population moments, since
 
-$$
+$
 \mu=\mu_{1}, \sigma^{2}=\mu_{2}-\mu_{1}^{2}
-$$
+$
 
 To get MOM estimates of $\mu$ and $\sigma^{2}$ we are going to plug in the sample moments. Thus
 
-$$
+$
 \hat{\mu}=\hat{\mu}_{1}=\bar{X}
-$$
+$
 
 and
 
-$$
+$
 \hat{\sigma}^{2}=\frac{1}{n} \sum_{j=1}^{n} X_{j}^{2}-\bar{X}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}
-$$
+$
 
 where we have used the fact that $\hat{\mu}_{2}=n^{-1} \sum_{j=1}^{n} X_{j}^{2}$.
 
 Example 3.3. Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are i.i.d Gamma $(\alpha, \beta), \alpha, \beta>0$. Thus, $\theta=(\alpha, \beta) \in \Omega:=\mathbb{R}_{+} \times \mathbb{R}_{+}$. The first two moments of this distribution are:
 
-$$
+$
 \mu_{1}(\theta)=\frac{\alpha}{\beta}, \quad \mu_{2}(\theta)=\frac{\alpha(\alpha+1)}{\beta^{2}}
-$$
+$
 
 which implies that
 
-$$
+$
 \alpha=\frac{\mu_{1}^{2}}{\mu_{2}-\mu_{1}^{2}}, \quad \beta=\frac{\mu_{1}}{\mu_{2}-\mu_{1}^{2}}
-$$
+$
 
 The MOM says that we replace the right-hand sides of these equations by the sample moments and then solve for $\alpha$ and $\beta$. In this case, we get
 
-$$
+$
 \hat{\alpha}=\frac{\hat{\mu}_{1}^{2}}{\hat{\mu}_{2}-\hat{\mu}_{1}^{2}}, \quad \hat{\beta}=\frac{\hat{\mu}_{1}}{\hat{\mu}_{2}-\hat{\mu}_{1}^{2}}
-$$
+$
 
 MOM can thus be thought of as "plug-in" estimates; to get an estimate $\hat{\theta}$ of $\theta= M\left(\mu_{1}, \mu_{2}, \ldots, \mu_{k}\right)$, we plug-in estimates of the $\mu_{i}$ 's, which are the $\hat{\mu}_{i}$ 's, to get $\hat{\theta}$.
 
 Result: If $M$ is continuous, then the fact that $m_{i}$ converges in probability to $\mu_{i}$, for every $i=1, \ldots, k$, entails that
 
-$$
+$
 \hat{\theta}=M\left(\hat{\mu}_{1}, \hat{\mu}_{2}, \ldots, \hat{\mu}_{k}\right) \xrightarrow{\mathbb{P}} M\left(\mu_{1}, \mu_{2}, \ldots, \mu_{k}\right)=\theta .
-$$
+$
 
 Thus MOM estimators are consistent under mild assumptions.
 
@@ -447,35 +447,35 @@ Example 3.4. Let $X_{1}, X_{2}, \ldots, X_{n}$ be the indicators of $n$ Bernoull
 
 Solution: Note that $\theta$ is the probability of success and satisifes,
 
-$$
+$
 \theta=\mathbb{E}\left(X_{1}\right), \theta=\mathbb{E}\left(X_{1}^{2}\right) .
-$$
+$
 
 Thus we can get MOMs of $\theta$ based on both the first and the second moments. Thus,
 
-$$
+$
 \hat{\theta}_{M O M}=\bar{X}
-$$
+$
 
 and
 
-$$
+$
 \hat{\theta}_{M O M}=\frac{1}{n} \sum_{j=1}^{n} X_{j}^{2}=\frac{1}{n} \sum_{j=1}^{n} X_{j}=\bar{X}
-$$
+$
 
 Example 3.5. Let $X_{1}, X_{2}, \ldots, X_{n}$ be i.i.d. Poisson( $\lambda$ ), $\lambda>0$. Find the MOM estimator of $\lambda$.
 
 Solution: We know that,
 
-$$
+$
 \mathbb{E}\left(X_{1}\right)=\mu_{1}=\lambda
-$$
+$
 
 and $\operatorname{Var}\left(X_{1}\right)=\mu_{2}-\mu_{1}^{2}=\lambda$. Thus
 
-$$
+$
 \mu_{2}=\lambda+\lambda^{2} .
-$$
+$
 
 Now, a MOM estimate of $\lambda$ is clearly given by $\hat{\lambda}=\hat{\mu}_{1}=\bar{X}$; thus a MOM estimate of $\mu_{2}=\lambda^{2}+\lambda$ is given by $\bar{X}^{2}+\bar{X}$.
 
@@ -487,27 +487,27 @@ Example 3.6. Consider $n$ systems with failure times $X_{1}, X_{2}, \ldots, X_{n
 
 Solution: It is not difficult to show that
 
-$$
+$
 \mathbb{E}\left(X_{1}\right)=\frac{1}{\lambda}, \mathbb{E}\left(X_{1}^{2}\right)=\frac{2}{\lambda^{2}} .
-$$
+$
 
 Therefore
 
-$$
+$
 \lambda=\frac{1}{\mu_{1}}=\sqrt{\frac{2}{\mu_{2}}} .
-$$
+$
 
 The above equations lead to two different MOM estimators for $\lambda$; the estimate based on the first moment is
 
-$$
+$
 \hat{\lambda}_{M O M}=\frac{1}{\hat{\mu}_{1}},
-$$
+$
 
 and the estimate based on the second moment is
 
-$$
+$
 \hat{\lambda}_{M O M}=\sqrt{\frac{2}{\hat{\mu}_{2}}}
-$$
+$
 
 Once again, note the non-uniqueness of the estimates.
 
@@ -522,9 +522,9 @@ As before, we have i.i.d observations $X_{1}, X_{2}, \ldots, X_{n}$ with common 
 The goal is to estimate $\theta$ or some $\Psi(\theta)$ where $\Psi$ is some known function of $\theta$.\\
 Definition 12 (Likelihood function). The likelihood function for the sample $\mathbf{X}_{n}= \left(X_{1}, X_{2}, \ldots, X_{n}\right)$ is
 
-$$
+$
 L_{n}(\theta) \equiv L_{n}\left(\theta, \mathbf{X}_{n}\right):=\prod_{i=1}^{n} f\left(X_{i}, \theta\right)
-$$
+$
 
 This is simply the joint density (or mass function) but we now think of this as a function of $\theta$ for a fixed $\mathbf{X}_{n}$; namely the $\mathbf{X}_{n}$ that is realized.
 
@@ -545,33 +545,33 @@ Example 4.1. Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Poisso
 
 Solution: In this case, it is easy to see that
 
-$$
+$
 L_{n}(\theta)=\prod_{i=1}^{n} \frac{e^{-\theta} \theta^{X_{i}}}{X_{i}!}=C\left(\mathbf{X}_{n}\right) e^{-n \theta} \theta^{\sum_{i=1}^{n} X_{i}}
-$$
+$
 
 To maximize this expression, we set
 
-$$
+$
 \frac{\partial}{\partial \theta} \log L_{n}(\theta)=0
-$$
+$
 
 This yields that
 
-$$
+$
 \frac{\partial}{\partial \theta}\left[-n \theta+\left(\sum_{i=1}^{n} X_{i}\right) \log \theta\right]=0
-$$
+$
 
 i.e.,
 
-$$
+$
 -n+\frac{\sum_{i=1}^{n} X_{i}}{\theta}=0
-$$
+$
 
 showing that
 
-$$
+$
 \hat{\theta}_{n}=\bar{X}
-$$
+$
 
 It can be checked (by computing the second derivative at $\hat{\theta}_{n}$ ) that the stationary point indeed gives (a unique) maximum (or by noting that the log-likelihood is a (strictly) concave function).
 
@@ -581,19 +581,19 @@ Example 4.2. Suppose $X_{1}, X_{2}, \ldots, X_{n}$ are i.i.d Uniform( $[0, \thet
 
 Solution: The likelihood function is given by,
 
-$$
+$
 \begin{aligned}
 L_{n}(\theta) & =\prod_{i=1}^{n} \frac{1}{\theta} I_{[0, \theta]}\left(X_{i}\right) \\
 & =\frac{1}{\theta^{n}} \prod_{i=1}^{n} I_{\left[X_{i}, \infty\right)}(\theta) \\
 & =\frac{1}{\theta^{n}} I_{\left[\max _{i=1, \ldots, n} X_{i}, \infty\right)}(\theta)
 \end{aligned}
-$$
+$
 
 It is then clear that $L_{n}(\theta)$ is constant and equals $1 / \theta^{n}$ for $\theta \geq \max _{i=1, \ldots, n} X_{i}$ and is 0 otherwise. By plotting the graph of this function, you can see that
 
-$$
+$
 \hat{\theta}_{n}=\max _{i=1, \ldots, n} X_{i}
-$$
+$
 
 Here, differentiation will not help you to get the MLE because the likelihood function is not differentiable at the point where it hits the maximum.
 
@@ -601,44 +601,44 @@ Example 4.3. Suppose that $X_{1}, X_{2}, \ldots, X_{n}$ are i.i.d $N\left(\mu, \
 
 Solution: We write down the likelihood function first. This is,
 
-$$
+$
 L_{n}\left(\mu, \sigma^{2}\right)=\frac{1}{(2 \pi)^{n / 2} \sigma^{n}} \exp \left(-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\mu\right)^{2}\right)
-$$
+$
 
 It is easy to see that,
 
-$$
+$
 \begin{aligned}
 \log L_{n}\left(\mu, \sigma^{2}\right) & =-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\mu\right)^{2}+\text { constant } \\
 & =-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}-\frac{n}{2 \sigma^{2}}\left(\bar{X}_{n}-\mu\right)^{2}
 \end{aligned}
-$$
+$
 
 To maximize the above expression w.r.t $\mu$ and $\sigma^{2}$ we proceed as follows. For any $\left(\mu, \sigma^{2}\right)$ we have,
 
-$$
+$
 \log L_{n}\left(\mu, \sigma^{2}\right) \leq \log L_{n}\left(\bar{X}_{n}, \sigma^{2}\right)
-$$
+$
 
 showing that we can choose $\hat{\mu}_{M L E}=\bar{X}_{n}$.\\
 It then remains to maximize $\log L_{n}\left(\bar{X}_{n}, \sigma^{2}\right)$ with respect to $\sigma^{2}$ to find $\hat{\sigma}_{M L E}^{2}$.\\
 Now,
 
-$$
+$
 \log L_{n}\left(\bar{X}_{n}, \sigma^{2}\right)=-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}
-$$
+$
 
 Differentiating the left-side w.r.t $\sigma^{2}$ gives,
 
-$$
+$
 -\frac{n}{2 \sigma^{2}}+\frac{1}{2\left(\sigma^{2}\right)^{2}} n \hat{\sigma}^{2}=0
-$$
+$
 
 where $\hat{\sigma}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}_{n}\right)^{2}$. The above equation leads to,
 
-$$
+$
 \hat{\sigma}_{M L E}^{2}=\hat{\sigma}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}
-$$
+$
 
 The fact that this actually gives a global maximizer follows from the fact that the second derivative at $\hat{\sigma}^{2}$ is negative.
 
@@ -654,28 +654,28 @@ Example 4.5 (MLEs might not exist). Consider a random variable $X$ that can come
 
 Thus, the p.d.f. $f\left(\cdot, \mu, \sigma^{2}\right)$ of $X$ is given by
 
-$$
+$
 f\left(x, \mu, \sigma^{2}\right)=\frac{1}{2}\left[\frac{1}{\sqrt{2 \pi}} e^{-x^{2} / 2}+\frac{1}{\sqrt{2 \pi} \sigma} e^{-(x-\mu)^{2} /\left(2 \sigma^{2}\right)}\right]
-$$
+$
 
 Suppose now that $X_{1}, \ldots, X_{n}$ form a random sample from this distribution. As usual, the likelihood function
 
-$$
+$
 L_{n}\left(\mu, \sigma^{2}\right)=\prod_{i=1}^{n} f\left(X_{i}, \mu, \sigma^{2}\right)
-$$
+$
 
 We want to find the MLE of $\theta=\left(\mu, \sigma^{2}\right)$.\\
 Let $X_{k}$ denote one of the observed values. Note that
 
-$$
+$
 \max _{\mu \in \mathbb{R}, \sigma^{2}>0} L_{n}\left(\mu, \sigma^{2}\right) \geq L_{n}\left(X_{k}, \sigma^{2}\right) \geq \frac{1}{2^{n}}\left[\frac{1}{\sqrt{2 \pi} \sigma}\right] \prod_{i \neq k} \frac{1}{\sqrt{2 \pi}} e^{-X_{i}^{2} / 2}
-$$
+$
 
 Thus, if we let $\mu=X_{k}$ and let $\sigma^{2} \rightarrow 0$ then the factor $f\left(X_{k}, \mu, \sigma^{2}\right)$ will grow large without bound, while each factor $f\left(X_{i}, \mu, \sigma^{2}\right)$, for $i \neq k$, will approach the value
 
-$$
+$
 \frac{1}{2 \sqrt{2 \pi}} e^{-X_{i}^{2} / 2}
-$$
+$
 
 Hence, when $\mu=X_{k}$ and $\sigma^{2} \rightarrow 0$, we find that $L_{n}\left(\mu, \sigma^{2}\right) \rightarrow \infty$.\\
 Note that 0 is not a permissible estimate of $\sigma^{2}$, because we know in advance that $\sigma>0$. Since the likelihood function can be made arbitrarily large by choosing $\mu=X_{k}$ and choosing $\sigma^{2}$ arbitrarily close to 0 , it follows that the MLE does not exist.
@@ -692,51 +692,51 @@ Consider an estimation problem in which a random sample is to be taken from a di
 
 Then, under certain conditions, which are typically satisfied in practical problems, the sequence of MLEs is consistent, i.e.,
 
-$$
+$
 \hat{\theta}_{n} \xrightarrow{\mathbb{P}} \theta, \quad \text { as } n \rightarrow \infty .
-$$
+$
 
 \subsection*{4.2 Computational methods for approximating MLEs}
 Example: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d from a Gamma distribution for which the p.d.f is as follows:
 
-$$
+$
 f(x, \alpha)=\frac{1}{\Gamma(\alpha)} x^{\alpha-1} e^{-x}, \quad \text { for } x>0
-$$
+$
 
 The likelihood function is
 
-$$
+$
 L_{n}(\alpha)=\frac{1}{\Gamma(\alpha)^{n}}\left(\prod_{i=1}^{n} X_{i}\right)^{\alpha-1} e^{-\sum_{i=1}^{n} X_{i}}
-$$
+$
 
 and thus the log-likelihood is
 
-$$
+$
 \ell_{n}(\alpha) \equiv \log L_{n}(\alpha)=-n \log \Gamma(\alpha)+(\alpha-1) \sum_{i=1}^{n} \log \left(X_{i}\right)-\sum_{i=1}^{n} X_{i}
-$$
+$
 
 The MLE of $\alpha$ will be the value of $\alpha$ that satisfies the equation
 
-$$
+$
 \begin{gathered}
 \frac{\partial}{\partial \alpha} \ell_{n}(\alpha)=-n \frac{\Gamma^{\prime}(\alpha)}{\Gamma(\alpha)}+\sum_{i=1}^{n} \log \left(X_{i}\right)=0 \\
 \text { i.e., } \frac{\Gamma^{\prime}(\alpha)}{\Gamma(\alpha)}=\frac{1}{n} \sum_{i=1}^{n} \log \left(X_{i}\right)
 \end{gathered}
-$$
+$
 
 \subsection*{4.2.1 Newton's Method}
 Let $f(x)$ be a real-valued function of a real variable, and suppose that we wish to solve the equation
 
-$$
+$
 f(x)=0
-$$
+$
 
 Let $x_{1}$ be an initial guess at the solution.\\
 Newton's method replaces the initial guess with the updated guess
 
-$$
+$
 x_{2}=x_{1}-\frac{f\left(x_{1}\right)}{f^{\prime}\left(x_{1}\right)}
-$$
+$
 
 The rationale behind the Newton's method is: approximate the curve by a line tangent to the curve passing through the point $\left(x_{1}, f\left(x_{1}\right)\right)$. The approximating line crosses the horizontal axis at the revised guess $x_{2}$. [Draw a figure!]
 
@@ -765,9 +765,9 @@ Also as $n$, the sample size, increases we get hold of more information and henc
 
 These notions when coupled together give rise to the consistency requirement for a sequence of estimators $T_{n}$; as $n$ increases, $T_{n}$ ought to converge in probability to $g(\theta)$ (under the probability distribution $P_{\theta}$ ). In other words, for any $\epsilon>0$,
 
-$$
+$
 \mathbb{P}_{\theta}\left(\left|T_{n}-g(\theta)\right|>\epsilon\right) \rightarrow 0
-$$
+$
 
 The above is clearly a large sample property; what it says is that with probability increasing to 1 (as the sample size grows), $T_{n}$ estimates $g(\theta)$ to any pre-determined level of accuracy.
 
@@ -790,15 +790,15 @@ However, as the data is random, $L\left(\delta\left(\mathbf{X}_{n}\right), \thet
 
 Definition 14 (Risk function). The risk of $\delta$ at $\theta$ is
 
-$$
+$
 R(\theta, \delta)=\mathbb{E}_{\theta}\left[L\left(\theta, \delta\left(\mathbf{X}_{n}\right)\right)\right]
-$$
+$
 
 The resulting quantity is then still a function of $\theta$ but no longer random. When $L(\theta, a)=|a-\theta|$, then $R(\theta, \delta)$ is called the mean absolute error and can be written compactly (using acronym) as:
 
-$$
+$
 \operatorname{MAD}(\theta, \delta):=\mathbb{E}_{\theta}\left[\left|\delta\left(\mathbf{X}_{n}\right)-\theta\right|\right]
-$$
+$
 
 However, it is more common to avoid absolute deviations and work with the square of the deviation, integrated out as before over the distribution of $\delta\left(\mathbf{X}_{n}\right)$. This is called the mean squared error (MSE), or the risk under the squared error loss, and is defined as (if $\Omega \subset \mathbb{R}$ ),
 
@@ -814,15 +814,15 @@ For most of this course we will focus on the risk function under the squared err
 
 Theorem 5.1. For any estimator $T_{n} \equiv T_{n}\left(\mathbf{X}_{n}\right)$ of $g(\theta)$, we have
 
-$$
+$
 \operatorname{MSE}\left(T_{n}, g(\theta)\right)=\operatorname{Var}_{\theta}\left(T_{n}\right)+b\left(T_{n}, g(\theta)\right)^{2}
-$$
+$
 
 where $b\left(T_{n}, g(\theta)\right)=\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)$ is the bias of $T_{n}$ as an estimator of $g(\theta)$.
 
 Proof. We have,
 
-$$
+$
 \begin{aligned}
 \operatorname{MSE}\left(T_{n}, g(\theta)\right) & =\mathbb{E}_{\theta}\left[\left(T_{n}-g(\theta)\right)^{2}\right] \\
 & =\mathbb{E}_{\theta}\left[\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)+\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)\right)^{2}\right] \\
@@ -830,13 +830,13 @@ $$
 & \quad+2 \mathbb{E}_{\theta}\left[\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)\right)\left(\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)\right)\right] \\
 & =\operatorname{Var}_{\theta}\left(T_{n}\right)+b\left(T_{n}, g(\theta)\right)^{2},
 \end{aligned}
-$$
+$
 
 where
 
-$$
+$
 b\left(T_{n}, g(\theta)\right):=\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)
-$$
+$
 
 is the bias of $T_{n}$ as an estimator of $g(\theta)$.\\
 The cross product term in the above display vanishes since $\mathbb{E}_{\theta}\left(T_{n}\right)-g(\theta)$ is a constant and $\mathbb{E}_{\theta}\left(T_{n}-\mathbb{E}_{\theta}\left(T_{n}\right)\right)=0$.
@@ -860,9 +860,9 @@ For small $|\theta|$, biased shrinkers ( $c<1$ ) beat $\bar{X}$; for large $|\th
 
 Two estimators $T_{n}$ and $S_{n}$ can be compared on the basis of their MSEs. Under parameter value $\theta, T_{n}$ dominates $S_{n}$ as an estimator if
 
-$$
+$
 \operatorname{MSE}\left(T_{n}, \theta\right) \leq \operatorname{MSE}\left(S_{n}, \theta\right) \quad \text { for all } \theta \in \Omega .
-$$
+$
 
 In this situation we say that $S_{n}$ is inadmissible in the presence of $T_{n}$.\\
 The use of the term "inadmissible" hardly needs explanation. If, for all possible values of the parameter, we incur less error using $T_{n}$ instead of $S_{n}$ as an estimate of $g(\theta)$, then clearly there is no point in considering $S_{n}$ as an estimator at all.
@@ -875,9 +875,9 @@ One way to try to construct optimal estimators is to restrict oneself to a subcl
 
 Definition 15 (Unbiased estimator). An estimator $T_{n} \equiv T_{n}\left(\mathbf{X}_{n}\right)$ of $g(\theta)$ is said to be unbiased if $\mathbb{E}_{\theta}\left(T_{n}\right)=g(\theta)$ for all possible values of $\theta$; i.e.,
 
-$$
+$
 b\left(T_{n}, g(\theta)\right)=0 \quad \text { for all } \theta \in \Omega .
-$$
+$
 
 Thus, unbiased estimators, on an average, hit the target, for all parameter values. This seems to be a reasonable constraint to impose on an estimator and indeed produces meaningful estimates in a variety of situations.
 
@@ -887,9 +887,9 @@ In a large class of models, it is possible to find an unbiased estimator of $g(\
 
 Definition 16 (Minimum variance unbiased estimator). We call $S_{n}$ an MVUE of $g(\theta)$ if
 
-$$
+$
 \text { (i) } \mathbb{E}_{\theta}\left(S_{n}\right)=g(\theta) \quad \text { for all } \theta \in \Omega
-$$
+$
 
 and (ii) if $T_{n}$ is an unbiased estimate of $g(\theta)$, then $\operatorname{Var}_{\theta}\left(S_{n}\right) \leq \operatorname{Var}_{\theta}\left(T_{n}\right)$.
 
@@ -901,9 +901,9 @@ A natural unbiased estimator of $g_{1}(\theta)=\mu$ is $\bar{X}_{n}$, the sample
 In other words, any other unbiased estimate of $\mu$ will have a larger variance than $\bar{X}_{n}$. Recall that the variance of $\bar{X}_{n}$ is simply $\sigma^{2} / n$.\\
 Consider now, the estimation of $\sigma^{2}$. Two estimates of this that we have considered in the past are
 
-$$
+$
 (i) \hat{\sigma}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2} \quad \text { and } \quad \text { (ii) } s^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2} \text {. }
-$$
+$
 
 Out of these $\hat{\sigma}^{2}$ is not unbiased for $\sigma^{2}$ but $s^{2}$ is. In fact $s^{2}$ is the MVUE of $\sigma^{2}$.\\
 (b) Let $X_{1}, X_{2}, \ldots, X_{n}$ be i.i.d from some underlying density function or mass function $f(x, \theta)$. Let $g(\theta)=\mathbb{E}_{\theta}\left(X_{1}\right)$.\\
@@ -930,13 +930,13 @@ The best unbiased estimator (MVUE) of $\theta$ is $\left(1+n^{-1}\right) X_{(n)}
 
 Solution: We can show that
 
-$$
+$
 \begin{aligned}
 \operatorname{MSE}\left(2 \bar{X}_{n}, \theta\right) & =\frac{\theta^{2}}{3 n}=\operatorname{Var}\left(2 \bar{X}_{n}\right) \\
 \operatorname{MSE}\left(\left(1+n^{-1}\right) X_{(n)}, \theta\right) & =\frac{\theta^{2}}{n(n+2)}=\operatorname{Var}\left(\left(1+n^{-1}\right) X_{(n)}\right) \\
 \operatorname{MSE}\left(X_{(n)}, \theta\right) & =\frac{\theta^{2}}{n(n+2)} \cdot \frac{n^{2}}{(n+1)^{2}}+\frac{\theta^{2}}{(n+1)^{2}}
 \end{aligned}
-$$
+$
 
 where in the last equality we have two terms - the variance and the squared bias.
 
@@ -971,33 +971,33 @@ Example 6.1. Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Poisso
 
 Note that
 
-$$
+$
 \mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x} \mid T(\mathbf{X})=t)=\frac{\mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x}, T(\mathbf{X})=t)}{\mathbb{P}_{\theta}(T=t)}
-$$
+$
 
 But,
 
-$$
+$
 \mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x}, T(\mathbf{X})=t)= \begin{cases}0 & T(\boldsymbol{x}) \neq t \\ \mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x}) & T(\boldsymbol{x})=t\end{cases}
-$$
+$
 
 As
 
-$$
+$
 \mathbb{P}(\mathbf{X}=\boldsymbol{x})=\frac{e^{-n \theta} \theta^{T(\boldsymbol{x})}}{\prod_{i=1}^{n} x_{i}!}
-$$
+$
 
 Also,
 
-$$
+$
 \mathbb{P}_{\theta}(T(\mathbf{X})=t)=\frac{e^{-n \theta}(n \theta)^{t}}{t!}
-$$
+$
 
 Hence,
 
-$$
+$
 \frac{\mathbb{P}_{\theta}(\mathbf{X}=\boldsymbol{x})}{\mathbb{P}_{\theta}(T(\mathbf{X})=t(\boldsymbol{x}))}=\frac{t!}{\prod_{i=1}^{n} x_{i}!n^{t}},
-$$
+$
 
 which does not depend on $\theta$. So $T=\sum_{i=1}^{n} X_{i}$ is a sufficient statistic for $\theta$.\\
 Other sufficient statistics are: $T=3.7 \sum_{i=1}^{n} X_{i}, T=\left(\sum_{i=1}^{n} X_{i}, X_{4}\right)$, and $T= \left(X_{1}, \ldots, X_{n}\right)$.
@@ -1007,9 +1007,9 @@ Theorem 6.2 (Factorization criterion). Let $X_{1}, X_{2}, \ldots, X_{n}$ form a 
 
 A statistic $T=r\left(X_{1}, X_{2}, \ldots, X_{n}\right)$ is a sufficient statistic for $\theta$ if and only if the joint p.d.f or the joint p.m.f $f_{n}(\boldsymbol{x}, \theta)$ of $\left(X_{1}, X_{2}, \ldots, X_{n}\right)$ can be factored as follows for all values of $\boldsymbol{x}=\left(x_{1}, \ldots, x_{n}\right) \in \mathbb{R}^{n}$ and all values of $\theta \in \Omega$ :
 
-$$
+$
 f_{n}(\boldsymbol{x}, \theta)=u(\boldsymbol{x}) \nu(r(\boldsymbol{x}), \theta), \quad \text { where }
-$$
+$
 
 \begin{itemize}
   \item $u$ and $\nu$ are both non-negative,
@@ -1019,17 +1019,17 @@ $$
 
 Example: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Poi}(\theta), \theta>0$. Thus, for every nonnegative integers $x_{1}, \ldots, x_{n}$, the joint p.m.f $f_{n}(\boldsymbol{x}, \theta)$ of ( $X_{1}, \ldots, X_{n}$ ) is
 
-$$
+$
 f_{n}(\boldsymbol{x}, \theta)=\prod_{i=1}^{n} \frac{e^{-\theta} \theta^{x_{i}}}{x_{i}!}=\frac{1}{\prod_{i=1}^{n} x_{i}!} e^{-n \theta} \theta^{\sum_{i=1}^{n} x_{i}}
-$$
+$
 
 Thus, we can take $u(\boldsymbol{x})=1 /\left(\prod_{i=1}^{n} x_{i}!\right), r(\boldsymbol{x})=\sum_{i=1}^{n} x_{i}, \nu(t, \theta)=e^{-n \theta} \theta^{t}$. It follows that $T=\sum_{i=1}^{n} X_{i}$ is a sufficient statistic for $\theta$.
 
 Exercise: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Gamma}(\alpha, \beta), \alpha, \beta>0$, where $\alpha$ is known, and $\beta$ is unknown. The joint p.d.f is
 
-$$
+$
 f_{n}(\boldsymbol{x}, \beta)=\left\{[\Gamma(\alpha)]^{-n}\left(\prod_{i=1}^{n} x_{i}\right)^{\alpha-1}\right\} \times\left\{\beta^{n \alpha} \exp (-\beta t)\right\}, \quad \text { where } t=\sum_{i=1}^{n} x_{i}
-$$
+$
 
 The sufficient statistics is $T_{n}=\sum_{i=1}^{n} X_{i}$.
 
@@ -1037,9 +1037,9 @@ Exercise: Suppose that $X_{1}, \ldots, X_{n}$ are i.i.d $\operatorname{Gamma}(\a
 
 The joint p.d.f in this exercise is the same as that given in the previous exercise. However, since the unknown parameter is now $\alpha$ instead of $\beta$, the appropriate factorization is now
 
-$$
+$
 f_{n}(\boldsymbol{x}, \alpha)=\left\{\exp \left(-\beta \sum_{i=1}^{n} x_{i}\right)\right\} \times\left\{\frac{\beta^{n \alpha}}{[\Gamma(\alpha)]^{n}} t^{\alpha-1}\right\}, \quad \text { where } t=\prod_{i=1}^{n} x_{i} .
-$$
+$
 
 The sufficient statistics is $T_{n}=\prod_{i=1}^{n} X_{i}$.
 
@@ -1083,9 +1083,9 @@ When we treat the unknown parameter $\Theta$ as random, then the joint distribut
 
 Thus, in general we will have $X_{1}, \ldots, X_{n} \mid \Theta=\theta$ are i.i.d with p.d.f/p.m.f $f(\cdot \mid \theta)$, and that $\Theta \sim \xi$, i.e.,
 
-$$
+$
 f_{n}(\boldsymbol{x} \mid \theta)=f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right)
-$$
+$
 
 where $f_{n}$ is the joint conditional distribution of $\mathbf{X}=\left(X_{1}, \ldots, X_{n}\right)$ given $\Theta=\theta$.
 
@@ -1096,15 +1096,15 @@ The conditional p.m.f/p.d.f of $\Theta$ given $X_{1}=x_{1}, \ldots, X_{n}=x_{n}$
 
 Theorem 7.1. Suppose that the $n$ random variables $X_{1}, \ldots, X_{n}$ form a random sample from a distribution for which the p.d.f/p.m.f is $f(\cdot \mid \theta)$. Suppose also that the value of the parameter $\theta$ is unknown and the prior p.d.f/p.m.f of $\Theta$ is $\xi(\cdot)$. Then the posterior p.d.f/p.m.f of $\Theta$, given the data $\left(X_{1}, \ldots, X_{n}\right)=\left(x_{1}, \ldots, x_{n}\right) \equiv \boldsymbol{x}$, is
 
-$$
+$
 \xi(\theta \mid \boldsymbol{x})=\frac{f\left(x_{1} \mid \theta\right) \cdots f\left(x_{n} \mid \theta\right) \xi(\theta)}{g_{n}(\boldsymbol{x})}, \quad \text { for } \theta \in \Omega
-$$
+$
 
 where $g_{n}$ is the marginal joint p.d.f/p.m.f of $X_{1}, \ldots, X_{n}$, i.e.,
 
-$$
+$
 g_{n}(\boldsymbol{x})=\int f\left(x_{1} \mid \theta\right) \cdots f\left(x_{n} \mid \theta\right) \xi(\theta) d \theta
-$$
+$
 
 if $\xi(\cdot)$ is a p.d.f.
 
@@ -1115,24 +1115,24 @@ Then the posterior distribution of $\Theta$ given $X_{i}=x_{i}$, for $i=1, \ldot
 
 Proof. The joint p.m.f of the data is
 
-$$
+$
 f_{n}(\boldsymbol{x} \mid \theta)=f\left(x_{1} \mid \theta\right) \cdots f\left(x_{n} \mid \theta\right)=\prod_{i=1}^{n} \theta^{x_{i}}(1-\theta)^{1-x_{i}}=\theta^{\sum_{i=1}^{n} x_{i}}(1-\theta)^{n-\sum_{i=1}^{n} x_{i}}
-$$
+$
 
 Therefore the posterior density of $\Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n}$ is given by
 
-$$
+$
 \begin{aligned}
 \xi(\theta \mid \boldsymbol{x}) & \propto \theta^{\alpha-1}(1-\theta)^{\beta-1} \cdot \theta^{\sum_{i=1}^{n} x_{i}}(1-\theta)^{n-\sum_{i=1}^{n} x_{i}} \\
 & =\theta^{\sum_{i=1}^{n} x_{i}+\alpha-1}(1-\theta)^{\beta+n-\sum_{i=1}^{n} x_{i}-1}
 \end{aligned}
-$$
+$
 
 for $\theta \in(0,1)$. Thus,
 
-$$
+$
 \Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n} \sim \operatorname{Beta}\left(\alpha+\sum_{i=1}^{n} x_{i}, \beta+n-\sum_{i=1}^{n} x_{i}\right) .
-$$
+$
 
 \subsection*{7.4 Sampling from a Poisson distribution}
 Theorem 7.3. Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from the Poisson distribution with mean $\theta>0$, where $\theta$ is unknown. Suppose that the prior distribution of $\Theta$ is $\operatorname{Gamma}(\alpha, \beta)$, where $\alpha, \beta>0$.
@@ -1151,15 +1151,15 @@ Example: Suppose that the distribution of the lifetime of fluorescent tubes of a
 Also suppose that $\Theta \sim \operatorname{Gamma}(\alpha, \beta)$, for known $\alpha, \beta$.\\
 Then
 
-$$
+$
 f_{n}(\boldsymbol{x} \mid \theta)=\prod_{i=1}^{n} \theta e^{-\theta x_{i}}=\theta^{n} e^{-\theta \sum_{i=1}^{n} x_{i}}
-$$
+$
 
 Then the posterior distribution of $\Theta$ given the data is
 
-$$
+$
 \xi(\theta \mid \boldsymbol{x}) \propto \theta^{n} e^{-\theta \sum_{i=1}^{n} x_{i}} \cdot \theta^{\alpha-1} e^{-\beta \theta}=\theta^{n+\alpha-1} e^{-\left(\beta+\sum_{i=1}^{n} x_{i}\right) \theta}
-$$
+$
 
 Therefore, $\Theta \mid \mathbf{X}_{n}=\boldsymbol{x} \sim \operatorname{Gamma}\left(\alpha+n, \beta+\sum_{i=1}^{n} x_{i}\right)$.
 
@@ -1209,97 +1209,97 @@ Hence, the statistician should now choose an estimate $a$ for which the above ex
 
 For each possible value $\boldsymbol{x}$ of $\mathbf{X}_{n}$, let $\delta^{*}(\boldsymbol{x})$ denote a value of the estimate $a$ for which the expected loss (4) is minimum, i.e.,
 
-$$
+$
 \delta^{*}(\boldsymbol{x})=\min _{a} \mathbb{E}[L(\Theta, a) \mid \boldsymbol{x}] .
-$$
+$
 
 Then the function $\delta^{*}\left(\mathbf{X}_{n}\right)$ is called the Bayes estimator of $\theta$.\\
 Thus, a Bayes estimator is an estimator that is chosen to minimize the posterior mean of some measure of how far the estimator is from the parameter.
 
 Note that the Bayes estimator minimizes the Bayes risk (3). To see this let $\delta$ be an arbitrary estimator. Then, from the definition of the Bayes estimator (which minimizes (4)), we have
 
-$$
+$
 \begin{aligned}
 \mathbb{E}\left[L\left(\Theta, \delta\left(\mathbf{X}_{n}\right)\right)\right] & =\mathbb{E}\left[\mathbb{E}\left[L\left(\Theta, \delta\left(\mathbf{X}_{n}\right)\right) \mid \mathbf{X}_{n}\right]\right] \\
 & \geq \mathbb{E}\left[\mathbb{E}\left[L\left(\Theta, \delta^{*}\left(\mathbf{X}_{n}\right)\right) \mid \mathbf{X}_{n}\right]\right] \\
 & =\mathbb{E}\left[L\left(\Theta, \delta^{*}\left(\mathbf{X}_{n}\right)\right)\right] .
 \end{aligned}
-$$
+$
 
 Corollary 8.1. Let $\theta \in \Omega \subset \mathbb{R}$. Suppose that the squared error loss function is used. Then the Bayes estimator of $\Theta$ is the posterior mean of $\Theta$ given $\mathbf{X}_{n}$, i.e.,
 
-$$
+$
 \delta^{*}\left(\mathbf{X}_{n}\right)=\mathbb{E}\left[\Theta \mid \mathbf{X}_{n}\right] .
-$$
+$
 
 Example 8.2. (Bernoulli distribution with Beta prior) Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from the Bernoulli distribution with mean $\theta>0$, where $0<\theta<1$ is unknown. Suppose that the prior distribution of $\Theta$ is $\operatorname{Beta}(\alpha, \beta)$, where $\alpha, \beta>0$.
 
 Recall that $\Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n} \sim \operatorname{Beta}\left(\alpha+\sum_{i=1}^{n} x_{i}, \beta+n-\sum_{i=1}^{n} x_{i}\right)$. Thus,
 
-$$
+$
 \delta^{*}\left(\mathbf{X}_{n}\right)=\frac{\alpha+\sum_{i=1}^{n} X_{i}}{\alpha+\beta+n}
-$$
+$
 
 \subsection*{8.1 Sampling from a normal distribution}
 Theorem 8.3. Suppose that $X_{1}, \ldots, X_{n}$ form a random sample from $N\left(\theta, \sigma^{2}\right)$, where $\theta$ is unknown and the value of the variance $\sigma^{2}>0$ is known. Suppose that $\Theta \sim N\left(\mu_{0}, v_{0}^{2}\right)$. Then
 
-$$
+$
 \Theta \mid X_{1}=x_{1}, \ldots, X_{n}=x_{n} \sim N\left(\mu_{1}, v_{1}^{2}\right),
-$$
+$
 
 where
 
-$$
+$
 \mu_{1}=\frac{\sigma^{2} \mu_{0}+n v_{0}^{2} \bar{x}_{n}}{\sigma^{2}+n v_{0}^{2}} \quad \text { and } \quad v_{1}^{2}=\frac{\sigma^{2} v_{0}^{2}}{\sigma^{2}+n v_{0}^{2}} .
-$$
+$
 
 Proof. The joint density has the form
 
-$$
+$
 f_{n}(\boldsymbol{x} \mid \theta) \propto \exp \left[-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(x_{i}-\theta\right)^{2}\right] .
-$$
+$
 
 The method of completing the squares tells us that
 
-$$
+$
 \sum_{i=1}^{n}\left(x_{i}-\theta\right)^{2}=n\left(\theta-\bar{x}_{n}\right)^{2}+\sum_{i=1}^{n}\left(x_{i}-\bar{x}_{n}\right)^{2} .
-$$
+$
 
 Thus, by omitting the factor that involves $x_{1}, \ldots, x_{n}$ but does depend on $\theta$, we may rewrite $f_{n}(\boldsymbol{x} \mid \theta)$ as
 
-$$
+$
 f_{n}(\boldsymbol{x} \mid \theta) \propto \exp \left[-\frac{n}{2 \sigma^{2}}\left(\theta-\bar{x}_{n}\right)^{2}\right] .
-$$
+$
 
 Since the prior density has the form
 
-$$
+$
 \xi(\theta) \propto \exp \left[-\frac{1}{2 v_{0}^{2}}\left(\theta-\mu_{0}\right)^{2}\right],
-$$
+$
 
 it follows that the posterior p.d.f $\xi(\theta \mid \boldsymbol{x})$ satisfies
 
-$$
+$
 \xi(\theta \mid \boldsymbol{x}) \propto \exp \left[-\frac{n}{2 \sigma^{2}}\left(\theta-\bar{x}_{n}\right)^{2}-\frac{1}{2 v_{0}^{2}}\left(\theta-\mu_{0}\right)^{2}\right] .
-$$
+$
 
 Completing the squares again establishes the following identity:
 
-$$
+$
 \frac{n}{\sigma^{2}}\left(\theta-\bar{x}_{n}\right)^{2}+\frac{1}{v_{0}^{2}}\left(\theta-\mu_{0}\right)^{2}=\frac{1}{v_{1}^{2}}\left(\theta-\mu_{1}\right)^{2}+\frac{n}{\sigma^{2}+n v_{0}^{2}}\left(\bar{x}_{n}-\mu_{0}\right)^{2} .
-$$
+$
 
 The last term on the right side does not involve on $\theta$. Thus,
 
-$$
+$
 \xi(\theta \mid \boldsymbol{x}) \propto \exp \left[-\frac{1}{2 v_{1}^{2}}\left(\theta-\mu_{1}\right)^{2}\right] .
-$$
+$
 
 Thus,
 
-$$
+$
 \delta^{*}\left(\mathbf{X}_{n}\right)=\frac{\sigma^{2} \mu_{0}+n v_{0}^{2} \bar{X}_{n}}{\sigma^{2}+n v_{0}^{2}} .
-$$
+$
 
 Corollary 8.4. Let $\theta \in \Omega \subset \mathbb{R}$. Suppose that the absolute error loss function is used. Then the Bayes estimator of $\theta \delta^{*}\left(\mathbf{X}_{n}\right)$ equals the median of the posterior distribution of $\Theta$.
 
