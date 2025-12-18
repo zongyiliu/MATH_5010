@@ -1,583 +1,292 @@
 
-		\underline{Sampling Distribution (抽样分布).}
-		设 $X_1,\dots,X_n \stackrel{\text{i.i.d.}}{\sim} P_\theta$，其中 $\theta\in\Omega\subset\mathbb R^k$。
-		令统计量
+		\underline{Inference about $\beta_1$} We often want to perform tests about the \emph{slope}:
 		$
-		T=\varphi(X_1,\dots,X_n),
+		H_0:\ \beta_1 = 0
+		\quad \text{versus} \quad
+		H_1:\ \beta_1 \neq 0.
+		$ Under the null hypothesis there is \emph{no linear relationship} between $Y$ and $x$, i.e., the means of the probability distributions of $Y$ at all levels of $x$ are equal, i.e.,
 		$
-		并记其分布为 $T\sim F_\theta$（允许依赖于 $\theta$）。
-		
-		\medskip
-		\noindent
-		\textbf{定义：}
-		在参数 $\theta$ 固定时，统计量 $T$ 的分布称为 $T$ 的 \emph{sampling distribution}，
-		其累积分布函数为 $F_\theta$。
-		抽样分布刻画了统计量可能取到的值及其概率。
-		
-		\medskip
-		\noindent
-		\textbf{例：}
-		若 $X_1,\dots,X_n \stackrel{\text{i.i.d.}}{\sim} N(\mu,\sigma^2)$，则样本均值
+		\mathbb{E}(Y \mid x) = \beta_0, \quad \text{for all } x.
 		$
-		\bar X_n \sim N\!\left(\mu,\frac{\sigma^2}{n}\right).
+		In fact, the sampling distribution of $\hat{\beta}_1$ is given by
 		$
-		
-		\underline{Gamma Function.}
-		Gamma 函数定义为
+		\hat{\beta}_1 \sim N\!\left( \beta_1, \frac{\sigma^2}{S_x^2} \right).
+		$ Need to show that $\hat{\beta}_1$ is normally distributed,
 		$
-		\Gamma(\alpha)=\int_0^\infty x^{\alpha-1}e^{-x}\,dx,\qquad \alpha>0.
-		$
-		
-		\noindent
-		\textbf{基本性质：}
-		$
-		\Gamma(\alpha+1)=\alpha\Gamma(\alpha),\qquad 
-		\Gamma(n)=(n-1)!,\ n\in\mathbb N,
-		$
-		且
-		$
-		\Gamma(1)=1,\qquad \Gamma\!\left(\tfrac12\right)=\sqrt{\pi}.
-		$
-		
-		\underline{Gamma Distribution.}
-		随机变量 $X\sim\mathrm{Gamma}(\alpha,\lambda)$（$\alpha>0,\lambda>0$）的密度为
-		$
-		f(x\mid\alpha,\lambda)
-		=\frac{\lambda^\alpha}{\Gamma(\alpha)}e^{-\lambda x}x^{\alpha-1}I_{(0,\infty)}(x).
-		$
-		
-		\noindent
-		其中 $\alpha$ 为 \emph{shape} 参数，$\lambda$ 为 \emph{scale}（更准确地说是 rate）参数。
-		
-		\underline{Scale Property.}
-		若 $X\sim\mathrm{Gamma}(\alpha,\lambda)$，则
-		$
-		\lambda X\sim\mathrm{Gamma}(\alpha,1),
+		\mathbb{E}(\hat{\beta}_1) = \beta_1,
 		\qquad
-		cX\sim\mathrm{Gamma}\!\left(\alpha,\frac{\lambda}{c}\right),\ c>0.
+		\mathrm{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_x^2}.
+		$ {Result.}
+		When $Z_1,\ldots,Z_k$ are independent normal random variables, the linear combination
 		$
-		
-		\underline{Reproductive Property.}
-		若 $X_i\sim\mathrm{Gamma}(\alpha_i,\lambda)$ 相互独立，则
+		a_1 Z_1 + \cdots + a_k Z_k
 		$
-		S_n:=\sum_{i=1}^n X_i \sim \mathrm{Gamma}\!\left(\sum_{i=1}^n\alpha_i,\lambda\right).
+		is also normally distributed. Since $\hat{\beta}_1$ is a linear combination of the $Y_i$'s and each $Y_i$ is an independent normally distributed random variable, then $\hat{\beta}_1$ is also normally distributed. We can write
 		$
-		
-		\underline{Moments.}
-		若 $X\sim\mathrm{Gamma}(\alpha,\lambda)$，则
+		\hat{\beta}_1 = \sum_{i=1}^n w_i Y_i
+		\quad \text{where} \quad
+		w_i = \frac{x_i - \bar{x}}{S_x^2},
+		\qquad i = 1,\ldots,n.
+		$ Thus,
 		$
-		\mathbb E[X]=\frac{\alpha}{\lambda},
+		\sum_{i=1}^n w_i = 0,
 		\qquad
-		\mathrm{Var}(X)=\frac{\alpha}{\lambda^2}.
-		$
-		
-		更一般地，对任意正整数 $k$，
-		$
-		\mathbb E[X^k]
-		=\frac{\Gamma(\alpha+k)}{\lambda^k\Gamma(\alpha)}
-		=\frac{\prod_{i=1}^k(\alpha+i-1)}{\lambda^k}.
-		$
-		
-		\noindent
-		以上计算基于恒等式
-		$
-		\int_0^\infty e^{-\lambda x}x^{\alpha+k-1}\,dx
-		=\frac{\Gamma(\alpha+k)}{\lambda^{\alpha+k}}.
-		$
-		
-		\underline{Chi-squared Distribution.}
-		$\chi^2$ 分布是 Gamma 分布的一个重要特例。
-		
-		\underline{$\chi^2_1$ Distribution.}
-		设 $Z\sim N(0,1)$，定义
-		$
-		W:=Z^2.
-		$
-		则 $W$ 的分布称为 $\chi^2_1$ 分布，且
-		$
-		\chi^2_1 \sim \mathrm{Gamma}\!\left(\tfrac12,\tfrac12\right).
-		$
-		
-		\underline{$\chi^2_d$ Distribution.}
-		设 $Z_1,\dots,Z_d \stackrel{\text{i.i.d.}}{\sim} N(0,1)$，定义
-		$
-		W_d:=\sum_{i=1}^d Z_i^2.
-		$
-		则 $W_d$ 服从自由度为 $d$ 的卡方分布，记作
-		$
-		W_d\sim\chi^2_d,
+		\sum_{i=1}^n x_i w_i = 1,
 		\qquad
-		\chi^2_d \sim \mathrm{Gamma}\!\left(\tfrac d2,\tfrac12\right).
-		$
-		
-		\underline{Additivity (Reproductive Property).}
-		若 $X_i\sim\chi^2_{m_i}$ 相互独立，则
-		$
-		\sum_{i=1}^k X_i \sim \chi^2_{\sum_{i=1}^k m_i}.
-		$
-		
-		\underline{Moments.}
-		若 $X\sim\chi^2_m$，则
-		$
-		\mathbb E[X]=m,
-		\qquad
-		\mathrm{Var}(X)=2m.
-		$
-		
-		\underline{Geometric Interpretation.}
-		若 $Z_1,\dots,Z_d \stackrel{\text{i.i.d.}}{\sim} N(0,1)$，
-		则
-		$
-		R^2=\sum_{i=1}^d Z_i^2 \sim \chi^2_d,
-		$
-		其中 $R$ 是随机向量 $(Z_1,\dots,Z_d)$ 到原点的欧氏距离。
-		
-		\underline{Confidence Intervals (CIs).}
-		置信区间用于量化对未知参数 $\theta$（或其函数 $g(\theta)$）的估计不确定性。
-		我们希望构造一个随机区间 $(A,B)$，使其在重复抽样意义下有高概率包含真值。
-		
-		\underline{Definition (Level / Coefficient).}
-		设 $X_n=(X_1,\dots,X_n)$ 来自分布族 $P_\theta$，其中 $\theta\in\Omega\subset\mathbb R^k$。
-		欲估计 $g(\theta)$。若统计量 $A\le B$ 满足对所有 $\theta$，
-		$
-		\mathbb P_\theta\!\bigl(A\le g(\theta)\le B\bigr)\ge 1-\alpha,\qquad \alpha\in(0,1),
-		$
-		则随机区间 $(A,B)$ 称为 $g(\theta)$ 的 $(1-\alpha)$ 置信区间（置信水平/系数）。
-		若上式对所有 $\theta$ 都取等号，则称该 CI 为 \emph{exact}（精确置信区间）。
-		
-		\underline{Standard Method: Pivots (枢轴量法).}
-		构造 CI 的常用套路是找一个 \emph{pivot}（枢轴量）：
-		$
-		\Psi\bigl(X_n,g(\theta)\bigr),
-		$
-		使得其在参数为 $\theta$ 时的分布 \emph{不依赖于 $\theta$}，且分布已知。
-		设该 pivot 的分布函数为 $G$，并记其 $\beta$ 分位数为 $q(G;\beta)$，即
-		$
-		\mathbb P_\theta\!\left(\Psi\bigl(X_n,g(\theta)\bigr)\le q(G;\beta)\right)=\beta.
-		$
-		选取 $0\le \beta_1,\beta_2\le \alpha$ 且 $\beta_1+\beta_2=\alpha$，则
-		$
-		\mathbb P_\theta\!\left(q(G;\beta_1)\le \Psi\bigl(X_n,g(\theta)\bigr)\le q(G;1-\beta_2)\right)=1-\alpha.
-		$
-		把上述不等式对 $g(\theta)$（或 $\theta$）解出来，得到 $(1-\alpha)$ 的置信集合/区间。
-		\emph{常见选择是等分尾部：} $\beta_1=\beta_2=\alpha/2$（通常可得到最短的双侧 CI）。
-		
-		\underline{Example 1: Normal Mean, $\sigma$ Known.}
-		若 $X_1,\dots,X_n\stackrel{\text{i.i.d.}}{\sim}N(\mu,\sigma^2)$ 且 $\sigma$ 已知，
-		$
-		\bar X=\frac1n\sum_{i=1}^n X_i,\qquad \bar X\sim N\!\left(\mu,\frac{\sigma^2}{n}\right).
-		$
-		标准化得到 pivot
-		$
-		\Psi(X_n,\mu)=\frac{\bar X-\mu}{\sigma/\sqrt n}=\frac{\sqrt n(\bar X-\mu)}{\sigma}\sim N(0,1).
-		$
-		令 $z_\beta$ 为 $N(0,1)$ 的 \emph{upper} $\beta$ 分位数（$\mathbb P(Z>z_\beta)=\beta$），
-		则双侧 $(1-\alpha)$ CI 满足
-		$
-		\mathbb P_\mu\!\left(-z_{\alpha/2}\le \frac{\sqrt n(\bar X-\mu)}{\sigma}\le z_{\alpha/2}\right)=1-\alpha,
-		$
-		等价于
-		$
-		\mathbb P_\mu\!\left(\bar X-\frac{\sigma}{\sqrt n}z_{\alpha/2}\le \mu\le
-		\bar X+\frac{\sigma}{\sqrt n}z_{\alpha/2}\right)=1-\alpha,
-		$
-		因此
-		$
-		\mathrm{CI}_{1-\alpha}(\mu)=\left[\bar X-\frac{\sigma}{\sqrt n}z_{\alpha/2},\ \bar X+\frac{\sigma}{\sqrt n}z_{\alpha/2}\right].
-		$
-		该 CI 长度为
-		$
-		L=2\frac{\sigma}{\sqrt n}z_{\alpha/2}.
-		$
-		\emph{权衡：} $\alpha$ 越小（置信度越高），$z_{\alpha/2}$ 越大，区间越宽；固定 $\alpha$ 时，
-		$n$ 越大，长度按 $1/\sqrt n$ 缩短（样本量增至 $4$ 倍，长度减半）。
-		
-		\underline{Example 2: Normal Mean, $\sigma$ Unknown.}
-		若仍有 $X_i\stackrel{\text{i.i.d.}}{\sim}N(\mu,\sigma^2)$ 但 $\sigma$ 未知，
-		$
-		s^2=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar X)^2.
-		$
-		直接用 $\sigma$ 的 pivot 不可行（含 nuisance 参数）。用 $s$ 替代 $\sigma$：
-		$
-		\Psi(X_n,\mu)=\frac{\sqrt n(\bar X-\mu)}{s}.
-		$
-		利用正态样本性质可得该 pivot 服从 $t$ 分布（自由度 $n-1$）：
-		$
-		\frac{\sqrt n(\bar X-\mu)}{s}\sim t_{n-1}.
-		$
-		由对称性，设 $q(t_{n-1};1-\alpha/2)$ 为上 $1-\alpha/2$ 分位数，则
-		$
-		\mathbb P_{\mu,\sigma^2}\!\left(-q(t_{n-1};1-\alpha/2)\le \frac{\sqrt n(\bar X-\mu)}{s}\le
-		q(t_{n-1};1-\alpha/2)\right)=1-\alpha,
-		$
-		等价于
-		$
-		\mathrm{CI}_{1-\alpha}(\mu)=\left[\bar X-\frac{s}{\sqrt n}q(t_{n-1};1-\alpha/2),\ 
-		\bar X+\frac{s}{\sqrt n}q(t_{n-1};1-\alpha/2)\right].
-		$
-		
-		\underline{Asymptotic Pivots via CLT (大样本近似).}
-		若 $X_1,\dots,X_n$ 为来自某分布 $F$ 的 i.i.d. 样本，满足
-		$
-		\mathbb E[X_1]=\mu,\qquad \mathrm{Var}(X_1)=\sigma^2,
-		$
-		则由 CLT，
-		$
-		\frac{\sqrt n(\bar X-\mu)}{\sigma}\ \overset{\text{approx}}{\sim}\ N(0,1)\qquad (n\ \text{大}).
-		$
-		若 $\sigma$ 已知，则得到近似 CI：
-		$
-		\mu \approx \bar X \pm \frac{\sigma}{\sqrt n}z_{\alpha/2}.
-		$
-		实际中 $\sigma$ 常未知，可用 $s$ 替代，仍得到近似 CI：
-		$
-		\mu \approx \left(\bar X-\frac{s}{\sqrt n}z_{\alpha/2},\ \bar X+\frac{s}{\sqrt n}z_{\alpha/2}\right),
-		$
-		但其真实覆盖率可能偏离 $1-\alpha$，并依赖于 $F$ 的形状与样本量 $n$。
-		
-		\underline{Exercise (Bernoulli, Large $n$).}
-		若 $X_i\stackrel{\text{i.i.d.}}{\sim}\mathrm{Bernoulli}(\theta)$，则
-		$
-		\mathbb E[X_1]=\theta,\qquad \mathrm{Var}(X_1)=\theta(1-\theta).
-		$
-		令样本比例 $\hat\theta=\frac1n\sum_{i=1}^n X_i$，大样本下可用近似 pivot 构造 CI，得到（题中形式）
-		$
-		\left[\hat\theta-\sqrt{\frac{\hat\theta(1-\hat\theta)}{\,n-1\,}}\,z_{\alpha/2},\ 
-		\hat\theta+\sqrt{\frac{\hat\theta(1-\hat\theta)}{\,n-1\,}}\,z_{\alpha/2}\right]
-		$
-		为 $\theta$ 的近似 $(1-\alpha)$ CI。
-		
-		\underline{Interpretation (如何正确解读).}
-		令 $(A,B)$ 为参数 $\theta$ 的置信系数 $\gamma$（即 $\gamma=1-\alpha$）的置信区间，
-		观察到具体数值 $(a,b)$ 后：
+		\sum_{i=1}^n w_i^2 = \frac{1}{S_x^2}.
+		$ {Variance for the estimated slope:}
+		There are three aspects of the scatter plot that affect the variance of the regression slope:
 		\begin{itemize}
-			\item \textbf{错误说法：} “$\theta$ 以概率 $\gamma$ 落在 $(a,b)$ 里。”
-			\item \textbf{正确频率学派含义：} 在重复抽样下，随机区间 $(A(X_n),B(X_n))$ 以概率 $\gamma$
-			覆盖真值 $\theta$：
-			$
-			\mathbb P_\theta\!\bigl(A(X_n)\le \theta\le B(X_n)\bigr)=\gamma.
-			$
-			\item 观测到 $(a,b)$ 之后，若不把 $\theta$ 当随机变量，就不能对事件 $\{\theta\in(a,b)\}$ 再赋“概率”；
-			通常表述为“我们对 $\theta\in(a,b)$ 有置信度 $\gamma$”。
+			\item The spread around the regression line $(\sigma^2)$ --- less scatter around the line means the slope will be more consistent from sample to sample.
+			\item The spread of the $x$ values $\bigl( \sum_{i=1}^n (x_i - \bar{x})^2 / n \bigr)$ --- a large variance of $x$ provides a more stable regression.
+			\item The sample size $n$ --- having a larger sample size gives more consistent estimates.
 		\end{itemize}
 		
+		{Estimated variance:}
+		When $\sigma^2$ is unknown we replace it with
+		$
+		\hat{\sigma}^2
+		= \frac{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}{n-2}
+		= \frac{\sum_{i=1}^n e_i^2}{n-2}.
+		$ Plugging this into the equation for $\mathrm{Var}(\hat{\beta}_1)$ we get
+		$
+		\mathrm{se}^2(\hat{\beta}_1)
+		= \frac{\hat{\sigma}^2}{S_x^2}.
+		$ Recall: \emph{Standard error} $\mathrm{se}(\hat{\theta})$ of an estimator $\hat{\theta}$ is used to refer to an estimate of its standard deviation. {Result:} For the normal error regression model:
+		$
+		\frac{\mathrm{SSE}}{\sigma^2}
+		= \frac{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}{\sigma^2}
+		\sim \chi^2_{n-2},
+		$
+		and is independent of $\hat{\beta}_0$ and $\hat{\beta}_1$.
 		
-		\textbf{$t$-Distribution.}
-
+		{Studentized statistic:}
+		Since $\hat{\beta}_1$ is normally distributed, the standardized statistic:
+		$
+		\frac{\hat{\beta}_1 - \beta_1}{\sqrt{\mathrm{Var}(\hat{\beta}_1)}}
+		\sim N(0,1).$If we replace $\mathrm{Var}(\hat{\beta}_1)$ by its estimate we get the \emph{studentized statistic}:
+		$
+		\frac{\hat{\beta}_1 - \beta_1}{\mathrm{se}(\hat{\beta}_1)}
+		\sim t_{n-2}.
+		$ Recall: Suppose that $Z \sim N(0,1)$ and $W \sim \chi^2_p$ where $Z$ and $W$ are independent. Then,
+		$
+		\frac{Z}{\sqrt{W/p}} \sim t_p,
+		$
+		the $t$-distribution with $p$ degrees of freedom.
 		
-		\underline{Definition.}  分布可视为正态变量与独立卡方变量之比,
-		设
+		{Hypothesis testing:}
+		To test
 		$
-		Z\sim N(0,1),\qquad V\sim\chi^2_n,
+		H_0:\ \beta_1 = 0
+		\qquad \text{versus} \qquad
+		H_a:\ \beta_1 \neq 0,
 		$
-		且 $Z$ 与 $V$ 相互独立。定义
+		use the test-statistic
 		$
-		T=\frac{Z}{\sqrt{V/n}},
+		T = \frac{\hat{\beta}_1}{\mathrm{se}(\hat{\beta}_1)}.
+		$ We reject $H_0$ when the observed value of $|T|$, i.e., $|t_{\mathrm{obs}}|$, is large. Thus, given level $(1-\alpha)$, we reject $H_0$ if
 		$
-		则称 $T$ 服从自由度为 $n$ 的 $t$ 分布，记作
+		|t_{\mathrm{obs}}| > t_{1-\alpha/2,\,n-2},
 		$
-		T\sim t_n.
+		where $t_{1-\alpha/2,\,n-2}$ denotes the $(1-\alpha/2)$-quantile of the $t_{n-2}$-distribution, i.e.,
 		$
-		
-		\underline{Symmetry.}
-		若 $T\sim t_n$，则
-		$
-		T\overset{d}= -T,
-		$
-		因此 $t_n$ 分布关于 $0$ 对称，其密度函数为偶函数。
-		
-		\underline{Asymptotic Normality.}
-		当 $n\to\infty$ 时，
-		$
-		t_n \;\Longrightarrow\; N(0,1).
-		$
-		直观地，
-		$
-		\frac{V}{n}\xrightarrow{P}1,
-		\qquad
-		\text{其中 } V\sim\chi^2_n.
+		1 - \frac{\alpha}{2}
+		= \mathbb{P}(T \le t_{1-\alpha/2,\,n-2}).
 		$
 		
-		\underline{Connection with Normal Samples.}
-		设 $X_1,\dots,X_n$ 为来自 $N(\mu,\sigma^2)$ 的随机样本，
+		{P-value:}
+		The $p$-value is the probability of obtaining a test statistic at least as extreme as the one that was actually observed, assuming that the null hypothesis is true. The $p$-value depends on $H_1$ (one-sided/two-sided). In our case, we compute $p$-values using a $t_{n-2}$-distribution. Thus,
 		$
-		\bar X_n=\frac1n\sum_{i=1}^n X_i,
-		\qquad
-		s^2=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar X_n)^2.
+		p\text{-value}
+		= \mathbb{P}_{H_0}\!\left( |T| > |t_{\mathrm{obs}}| \right).
+		$ If we know the $p$-value then we can decide to accept/reject $H_0$ (versus $H_1$) at any given $\alpha \in (0,1)$.
+		
+		{Confidence interval:} A \emph{confidence interval} (CI) is a kind of interval estimator of a population parameter and is used to indicate the reliability of an estimator. Using the sampling distribution of $\hat{\beta}_1$ we can make the following probability statement:
 		$
-		则
+		\mathbb{P}\!\left(
+		t_{\alpha/2,\,n-2}
+		\le
+		\frac{\hat{\beta}_1 - \beta_1}{\mathrm{se}(\hat{\beta}_1)}
+		\le
+		t_{1-\alpha/2,\,n-2}
+		\right)
+		= 1 - \alpha.
+		$ Equivalently,
 		$
-		\frac{\sqrt n(\bar X_n-\mu)}{s}\sim t_{n-1}.
+		\mathbb{P}\!\left(
+		\hat{\beta}_1 - t_{1-\alpha/2,\,n-2}\,\mathrm{se}(\hat{\beta}_1)
+		\le
+		\beta_1
+		\le
+		\hat{\beta}_1 + t_{1-\alpha/2,\,n-2}\,\mathrm{se}(\hat{\beta}_1)
+		\right)
+		= 1 - \alpha.
 		$
 		
-		\underline{Key Facts.}
+		Thus, a $(1-\alpha)$ confidence interval for $\beta_1$ is
+		$
+		\bigl[
+		\hat{\beta}_1 - t_{1-\alpha/2,\,n-2}\,\mathrm{se}(\hat{\beta}_1),
+		\;
+		\hat{\beta}_1 + t_{1-\alpha/2,\,n-2}\,\mathrm{se}(\hat{\beta}_1)
+		\bigr],
+		$
+		as $t_{1-\alpha/2,\,n-2} = -t_{\alpha/2,\,n-2}$.
+		\underline{Prediction interval} A CI for a \emph{future observation} is called a \emph{prediction interval}.
+		Consider the prediction of a new observation $Y$ corresponding to a given level
+		$x$ of the predictor.
+		
+		Suppose $x=x_h$ and the new observation is denoted $Y_{h(\text{new})}$.
+		Note that $E(\hat Y_h)$ is the mean of the distribution of $Y\mid X=x_h$.
+		$Y_{h(\text{new})}$ represents the prediction of an \emph{individual outcome}
+		drawn from the distribution of $Y\mid X=x_h$, i.e.,
+		$
+		Y_{h(\text{new})}=\beta_0+\beta_1 x_h+\varepsilon_{\text{new}},
+		$
+		where $\varepsilon_{\text{new}}$ is independent of our data.
+		
 		\begin{itemize}
-			\item $t_n$ 是对称、重尾分布；
-			\item 自由度 $n$ 越大，越接近标准正态；
-			\item $t$ 统计量源自未知方差的正态样本推断。
-		\end{itemize}
-		
-		置信區間的
-		
-		\underline{Confidence Intervals (CIs).}
-		置信区间用于量化对未知参数 $\theta$（或其函数 $g(\theta)$）的估计不确定性。
-		我们希望构造一个随机区间 $(A,B)$，使其在重复抽样意义下有高概率包含真值。
-		
-		\underline{Definition (Level / Coefficient).}
-		设 $X_n=(X_1,\dots,X_n)$ 来自分布族 $P_\theta$，其中 $\theta\in\Omega\subset\mathbb R^k$。
-		欲估计 $g(\theta)$。若统计量 $A\le B$ 满足对所有 $\theta$，
-		$
-		\mathbb P_\theta\!\bigl(A\le g(\theta)\le B\bigr)\ge 1-\alpha,\qquad \alpha\in(0,1),
-		$
-		则随机区间 $(A,B)$ 称为 $g(\theta)$ 的 $(1-\alpha)$ 置信区间（置信水平/系数）。
-		若上式对所有 $\theta$ 都取等号，则称该 CI 为 \emph{exact}（精确置信区间）。
-		
-		\underline{Standard Method: Pivots (枢轴量法).}
-		构造 CI 的常用套路是找一个 \emph{pivot}（枢轴量）：
-		$
-		\Psi\bigl(X_n,g(\theta)\bigr),
-		$
-		使得其在参数为 $\theta$ 时的分布 \emph{不依赖于 $\theta$}，且分布已知。
-		设该 pivot 的分布函数为 $G$，并记其 $\beta$ 分位数为 $q(G;\beta)$，即
-		$
-		\mathbb P_\theta\!\left(\Psi\bigl(X_n,g(\theta)\bigr)\le q(G;\beta)\right)=\beta.
-		$
-		选取 $0\le \beta_1,\beta_2\le \alpha$ 且 $\beta_1+\beta_2=\alpha$，则
-		$
-		\mathbb P_\theta\!\left(q(G;\beta_1)\le \Psi\bigl(X_n,g(\theta)\bigr)\le q(G;1-\beta_2)\right)=1-\alpha.
-		$
-		把上述不等式对 $g(\theta)$（或 $\theta$）解出来，得到 $(1-\alpha)$ 的置信集合/区间。
-		\emph{常见选择是等分尾部：} $\beta_1=\beta_2=\alpha/2$（通常可得到最短的双侧 CI）。
-		
-		\underline{Example 1: Normal Mean, $\sigma$ Known.}
-		若 $X_1,\dots,X_n\stackrel{\text{i.i.d.}}{\sim}N(\mu,\sigma^2)$ 且 $\sigma$ 已知，
-		$
-		\bar X=\frac1n\sum_{i=1}^n X_i,\qquad \bar X\sim N\!\left(\mu,\frac{\sigma^2}{n}\right).
-		$
-		标准化得到 pivot
-		$
-		\Psi(X_n,\mu)=\frac{\bar X-\mu}{\sigma/\sqrt n}=\frac{\sqrt n(\bar X-\mu)}{\sigma}\sim N(0,1).
-		$
-		令 $z_\beta$ 为 $N(0,1)$ 的 \emph{upper} $\beta$ 分位数（$\mathbb P(Z>z_\beta)=\beta$），
-		则双侧 $(1-\alpha)$ CI 满足
-		$
-		\mathbb P_\mu\!\left(-z_{\alpha/2}\le \frac{\sqrt n(\bar X-\mu)}{\sigma}\le z_{\alpha/2}\right)=1-\alpha,
-		$
-		等价于
-		$
-		\mathbb P_\mu\!\left(\bar X-\frac{\sigma}{\sqrt n}z_{\alpha/2}\le \mu\le
-		\bar X+\frac{\sigma}{\sqrt n}z_{\alpha/2}\right)=1-\alpha,
-		$
-		因此
-		$
-		\mathrm{CI}_{1-\alpha}(\mu)=\left[\bar X-\frac{\sigma}{\sqrt n}z_{\alpha/2},\ \bar X+\frac{\sigma}{\sqrt n}z_{\alpha/2}\right].
-		$
-		该 CI 长度为
-		$
-		L=2\frac{\sigma}{\sqrt n}z_{\alpha/2}.
-		$
-		\emph{权衡：} $\alpha$ 越小（置信度越高），$z_{\alpha/2}$ 越大，区间越宽；固定 $\alpha$ 时，
-		$n$ 越大，长度按 $1/\sqrt n$ 缩短（样本量增至 $4$ 倍，长度减半）。
-		
-		\underline{Example 2: Normal Mean, $\sigma$ Unknown.}
-		若仍有 $X_i\stackrel{\text{i.i.d.}}{\sim}N(\mu,\sigma^2)$ 但 $\sigma$ 未知，
-		$
-		s^2=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar X)^2.
-		$
-		直接用 $\sigma$ 的 pivot 不可行（含 nuisance 参数）。用 $s$ 替代 $\sigma$：
-		$
-		\Psi(X_n,\mu)=\frac{\sqrt n(\bar X-\mu)}{s}.
-		$
-		利用正态样本性质可得该 pivot 服从 $t$ 分布（自由度 $n-1$）：
-		$
-		\frac{\sqrt n(\bar X-\mu)}{s}\sim t_{n-1}.
-		$
-		由对称性，设 $q(t_{n-1};1-\alpha/2)$ 为上 $1-\alpha/2$ 分位数，则
-		$
-		\mathbb P_{\mu,\sigma^2}\!\left(-q(t_{n-1};1-\alpha/2)\le \frac{\sqrt n(\bar X-\mu)}{s}\le
-		q(t_{n-1};1-\alpha/2)\right)=1-\alpha,
-		$
-		等价于
-		$
-		\mathrm{CI}_{1-\alpha}(\mu)=\left[\bar X-\frac{s}{\sqrt n}q(t_{n-1};1-\alpha/2),\ 
-		\bar X+\frac{s}{\sqrt n}q(t_{n-1};1-\alpha/2)\right].
-		$
-		
-		\underline{Asymptotic Pivots via CLT (大样本近似).}
-		若 $X_1,\dots,X_n$ 为来自某分布 $F$ 的 i.i.d. 样本，满足
-		$
-		\mathbb E[X_1]=\mu,\qquad \mathrm{Var}(X_1)=\sigma^2,
-		$
-		则由 CLT，
-		$
-		\frac{\sqrt n(\bar X-\mu)}{\sigma}\ \overset{\text{approx}}{\sim}\ N(0,1)\qquad (n\ \text{大}).
-		$
-		若 $\sigma$ 已知，则得到近似 CI：
-		$
-		\mu \approx \bar X \pm \frac{\sigma}{\sqrt n}z_{\alpha/2}.
-		$
-		实际中 $\sigma$ 常未知，可用 $s$ 替代，仍得到近似 CI：
-		$
-		\mu \approx \left(\bar X-\frac{s}{\sqrt n}z_{\alpha/2},\ \bar X+\frac{s}{\sqrt n}z_{\alpha/2}\right),
-		$
-		但其真实覆盖率可能偏离 $1-\alpha$，并依赖于 $F$ 的形状与样本量 $n$。
-		
-		\underline{Exercise (Bernoulli, Large $n$).}
-		若 $X_i\stackrel{\text{i.i.d.}}{\sim}\mathrm{Bernoulli}(\theta)$，则
-		$
-		\mathbb E[X_1]=\theta,\qquad \mathrm{Var}(X_1)=\theta(1-\theta).
-		$
-		令样本比例 $\hat\theta=\frac1n\sum_{i=1}^n X_i$，大样本下可用近似 pivot 构造 CI，得到（题中形式）
-		$
-		\left[\hat\theta-\sqrt{\frac{\hat\theta(1-\hat\theta)}{\,n-1\,}}\,z_{\alpha/2},\ 
-		\hat\theta+\sqrt{\frac{\hat\theta(1-\hat\theta)}{\,n-1\,}}\,z_{\alpha/2}\right]
-		$
-		为 $\theta$ 的近似 $(1-\alpha)$ CI。
-		
-		\underline{Interpretation (如何正确解读).}
-		令 $(A,B)$ 为参数 $\theta$ 的置信系数 $\gamma$（即 $\gamma=1-\alpha$）的置信区间，
-		观察到具体数值 $(a,b)$ 后：
-		\begin{itemize}
-			\item \textbf{错误说法：} “$\theta$ 以概率 $\gamma$ 落在 $(a,b)$ 里。”
-			\item \textbf{正确频率学派含义：} 在重复抽样下，随机区间 $(A(X_n),B(X_n))$ 以概率 $\gamma$
-			覆盖真值 $\theta$：
+			\item The \emph{point estimate} will be the \emph{same} for both.
+			
+			\item However, the variance is \emph{larger} when predicting an individual outcome
+			due to the \emph{additional variation} of an individual about the mean.
+			
+			\item When constructing prediction limits for $Y_{h(\text{new})}$ we must take into
+			consideration two sources of variation:
+			\begin{itemize}
+				\item Variation in the \emph{mean} of $Y$.
+				\item Variation around the mean.
+			\end{itemize}
+			
+			\item The sampling distribution of the studentized statistic:
 			$
-			\mathbb P_\theta\!\bigl(A(X_n)\le \theta\le B(X_n)\bigr)=\gamma.
+			\frac{Y_{h(\text{new})}-\hat Y_h}{\se\!\left(Y_{h(\text{new})}-\hat Y_h\right)}
+			\sim t_{n-2}.
 			$
-			\item 观测到 $(a,b)$ 之后，若不把 $\theta$ 当随机变量，就不能对事件 $\{\theta\in(a,b)\}$ 再赋“概率”；
-			通常表述为“我们对 $\theta\in(a,b)$ 有置信度 $\gamma$”。
 		\end{itemize}
 		
-		
-		
-		\textbf{C-R Ineq}
-		\section*{Cramér--Rao Inequality (Cheat Sheet)}
-		
-		\underline{Model \& Notation}
-		
-		Let $X\sim f(x,\theta)$, $\theta\in\Omega$.
-		
+		All inference regarding $Y_{h(\text{new})}$ are carried out using the $t$-distribution:
 		$
-		\ell(x,\theta)=\log f(x,\theta), \qquad 
-		\dot\ell(x,\theta)=\frac{\partial}{\partial\theta}\ell(x,\theta).
+		\Var\!\left(Y_{h(\text{new})}-\hat Y_h\right)
+		=
+		\Var(Y_{h(\text{new})})+\Var(\hat Y_h)
+		=
+		\sigma^2\!\left\{
+		1+\frac{1}{n}+\frac{(x_h-\bar x)^2}{S_x^2}
+		\right\}.
 		$
 		
-		For i.i.d.\ samples $X_1,\dots,X_n$,
+		Thus,
 		$
-		\ell_n(X_n,\theta)=\sum_{i=1}^n \ell(X_i,\theta), \qquad
-		\dot\ell_n(X_n,\theta)=\sum_{i=1}^n \dot\ell(X_i,\theta).
-		$
-		
-		---
-		
-		\underline{Fisher Information}
-		
-		Single observation:
-		$
-		I(\theta)=\mathbb E_\theta\!\left[\dot\ell(X,\theta)^2\right].
+		\se_{\text{pred}}
+		=
+		\se\!\left(Y_{h(\text{new})}-\hat Y_h\right)
+		=
+		\tilde\sigma^2
+		\left\{
+		1+\frac{1}{n}+\frac{(x_h-\bar x)^2}{S_x^2}
+		\right\}.
 		$
 		
-		$n$ observations:
+		Using this result, a $(1-\alpha)$ \emph{prediction interval} for a new observation
+		$Y_{h(\text{new})}$ is
 		$
-		I_n(\theta)=nI(\theta).
-		$
-		
-		Equivalent form (under regularity conditions):
-		$
-		I(\theta)=-\mathbb E_\theta\!\left[\ddot\ell(X,\theta)\right].
+		\hat Y_h \pm t_{1-\alpha/2,n-2}\,\se_{\text{pred}}.
 		$
 		
-		---
+		\subsection*{2.4.5\quad Inference about both $\beta_0$ and $\beta_1$ simultaneously}
 		
-		\underline{Cramér--Rao Inequality}
-		
-		Let $T(X_n)$ be an unbiased estimator of $g(\theta)$, i.e.,
+		Suppose that $\beta_0^*$ and $\beta_1^*$ are given numbers and we are interested in
+		testing the following hypothesis:
 		$
-		\mathbb E_\theta[T(X_n)]=g(\theta).
-		$
-		
-		Then,
-		$
-		\boxed{
-			\mathrm{Var}_\theta(T(X_n))
-			\;\ge\;
-			\frac{[g'(\theta)]^2}{I_n(\theta)}
-		}
+		H_0:\ \beta_0=\beta_0^* \ \text{and}\ \beta_1=\beta_1^*
+		\qquad \text{versus} \qquad
+		H_1:\ \text{at least one is different}.
 		$
 		
-		In particular, for $g(\theta)=\theta$,
+		We shall derive the likelihood ratio test for (10).
+		
+		The likelihood function (8), when maximized under the unconstrained space yields the
+		MLEs $\hat\beta_0,\hat\beta_1,\hat\sigma^2$.
+		
+		Under the constrained space, $\beta_0$ and $\beta_1$ are fixed at
+		$\beta_0^*$ and $\beta_1^*$, and so
 		$
-		\boxed{
-			\mathrm{Var}_\theta(T)\ge \frac{1}{I_n(\theta)}
-		}
-		$
-		
-		---
-		
-		\underline{Interpretation}
-		
-		\begin{itemize}
-			\item $I(\theta)$ measures the amount of information about $\theta$ in the data.
-			\item Large $I(\theta)$ $\Rightarrow$ small variance lower bound.
-			\item Small $I(\theta)$ $\Rightarrow$ no unbiased estimator can be precise.
-		\end{itemize}
-		
-		If equality holds, $T$ is called an \emph{efficient estimator} and is the
-		\emph{minimum variance unbiased estimator (MVUE)}.
-		
-		---
-		
-		\underline{Example 1: Poisson$(\theta)$}
-		
-		Let $X_1,\dots,X_n \sim \text{Pois}(\theta)$.
-		
-		$
-		\dot\ell(x,\theta)=-1+\frac{x}{\theta},
-		\qquad
-		I_n(\theta)=\frac{n}{\theta}.
+		\hat\sigma_0^2
+		=
+		\frac{1}{n}\sum_{i=1}^n (Y_i-\beta_0^*-\beta_1^*x_i)^2.
 		$
 		
-		Cramér--Rao bound:
+		The likelihood statistic reduces to
 		$
-		\mathrm{Var}(T)\ge \frac{\theta}{n}.
-		$
-		
-		Since $\bar X$ is unbiased and $\mathrm{Var}(\bar X)=\theta/n$,
-		$
-		\bar X \text{ is the MVUE of } \theta.
-		$
-		
-		---
-		
-		\underline{Example 2: Normal$(0,V)$}
-		
-		Let $X_1,\dots,X_n \sim N(0,V)$.
-		
-		$
-		I_n(V)=\frac{n}{2V^2}.
+		\Lambda(\mathbf Y,\mathbf x)
+		=
+		\frac{\sup_{\sigma^2} L(\beta_0^*,\beta_1^*,\sigma^2)}
+		{\sup_{\beta_0,\beta_1,\sigma^2} L(\beta_0,\beta_1,\sigma^2)}
+		=
+		\left(\frac{\hat\sigma^2}{\hat\sigma_0^2}\right)^{n/2}
+		=
+		\left[
+		\frac{\sum_{i=1}^n (Y_i-\hat\beta_0-\hat\beta_1 x_i)^2}
+		{\sum_{i=1}^n (Y_i-\beta_0^*-\beta_1^* x_i)^2}
+		\right]^{n/2}.
 		$
 		
-		Cramér--Rao bound:
+		The LRT procedure specifies rejecting $H_0$ when
 		$
-		\mathrm{Var}(S)\ge \frac{2V^2}{n}.
+		\Lambda(\mathbf Y,\mathbf x)\le k,
+		$
+		for some $k$, chosen given the level condition.
+		
+		\textbf{Exercise.} Show that
+		$
+		\sum_{i=1}^n (Y_i-\beta_0^*-\beta_1^*x_i)^2=S^2+Q^2,
+		$
+		where
+		$
+		S^2=\sum_{i=1}^n (Y_i-\hat\beta_0-\hat\beta_1 x_i)^2,
+		$
+		and
+		$
+		Q^2
+		=
+		n(\hat\beta_0-\beta_0^*)^2
+		+
+		\left(\sum_{i=1}^n x_i^2\right)(\hat\beta_1-\beta_1^*)^2
+		+
+		2n\bar x(\hat\beta_0-\beta_0^*)(\hat\beta_1-\beta_1^*).
 		$
 		
-		Consider $\hat V=\frac1n\sum_{i=1}^n X_i^2$.
-		Then,
+		Thus,
 		$
-		\mathrm{Var}(\hat V)=\frac{2V^2}{n}.
+		\Lambda(\mathbf Y,\mathbf x)
+		=
+		\left[\frac{S^2}{S^2+Q^2}\right]^{n/2}
+		=
+		\left[1+\frac{Q^2}{S^2}\right]^{-n/2}.
 		$
 		
-		Hence,
+		It can be seen that this is equivalent to rejecting $H_0$ when
+		$Q^2/S^2\ge k'$, which is equivalent to
 		$
-		\hat V \text{ is the MVUE of } V.
+		U^2:=\frac{1}{2}\frac{Q^2}{\tilde\sigma^2}\ge \gamma.
 		$
-
 		
-		\underline{Key Takeaway}
+		\textbf{Exercise.} Show that, under $H_0$,
+		$\displaystyle \frac{Q^2}{\sigma^2}\sim\chi_2^2$.
+		Also show that $Q^2$ and $S^2$ are independent.
 		
-		\begin{center}
-			\emph{Cramér--Rao gives the best possible variance for unbiased estimators.  
-				If the bound is attained, the estimator is optimal (MVUE).}
-		\end{center}
+		We know that $\displaystyle S^2/\sigma^2\sim\chi_{n-2}^2$.
+		Thus, under $H_0$,
+		$
+		U^2\sim F_{2,n-2},
+		$
+		and hence
+		$
+		\gamma=F_{2,n-2}^{-1}(1-\alpha).
+		$
+		
+		
+		
+		\clearpage
 		
