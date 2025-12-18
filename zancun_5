@@ -1,0 +1,1577 @@
+% This LaTeX document needs to be compiled with XeLaTeX.
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage{bbold}
+\usepackage[fallback]{xeCJK}
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{newunicodechar}
+\IfFontExistsTF{Noto Serif CJK TC}
+{\setCJKmainfont{Noto Serif CJK TC}}
+{\IfFontExistsTF{STSong}
+  {\setCJKmainfont{STSong}}
+  {\IfFontExistsTF{Droid Sans Fallback}
+    {\setCJKmainfont{Droid Sans Fallback}}
+    {\setCJKmainfont{SimSun}}
+}}
+
+\setmainlanguage{english}
+\IfFontExistsTF{CMU Serif}
+{\setmainfont{CMU Serif}}
+{\IfFontExistsTF{DejaVu Sans}
+  {\setmainfont{DejaVu Sans}}
+  {\setmainfont{Georgia}}
+}
+
+\title{Linear regression }
+
+\author{Bodhisattva Sen}
+\date{}
+
+
+\newunicodechar{×}{\ifmmode\times\else{$\times$}\fi}
+
+\begin{document}
+\maketitle
+December 2, 2025
+
+\begin{itemize}
+  \item We are often interested in understanding the relationship between two or more variables.
+  \item Want to model a functional relationship between a "predictor" (input, independent variable) and a "response" variable (output, dependent variable, etc.).
+  \item But real world is noisy, no $f=m a$ (Force $=$ mass × acceleration). We have observation noise, weak relationship, etc.
+\end{itemize}
+
+\section*{Examples:}
+\begin{itemize}
+  \item How is the sales price of a house related to its size, number of rooms and property tax?
+  \item How does the probability of surviving a particular surgery change as a function of the patient's age and general health condition?
+  \item How does the weight of an individual depend on his/her height?
+\end{itemize}
+
+\section*{1 Method of least squares}
+Suppose that we have $n$ data points $\left(x_{1}, Y_{1}\right), \ldots,\left(x_{n}, Y_{n}\right)$. We want to predict $Y$ given a value of $x$.
+
+\begin{itemize}
+  \item $Y_{i}$ is the value of the response variable for the $i$-th observation.
+  \item $x_{i}$ is the value of the predictor (covariate/explanatory variable) for the $i$-th observation.
+  \item Scatter plot: Plot the data and try to visualize the relationship.
+  \item Suppose that we think that $Y$ is a linear function (actually here a more appropriate term is "affine") of $x$, i.e.,
+\end{itemize}
+
+$$
+Y_{i} \approx \beta_{0}+\beta_{1} x_{i}
+$$
+
+and we want to find the "best" such linear function.
+
+\begin{itemize}
+  \item For the correct parameter values $\beta_{0}$ and $\beta_{1}$, the deviation of the observed values to its expected value, i.e.,
+\end{itemize}
+
+$$
+Y_{i}-\beta_{0}-\beta_{1} x_{i}
+$$
+
+should be small.
+
+\begin{itemize}
+  \item We try to minimize the sum of the $n$ squared deviations, i.e., we can try to minimize
+\end{itemize}
+
+$$
+Q\left(b_{0}, b_{1}\right)=\sum_{i=1}^{n}\left(Y_{i}-b_{0}-b_{1} x_{i}\right)^{2}
+$$
+
+as a function of $b_{0}$ and $b_{1}$. In other words, we want to minimize the sum of the squares of the vertical deviations of all the points from the line.
+
+\begin{itemize}
+  \item The least squares estimators can be found by differentiating $Q$ with respect to $b_{0}$ and $b_{1}$ and setting the partial derivatives equal to 0 .
+  \item Find $b_{0}$ and $b_{1}$ that solve:
+\end{itemize}
+
+$$
+\begin{aligned}
+& \frac{\partial Q}{\partial b_{0}}=-2 \sum_{i=1}^{n}\left(Y_{i}-b_{0}-b_{1} x_{i}\right)=0 \\
+& \frac{\partial Q}{\partial b_{1}}=-2 \sum_{i=1}^{n} x_{i}\left(Y_{i}-b_{0}-b_{1} x_{i}\right)=0
+\end{aligned}
+$$
+
+\subsection*{1.1 Normal equations}
+\begin{itemize}
+  \item The values of $b_{0}$ and $b_{1}$ that minimize $Q$ are given by the solution to the normal equations:
+\end{itemize}
+
+
+\begin{align*}
+\sum_{i=1}^{n} Y_{i} & =n b_{0}+b_{1} \sum_{i=1}^{n} x_{i}  \tag{1}\\
+\sum_{i=1}^{n} x_{i} Y_{i} & =b_{0} \sum_{i=1}^{n} x_{i}+b_{1} \sum_{i=1}^{n} x_{i}^{2} \tag{2}
+\end{align*}
+
+
+\begin{itemize}
+  \item Solving the normal equations gives us the following point estimates:
+\end{itemize}
+
+
+\begin{align*}
+b_{1} & =\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(Y_{i}-\bar{Y}\right)}{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}}=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right) Y_{i}}{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}}  \tag{3}\\
+b_{0} & =\bar{Y}-b_{1} \bar{x} \tag{4}
+\end{align*}
+
+
+where $\bar{x}=\sum_{i=1}^{n} x_{i} / n$ and $\bar{Y}=\sum_{i=1}^{n} Y_{i} / n$.
+
+In general, if we can parametrize the form of the functional dependence between $Y$ and $x$ in a linear fashion (linear in the parameters), then the method of least squares can be used to estimate the function. For example,
+
+$$
+Y_{i} \approx \beta_{0}+\beta_{1} x_{i}+\beta_{2} x_{i}^{2}
+$$
+
+is still linear in the parameters.
+
+\section*{2 Simple linear regression}
+The model for simple linear regression can be stated as follows:
+
+$$
+Y_{i}=\beta_{0}+\beta_{1} x_{i}+\epsilon_{i}, \quad i=1, \ldots, n
+$$
+
+\begin{itemize}
+  \item Observations: $\left\{\left(x_{i}, Y_{i}\right): i=1, \ldots, n\right\}$.
+  \item $\beta_{0}, \beta_{1}$ and $\sigma^{2}$ are unknown parameters.
+  \item $\epsilon_{i}$ is a (unobserved) random error term whose distribution is unspecified:
+\end{itemize}
+
+$$
+\mathbb{E}\left(\epsilon_{i}\right)=0, \quad \operatorname{Var}\left(\epsilon_{i}\right)=\sigma^{2}, \quad \operatorname{Cov}\left(\epsilon_{i}, \epsilon_{j}\right)=0 \quad \text { for } i \neq j .
+$$
+
+\begin{itemize}
+  \item $x_{i}$ 's will be treated as known constants. Even if the $x_{i}$ 's are random, we condition on the predictors and want to understand the conditional distribution of $Y$ given $X$.
+  \item Regression function: Conditional mean on $Y$ given $x$, i.e.,
+\end{itemize}
+
+$$
+m(x):=\mathbb{E}(Y \mid x)=\beta_{0}+\beta_{1} x
+$$
+
+\begin{itemize}
+  \item The regression function shows how the mean of $Y$ changes as a function of $x$.
+  \item $\mathbb{E}\left(Y_{i}\right)=\mathbb{E}\left(\beta_{0}+\beta_{1} x_{i}+\epsilon_{i}\right)=\beta_{0}+\beta_{1} x_{i}$
+  \item $\operatorname{Var}\left(Y_{i}\right)=\operatorname{Var}\left(\beta_{0}+\beta_{1} x_{i}+\epsilon_{i}\right)=\operatorname{Var}\left(\epsilon_{i}\right)=\sigma^{2}$.
+\end{itemize}
+
+\subsection*{2.1 Interpretation}
+\begin{itemize}
+  \item The slope $\beta_{1}$ has units " y -units per x -units".
+  \item For every 1 inch increase in height, the model predicts a $\beta_{1}$ pounds increase in the mean weight.
+  \item The intercept term $\beta_{0}$ is not always meaningful.
+  \item The model is only valid for values of the explanatory variable in the domain of the data.
+\end{itemize}
+
+\subsection*{2.2 Estimation}
+\begin{itemize}
+  \item After formulating the model we use the observed data to estimate the unknown parameters.
+  \item Three unknown parameters: $\beta_{0}, \beta_{1}$ and $\sigma^{2}$.
+  \item We are interested in finding the estimates of these parameters that best fit the data.
+  \item Question: Best in what sense?
+\end{itemize}
+
+\subsection*{2.2.1 Estimated regression function}
+\begin{itemize}
+  \item The least squares estimators of $\beta_{0}$ and $\beta_{1}$ are those values $b_{0}$ and $b_{1}$ that minimize:
+\end{itemize}
+
+$$
+Q\left(b_{0}, b_{1}\right)=\sum_{i=1}^{n}\left(Y_{i}-b_{0}-b_{1} x_{i}\right)^{2} .
+$$
+
+\begin{itemize}
+  \item Solving the normal equations gives us the following point estimates:
+\end{itemize}
+
+
+\begin{align*}
+\hat{\beta}_{1} & =\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(Y_{i}-\bar{Y}\right)}{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}}=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right) Y_{i}}{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}},  \tag{5}\\
+\hat{\beta}_{0} & =\bar{Y}-\hat{\beta}_{1} \bar{x}, \tag{6}
+\end{align*}
+
+
+where $\bar{x}=\sum_{i=1}^{n} x_{i} / n$ and $\bar{Y}=\sum_{i=1}^{n} Y_{i} / n$.
+
+\begin{itemize}
+  \item We estimate the regression function:
+\end{itemize}
+
+$$
+\mathbb{E}(Y)=\beta_{0}+\beta_{1} x
+$$
+
+using
+
+$$
+\hat{Y}=\hat{\beta}_{0}+\hat{\beta}_{1} x .
+$$
+
+\begin{itemize}
+  \item The term
+\end{itemize}
+
+$$
+\hat{Y}_{i}=\hat{\beta}_{0}+\hat{\beta}_{1} x_{i}, \quad i=1, \ldots, n
+$$
+
+is called the fitted or predicted value for the $i$-th observation, while $Y_{i}$ is the observed value.
+
+\begin{itemize}
+  \item The residual, denoted $e_{i}$, is the difference between the observed and the predicted value of $Y_{i}$, i.e.,
+\end{itemize}
+
+$$
+e_{i}=Y_{i}-\hat{Y}_{i}
+$$
+
+\begin{itemize}
+  \item The residuals show how far the individual data points fall from the regression function.
+\end{itemize}
+
+\subsection*{2.2.2 Properties}
+\begin{enumerate}
+  \item The sum of the residuals $\sum_{i=1}^{n} e_{i}$ is zero.
+  \item The sum of the squared residuals is a minimum.
+  \item The sum of the observed values equal the sum of the predicted values, i.e., $\sum_{i=1}^{n} Y_{i}= \sum_{i=1}^{n} \hat{Y}_{i}$.
+  \item The following sums of weighted residuals are equal to zero:
+\end{enumerate}
+
+$$
+\sum_{i=1}^{n} x_{i} e_{i}=0 \quad \sum_{i=1}^{n} e_{i}=0
+$$
+
+\begin{enumerate}
+  \setcounter{enumi}{4}
+  \item The regression line always passes through the point $(\bar{x}, \bar{Y})$.
+\end{enumerate}
+
+\subsection*{2.2.3 Estimation of $\sigma^{2}$}
+\begin{itemize}
+  \item Recall: $\sigma^{2}=\operatorname{Var}\left(\epsilon_{i}\right)$.
+  \item We might have used $\hat{\sigma}^{2}=\frac{\sum_{i=1}^{n}\left(\epsilon_{i}-\bar{\epsilon}\right)^{2}}{n-1}$. But $\epsilon_{i}$ 's are not observed!
+  \item Idea: Use $e_{i}$ 's, i.e., $s^{2}=\frac{\sum_{i=1}^{n}\left(e_{i}-\bar{e}\right)^{2}}{n-2}=\frac{\sum_{i=1}^{n} e_{i}^{2}}{n-2}$.
+  \item The divisor $n-2$ in $s^{2}$ is the number of degrees of freedom associated with the estimate.
+  \item To obtain $s^{2}$, the two parameters $\beta_{0}$ and $\beta_{1}$ must first be estimated, which results in a loss of two degrees of freedom.
+  \item Using $n-2$ makes $s^{2}$ an unbiased estimator of $\sigma^{2}$, i.e., $\mathbb{E}\left(s^{2}\right)=\sigma^{2}$.
+\end{itemize}
+
+\subsection*{2.2.4 Gauss-Markov theorem}
+The least squares estimators $\hat{\beta}_{0}, \hat{\beta}_{1}$ are unbiased (why?), i.e.,
+
+$$
+\mathbb{E}\left(\hat{\beta}_{0}\right)=\beta_{0}, \quad \mathbb{E}\left(\hat{\beta}_{1}\right)=\beta_{1} .
+$$
+
+A linear estimator of $\beta_{j}(j=0,1)$ is an estimator of the form
+
+$$
+\tilde{\beta}_{j}=\sum_{i=1}^{n} c_{i} Y_{i}
+$$
+
+where the coefficients $c_{1}, \ldots, c_{n}$ are only allowed to depend on $x_{i}$.\\
+Note that $\hat{\beta}_{0}, \hat{\beta}_{1}$ are linear estimators (show this!).\\
+Result: No matter what the distribution of the error terms $\epsilon_{i}$, the least squares method provides unbiased point estimates that have minimum variance among all unbiased linear estimators.
+
+The Gauss-Markov theorem states that in a linear regression model in which the errors have expectation zero and are uncorrelated and have equal variances, the best linear unbiased estimator (BLUE) of the coefficients is given by the ordinary least squares estimators. The following result makes this precise.
+
+Theorem 2.1 (Gauss-Markov theorem for simple linear regression). Consider the simple linear regression model
+
+$$
+Y_{i}=\beta_{0}+\beta_{1} x_{i}+\varepsilon_{i}, \quad i=1, \ldots, n
+$$
+
+with fixed regressors $x_{i}$ and errors $\varepsilon_{i}$ satisfying
+
+$$
+\mathbb{E}\left(\varepsilon_{i}\right)=0, \quad \operatorname{Var}\left(\varepsilon_{i}\right)=\sigma^{2}, \quad \operatorname{Cov}\left(\varepsilon_{i}, \varepsilon_{j}\right)=0(i \neq j)
+$$
+
+Among all linear unbiased estimators of ( $\beta_{0}, \beta_{1}$ ), the ordinary least squares (OLS) estimators are those with the smallest covariance matrix. In particular, the OLS estimator is the best (minimum variance) linear unbiased estimator (BLUE).
+
+Proof. It is convenient to use matrix notation. Write the model as
+
+$$
+\mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\varepsilon
+$$
+
+where
+
+$$
+\mathbf{Y}=\left(\begin{array}{c}
+Y_{1} \\
+\vdots \\
+Y_{n}
+\end{array}\right), \quad \boldsymbol{\beta}=\binom{\beta_{0}}{\beta_{1}}, \quad \mathbf{X}=\left(\begin{array}{cc}
+1 & x_{1} \\
+1 & x_{2} \\
+\vdots & \vdots \\
+1 & x_{n}
+\end{array}\right), \quad \boldsymbol{\varepsilon}=\left(\begin{array}{c}
+\varepsilon_{1} \\
+\vdots \\
+\varepsilon_{n}
+\end{array}\right) .
+$$
+
+The assumptions imply
+
+$$
+\mathbb{E}(\boldsymbol{\varepsilon})=0, \quad \operatorname{Var}(\boldsymbol{\varepsilon})=\sigma^{2} I_{n}
+$$
+
+so that
+
+$$
+\mathbb{E}(\mathbf{Y})=\mathbf{X} \boldsymbol{\beta}, \quad \operatorname{Var}(\mathbf{Y})=\sigma^{2} I_{n}
+$$
+
+Assume that $\mathbf{X}$ has full column rank (i.e., the $x_{i}$ are not all equal), so that $\mathbf{X}^{\top} \mathbf{X}$ is invertible. The ordinary least squares estimator is
+
+$$
+\hat{\boldsymbol{\beta}}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{Y}
+$$
+
+Step 1: $\hat{\beta}$ is linear and unbiased.\\
+The estimator $\hat{\boldsymbol{\beta}}$ is linear in $\mathbf{Y}$, since we can write
+
+$$
+\hat{\boldsymbol{\beta}}=L \mathbf{Y}, \quad L:=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}
+$$
+
+Its expectation is
+
+$$
+\mathbb{E}(\hat{\boldsymbol{\beta}})=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbb{E}(\mathbf{Y})=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}(\mathbf{X} \boldsymbol{\beta})=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}\left(\mathbf{X}^{\top} \mathbf{X}\right) \beta=\boldsymbol{\beta}
+$$
+
+so $\hat{\boldsymbol{\beta}}$ is unbiased. The covariance matrix of $\hat{\boldsymbol{\beta}}$ is\\
+$\operatorname{Var}(\hat{\boldsymbol{\beta}})=\left(\mathbf{X}^{\top} X\right)^{-1} \mathbf{X}^{\top} \operatorname{Var}(\mathbf{Y}) \mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}\left(\sigma^{2} I_{n}\right) \mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}=\sigma^{2}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}$.
+
+\section*{Step 2: Characterization of all linear unbiased estimators.}
+Consider any other linear estimator of $\boldsymbol{\beta}$ of the form
+
+$$
+\tilde{\boldsymbol{\beta}}=A \mathbf{Y}
+$$
+
+where $A$ is a $2 \times n$ matrix. Unbiasedness requires
+
+$$
+\mathbb{E}(\tilde{\boldsymbol{\beta}})=\beta \quad \Longleftrightarrow \quad A \mathbb{E}(\mathbf{Y})=A \mathbf{X} \boldsymbol{\beta}=\boldsymbol{\beta} \quad \text { for all } \boldsymbol{\beta} .
+$$
+
+Thus we must have
+
+
+\begin{equation*}
+A \mathbf{X}=I_{2} \tag{*}
+\end{equation*}
+
+
+We now compare $\operatorname{Var}(\tilde{\boldsymbol{\beta}})$ to $\operatorname{Var}(\hat{\boldsymbol{\beta}})$.\\
+Step 3: Decomposition around the OLS matrix.\\
+Write
+
+$$
+A=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}+D=L+D
+$$
+
+for some $2 \times n$ matrix $D$. Substituting this into (*), we get
+
+$$
+A \mathbf{X}=(L+D) \mathbf{X}=L \mathbf{X}+D \mathbf{X}
+$$
+
+But
+
+$$
+L \mathbf{X}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{X}=I_{2}
+$$
+
+so
+
+$$
+A \mathbf{X}=I_{2} \quad \Longrightarrow \quad I_{2}+D \mathbf{X}=I_{2} \quad \Longrightarrow \quad D \mathbf{X}=0 .
+$$
+
+Thus every linear unbiased estimator can be written as
+
+$$
+A=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}+D \quad \text { with } D \mathbf{X}=0
+$$
+
+\section*{Step 4: Comparison of covariance matrices.}
+The covariance matrix of $\tilde{\boldsymbol{\beta}}$ is
+
+$$
+\operatorname{Var}(\tilde{\boldsymbol{\beta}})=\operatorname{Var}(A \mathbf{Y})=A \operatorname{Var}(\mathbf{Y}) A^{\top}=\sigma^{2} A A^{\top}
+$$
+
+Using $A=L+D$, we obtain
+
+$$
+A A^{\top}=(L+D)(L+D)^{\top}=L L^{\top}+L D^{\top}+D L^{\top}+D D^{\top} \text {. }
+$$
+
+We compute
+
+$$
+L L^{\top}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} .
+$$
+
+Next we show that the cross terms vanish. From $D \mathbf{X}=0$, we get by transposing
+
+$$
+0=(D \mathbf{X})^{\top}=\mathbf{X}^{\top} D^{\top}
+$$
+
+Thus
+
+$$
+L D^{\top}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} D^{\top}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \cdot 0=0
+$$
+
+and similarly,
+
+$$
+D L^{\top}=\left(L D^{\top}\right)^{\top}=0 .
+$$
+
+Therefore
+
+$$
+A A^{\top}=L L^{\top}+D D^{\top}=\left(X^{\top} X\right)^{-1}+D D^{\top} \text {. }
+$$
+
+Hence
+
+$$
+\operatorname{Var}(\tilde{\boldsymbol{\beta}})=\sigma^{2}\left[\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}+D D^{\top}\right]=\underbrace{\sigma^{2}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}}_{\operatorname{Var}(\hat{\boldsymbol{\beta}})}+\sigma^{2} D D^{\top}
+$$
+
+The matrix $D D^{\top}$ is positive semidefinite, so
+
+$$
+\operatorname{Var}(\tilde{\boldsymbol{\beta}})-\operatorname{Var}(\hat{\boldsymbol{\beta}})=\sigma^{2} D D^{\top} \succeq 0 .
+$$
+
+That is, in the Loewner ordering of symmetric matrices,
+
+$$
+\operatorname{Var}(\tilde{\boldsymbol{\beta}}) \succeq \operatorname{Var}(\hat{\boldsymbol{\beta}})
+$$
+
+for every linear unbiased estimator $\tilde{\boldsymbol{\beta}}$.\\
+Equivalently, for every vector $c \in \mathbb{R}^{2}$,
+
+$$
+\operatorname{Var}\left(c^{\top} \hat{\boldsymbol{\beta}}\right) \leq \operatorname{Var}\left(c^{\top} \tilde{\boldsymbol{\beta}}\right)
+$$
+
+so any linear combination of $\beta_{0}, \beta_{1}$ is estimated with minimum variance by the OLS estimator among all linear unbiased estimators.
+
+This proves that the OLS estimator in the simple linear regression model is BLUE.
+
+\subsection*{2.3 Normal simple linear regression}
+To perform inference we need to make assumptions regarding the distribution of $\epsilon_{i}$. We often assume that $\epsilon_{i}$ 's are normally distributed. The normal error version of the model for simple linear regression can be written:
+
+
+\begin{equation*}
+Y_{i}=\beta_{0}+\beta_{1} x_{i}+\epsilon_{i}, \quad i=1, \ldots, n \tag{7}
+\end{equation*}
+
+
+Here $\epsilon_{i}$ 's are independent $N\left(0, \sigma^{2}\right), \sigma^{2}$ unknown. Hence, $Y_{i}$ 's are independent normal random variables with mean $\beta_{0}+\beta_{1} x_{i}$ and variance $\sigma^{2}$. Picture?
+
+\subsection*{2.3.1 Maximum likelihood estimation}
+When the probability distribution of $Y_{i}$ is specified, the estimates can be obtained using the method of maximum likelihood. This method chooses as estimates those values of the parameter that are most consistent with the observed data.
+
+The likelihood is the joint density of the $Y_{i}$ 's viewed as a function of the unknown parameters, which we denote $L\left(\beta_{0}, \beta_{1}, \sigma^{2}\right)$. Since the $Y_{i}$ 's are independent this is simply the product of the density of individual $Y_{i}$ 's. We seek the values of $\beta_{0}, \beta_{1}$ and $\sigma^{2}$ that maximize $L\left(\beta_{0}, \beta_{1}, \sigma^{2}\right)$ for the given $x$ and $Y$ values in the sample.
+
+According to our model:
+
+$$
+Y_{i} \sim N\left(\beta_{0}+\beta_{1} x_{i}, \sigma^{2}\right), \quad \text { for } i=1,2, \ldots, n .
+$$
+
+The likelihood function for the $n$ independent observations $Y_{1}, \ldots, Y_{n}$ is given by
+
+
+\begin{align*}
+L\left(\beta_{0}, \beta_{1}, \sigma^{2}\right) & =\prod_{i=1}^{n} \frac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left\{-\frac{1}{2 \sigma^{2}}\left(Y_{i}-\beta_{0}-\beta_{1} x_{i}\right)^{2}\right\}  \tag{8}\\
+& =\frac{1}{\left(2 \pi \sigma^{2}\right)^{n / 2}} \exp \left\{-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(Y_{i}-\beta_{0}-\beta_{1} x_{i}\right)^{2}\right\}
+\end{align*}
+
+
+The value of $\left(\beta_{0}, \beta_{1}, \sigma^{2}\right)$ that maximizes the likelihood function are called maximum likelihood estimates (MLEs). The MLE of $\beta_{0}$ and $\beta_{1}$ are identical to the ones obtained using the method of least squares, i.e.,
+
+$$
+\hat{\beta}_{0}=\bar{Y}-\hat{\beta}_{1} \bar{x}, \quad \hat{\beta}_{1}=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right) Y_{i}}{S_{x}^{2}}
+$$
+
+where $S_{x}^{2}=\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}$.\\
+The MLE of $\sigma^{2}: \hat{\sigma}^{2}=\frac{\sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}}{n}$.
+
+\subsection*{2.4 Inference}
+Our model describes the linear relationship between the two variables $x$ and $Y$. Different samples from the same population will produce different point estimates of $\beta_{0}$ and $\beta_{1}$. Hence, $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$ are random variables with sampling distributions that describe what values they can take and how often they take them. Hypothesis tests about $\beta_{0}$ and $\beta_{1}$ can be constructed using these distributions. The next step is to perform inference, including:
+
+\begin{itemize}
+  \item Tests and confidence intervals for the slope and intercept.
+  \item Confidence intervals for the mean response.
+  \item Prediction intervals for new observations.
+\end{itemize}
+
+The main result of this section is stated below.\\
+Theorem 2.2. Under the assumptions of the normal linear model,
+
+$$
+\binom{\hat{\beta}_{0}}{\hat{\beta}_{1}} \sim N_{2}\left(\binom{\beta_{0}}{\beta_{1}}, \sigma^{2}\left(\begin{array}{cc}
+\frac{1}{n}+\frac{\bar{x}^{2}}{S_{x}^{2}} & -\frac{\bar{x}}{S_{x}^{2}} \\
+-\frac{\bar{x}}{S_{x}^{2}} & \frac{1}{S_{x}^{2}}
+\end{array}\right)\right)
+$$
+
+where $S_{x}^{2}=\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}$. Also, if $n \geq 3$, $\hat{\sigma}^{2}$ is independent of $\left(\hat{\beta}_{0}, \hat{\beta}_{1}\right)$ and $n \hat{\sigma}^{2} / \sigma^{2}$ has a $\chi^{2}$-distribution with $n-2$ degrees of freedom.
+
+Note that if the $x_{i}$ 's are random, the above theorem is still valid if we condition on the values of the predictor $x_{i}$ 's.
+
+Exercise: Compute the variances and covariance of $\hat{\beta}_{0}, \hat{\beta}_{1}$.
+
+\subsection*{2.4.1 Inference about $\beta_{1}$}
+We often want to perform tests about the slope:
+
+$$
+H_{0}: \beta_{1}=0 \quad \text { versus } \quad H_{1}: \beta_{1} \neq 0
+$$
+
+Under the null hypothesis there is no linear relationship between $Y$ and $x$, i.e., the means of probability distributions of $Y$ at all levels of $x$ are equal, i.e., $\mathbb{E}(Y \mid x)=\beta_{0}$, for all $x$. In fact, the sampling distribution of $\hat{\beta}_{1}$ is given by
+
+$$
+\hat{\beta}_{1} \sim N\left(\beta_{1}, \frac{\sigma^{2}}{S_{x}^{2}}\right)
+$$
+
+Need to show that: $\hat{\beta}_{1}$ is normally distributed,
+
+$$
+\mathbb{E}\left(\hat{\beta}_{1}\right)=\beta_{1}, \quad \operatorname{Var}\left(\hat{\beta}_{1}\right)=\frac{\sigma^{2}}{S_{x}^{2}}
+$$
+
+Result: When $Z_{1}, \ldots, Z_{k}$ are independent normal random variables, the linear combination
+
+$$
+a_{1} Z_{1}+\ldots+a_{k} Z_{k}
+$$
+
+is also normally distributed.\\
+Since $\hat{\beta}_{1}$ is a linear combination of the $Y_{i}$ 's and each $Y_{i}$ is an independent normally distributed random variable, then $\hat{\beta}_{1}$ is also normally distributed.
+
+We can write $\hat{\beta}_{1}=\sum_{i=1}^{n} w_{i} Y_{i}$ where
+
+$$
+w_{i}=\frac{x_{i}-\bar{x}}{S_{x}^{2}}, \quad \text { for } i=1, \ldots, n
+$$
+
+Thus,
+
+$$
+\sum_{i=1}^{n} w_{i}=0, \quad \sum_{i=1}^{n} x_{i} w_{i}=1, \quad \sum_{i=1}^{n} w_{i}^{2}=\frac{1}{S_{x}^{2}} .
+$$
+
+\begin{itemize}
+  \item Variance for the estimated slope: There are three aspects of the scatter plot that affect the variance of the regression slope:
+  \item The spread around the regression line $\left(\sigma^{2}\right)$ - less scatter around the line means the slope will be more consistent from sample to sample.
+  \item The spread of the $x$ values $\left(\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} / n\right)$ - a large variance of $x$ provides a more stable regression.
+  \item The sample size $n$ - having a larger sample size $n$, gives more consistent estimates.
+  \item Estimated variance: When $\sigma^{2}$ is unknown we replace it with the
+\end{itemize}
+
+$$
+\tilde{\sigma}^{2}=\frac{\sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}}{n-2}=\frac{\sum_{i=1}^{n} e_{i}^{2}}{n-2}
+$$
+
+Plugging this into the equation for $\operatorname{Var}\left(\hat{\beta}_{1}\right)$ we get
+
+$$
+s e^{2}\left(\hat{\beta}_{1}\right)=\frac{\tilde{\sigma}^{2}}{S_{x}^{2}}
+$$
+
+Recall: Standard error $\operatorname{se}(\hat{\theta})$ of an estimator $\hat{\theta}$ is used to refer to an estimate of its standard deviation.
+
+Result: For the normal error regression model:
+
+$$
+\frac{S S E}{\sigma^{2}}=\frac{\sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}}{\sigma^{2}} \sim \chi_{n-2}^{2}
+$$
+
+and is independent of $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$.
+
+\begin{itemize}
+  \item (Studentized statistic:) Since $\hat{\beta}_{1}$ is normally distributed, the standardized statistic:
+\end{itemize}
+
+$$
+\frac{\hat{\beta}_{1}-\beta_{1}}{\sqrt{\operatorname{Var}\left(\hat{\beta}_{1}\right)}} \sim N(0,1)
+$$
+
+If we replace $\operatorname{Var}\left(\hat{\beta}_{1}\right)$ by its estimate we get the studentized statistic:
+
+$$
+\frac{\hat{\beta}_{1}-\beta_{1}}{\operatorname{se}\left(\hat{\beta}_{1}\right)} \sim t_{n-2}
+$$
+
+Recall: Suppose that $Z \sim N(0,1)$ and $W \sim \chi_{p}^{2}$ where $Z$ and $W$ are independent. Then,
+
+$$
+\frac{Z}{\sqrt{W / p}} \sim t_{p}
+$$
+
+the $t$-distribution with $p$ degrees of freedom.
+
+\begin{itemize}
+  \item Hypothesis testing: To test
+\end{itemize}
+
+$$
+H_{0}: \beta_{1}=0 \quad \text { versus } \quad H_{a}: \beta_{1} \neq 0
+$$
+
+use the test-statistic
+
+$$
+T=\frac{\hat{\beta}_{1}}{\operatorname{se}\left(\hat{\beta}_{1}\right)}
+$$
+
+We reject $H_{0}$ when the observed value of $|T|$ i.e., $\left|t_{o b s}\right|$, is large! Thus, given level $(1-\alpha)$, we reject $H_{0}$ if
+
+$$
+\left|t_{o b s}\right|>t_{1-\alpha / 2, n-2}
+$$
+
+where $t_{1-\alpha / 2, n-2}$ denotes the $(1-\alpha / 2)$-quantile of the $t_{n-2}$-distribution, i.e.,
+
+$$
+1-\frac{\alpha}{2}=\mathbb{P}\left(T \leq t_{1-\alpha / 2, n-2}\right)
+$$
+
+\begin{itemize}
+  \item $P$-value: $p$-value is the probability of obtaining a test statistic at least as extreme as the one that was actually observed, assuming that the null hypothesis is true. The $p$-value depends on $H_{1}$ (one-sided/two-sided). In our case, we compute $p$-values using a $t_{n-2}$-distribution. Thus,
+\end{itemize}
+
+$$
+p \text {-value }=\mathbb{P}_{H_{0}}\left(|T|>\left|t_{o b s}\right|\right)
+$$
+
+If we know the $p$-value then we can decide to accept/reject $H_{0}$ (versus $H_{1}$ ) at any given $\alpha \in(0,1)$.
+
+\begin{itemize}
+  \item Confidence interval: A confidence interval (CI) is a kind of interval estimator of a population parameter and is used to indicate the reliability of an estimator. Using the sampling distribution of $\hat{\beta}_{1}$ we can make the following probability statement:
+\end{itemize}
+
+$$
+\begin{aligned}
+\mathbb{P}\left(t_{\alpha / 2, n-2} \leq \frac{\hat{\beta}_{1}-\beta_{1}}{\operatorname{se}\left(\hat{\beta}_{1}\right)} \leq t_{1-\alpha / 2, n-2}\right) & =1-\alpha \\
+\mathbb{P}\left(\hat{\beta}_{1}-t_{1-\alpha / 2, n-2} \operatorname{se}\left(\hat{\beta}_{1}\right) \leq \beta_{1} \leq \hat{\beta}_{1}-t_{\alpha / 2, n-2} \operatorname{se}\left(\hat{\beta}_{1}\right)\right) & =1-\alpha
+\end{aligned}
+$$
+
+Thus, a $(1-\alpha)$ confidence interval for $\beta_{1}$ is
+
+$$
+\left[\hat{\beta}_{1}-t_{1-\alpha / 2, n-2} \cdot s e\left(\hat{\beta}_{1}\right), \hat{\beta}_{1}+t_{1-\alpha / 2, n-2} \cdot s e\left(\hat{\beta}_{1}\right)\right]
+$$
+
+as $t_{1-\alpha / 2, n-2}=-t_{\alpha / 2, n-2}$.
+
+\subsection*{2.4.2 Sampling distribution of $\hat{\beta}_{0}$}
+The sampling distribution of $\hat{\beta}_{0}$ is
+
+$$
+N\left(\beta_{0}, \sigma^{2}\left(\frac{1}{n}+\frac{\bar{x}^{2}}{S_{x}^{2}}\right)\right) .
+$$
+
+Verify at home using the same procedure as used for $\hat{\beta}_{1}$.
+
+Hypothesis testing: In general, let $c_{0}, c_{1}$ and $c_{*}$ be specified numbers, where at least one of $c_{0}$ and $c_{1}$ is nonzero. Suppose that we are interested in testing the following hypotheses:
+
+
+\begin{equation*}
+H_{0}: c_{o} \beta_{0}+c_{1} \beta_{1}=c_{*}, \quad \text { versus } \quad H_{0}: c_{o} \beta_{0}+c_{1} \beta_{1} \neq c_{*} . \tag{9}
+\end{equation*}
+
+
+We should use a scalar multiple of
+
+$$
+c_{0} \hat{\beta}_{0}+c_{1} \hat{\beta}_{1}-c_{*}
+$$
+
+as the test statistic. Specifically, we use
+
+$$
+U_{01}=\left[\frac{c_{0}^{2}}{n}+\frac{\left(c_{0} \bar{x}-c_{1}\right)^{2}}{S_{x}^{2}}\right]^{-1 / 2}\left(\frac{c_{0} \hat{\beta}_{0}+c_{1} \hat{\beta}_{1}-c_{*}}{\tilde{\sigma}}\right),
+$$
+
+where
+
+$$
+\tilde{\sigma}^{2}=\frac{S^{2}}{n-2}, \quad S^{2}=\sum_{i=1}^{n}\left(Y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1} x_{i}\right)^{2}=\sum_{i=1}^{n} e_{i}^{2} .
+$$
+
+Note that $\tilde{\sigma}^{2}$ is an unbiased estimator of $\sigma^{2}$. For each $\alpha \in(0,1)$, a level $\alpha$ test of the hypothesis (9) is to reject $H_{0}$ if
+
+$$
+\left|U_{01}\right|>T_{n-2}^{-1}\left(1-\frac{\alpha}{2}\right) .
+$$
+
+The above result follows from the fact that $c_{0} \hat{\beta}_{0}+c_{1} \hat{\beta}_{1}-c_{*}$ is normally distributed with mean $c_{0} \beta_{0}+c_{1} \beta_{1}-c_{*}$ and variance
+
+$$
+\begin{aligned}
+\operatorname{Var}\left(c_{0} \hat{\beta}_{0}+c_{1} \hat{\beta}_{1}-c_{*}\right) & =c_{0}^{2} \operatorname{Var}\left(\hat{\beta}_{0}\right)+c_{1}^{2} \operatorname{Var}\left(\hat{\beta}_{1}\right)+2 c_{0} c_{1} \operatorname{Cov}\left(\hat{\beta}_{0}, \hat{\beta}_{1}\right) \\
+& =c_{0}^{2} \sigma^{2}\left(\frac{1}{n}+\frac{\bar{x}^{2}}{S_{x}^{2}}\right)+c_{1}^{2} \sigma^{2} \frac{1}{S_{x}^{2}}-2 c_{0} c_{1} \frac{\sigma^{2} \bar{x}}{S_{x}^{2}} \\
+& =\sigma^{2}\left[\frac{c_{0}^{2}}{n}+\frac{c_{0}^{2} \bar{x}^{2}}{S_{x}^{2}}-2 c_{0} c_{1} \frac{\bar{x}}{S_{x}^{2}}+c_{1}^{2} \frac{1}{S_{x}^{2}}\right] \\
+& =\sigma^{2}\left[\frac{c_{0}^{2}}{n}+\frac{\left(c_{0} \bar{x}-c_{1}\right)^{2}}{S_{x}^{2}}\right] .
+\end{aligned}
+$$
+
+Confidence interval: We can give a $1-\alpha$ confidence interval for the parameter $c_{0} \beta_{0}+c_{1} \beta_{1}$ as
+
+$$
+c_{0} \hat{\beta}_{0}+c_{1} \hat{\beta}_{1} \mp \tilde{\sigma}\left[\frac{c_{0}^{2}}{n}+\frac{\left(c_{0} \bar{x}-c_{1}\right)^{2}}{S_{x}^{2}}\right]^{1 / 2} T_{n-2}^{-1}\left(1-\frac{\alpha}{2}\right) .
+$$
+
+\subsection*{2.4.3 Mean response}
+We often want to estimate the mean of the probability distribution of $Y$ for some value of $x$.
+
+\begin{itemize}
+  \item The point estimator of the mean response
+\end{itemize}
+
+$$
+\mathbb{E}\left(Y \mid x_{h}\right)=\beta_{0}+\beta_{1} x_{h}
+$$
+
+when $x=x_{h}$ is given by
+
+$$
+\hat{Y}_{h}=\hat{\beta}_{0}+\hat{\beta}_{1} x_{h}
+$$
+
+Need to:
+
+\begin{itemize}
+  \item Show that $\hat{Y}_{h}$ is normally distributed.
+  \item Find $\mathbb{E}\left(\hat{Y}_{h}\right)$.
+  \item Find $\operatorname{Var}\left(\hat{Y}_{h}\right)$.
+  \item The sampling distribution of $\hat{Y}_{h}$ is given by
+\end{itemize}
+
+$$
+\hat{Y}_{h} \sim N\left(\beta_{0}+\beta_{1} x_{h}, \sigma^{2}\left(\frac{1}{n}+\frac{\left(x_{h}-\bar{x}\right)^{2}}{S_{x}^{2}}\right)\right)
+$$
+
+Normality: Both $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$ are linear combinations of independent normal random variables $Y_{i}$. Hence, $\hat{Y}_{h}=\hat{\beta}_{0}+\hat{\beta}_{1} x_{h}$ is also a linear combination of independent normally distributed random variables. Thus, $\hat{Y}_{h}$ is also normally distributed.
+
+\section*{Mean and variance of $\hat{Y}_{h}$ :}
+Find the expected value of $\hat{Y}_{h}$ :
+
+$$
+\mathbb{E}\left(\hat{Y}_{h}\right)=\mathbb{E}\left(\hat{\beta}_{0}+\hat{\beta}_{1} x_{h}\right)=\mathbb{E}\left(\hat{\beta}_{0}\right)+\mathbb{E}\left(\hat{\beta}_{1}\right) x_{h}=\beta_{0}+\beta_{1} x_{h}
+$$
+
+Note that $\hat{Y}_{h}=\bar{Y}-\hat{\beta}_{1} \bar{x}+\hat{\beta}_{1} x_{h}=\bar{Y}+\hat{\beta}_{1}\left(x_{h}-\bar{x}\right)$.\\
+Note that $\hat{\beta}_{1}$ and $\bar{Y}$ are uncorrelated:
+
+$$
+\operatorname{Cov}\left(\sum_{i=1}^{n} w_{i} Y_{i}, \sum_{i=1}^{n} \frac{1}{n} Y_{i}\right)=\sum_{i=1}^{n} \frac{w_{i}}{n} \sigma^{2}=\frac{\sigma^{2}}{n} \sum_{i=1}^{n} w_{i}=0 .
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+\operatorname{Var}\left(\hat{Y}_{h}\right) & =\operatorname{Var}(\bar{Y})+\left(x_{h}-\bar{x}\right)^{2} \operatorname{Var}\left(\hat{\beta}_{1}\right) \\
+& =\frac{\sigma^{2}}{n}+\left(x_{h}-\bar{x}\right)^{2} \frac{\sigma^{2}}{S_{x}^{2}}
+\end{aligned}
+$$
+
+When we do not know $\sigma^{2}$ we estimate it using $\tilde{\sigma}^{2}$. Thus, the estimated variance of $\hat{Y}_{h}$ is given by
+
+$$
+\operatorname{se}^{2}\left(\hat{Y}_{h}\right)=\tilde{\sigma}^{2}\left(\frac{1}{n}+\frac{\left(x_{h}-\bar{x}\right)^{2}}{S_{x}^{2}}\right)
+$$
+
+The variance of $\hat{Y}_{h}$ is smallest when $x_{h}=\bar{x}$.\\
+When $x_{h}=0$, the variance of reduces to the variance of $\hat{\beta}_{0}$.
+
+\begin{itemize}
+  \item The sampling distribution for the studentized statistic:
+\end{itemize}
+
+$$
+\frac{\hat{Y}_{h}-\mathbb{E}\left(\hat{Y}_{h}\right)}{\operatorname{se}\left(\hat{Y}_{h}\right)} \sim t_{n-2}
+$$
+
+All inference regarding $\mathbb{E}\left(\hat{Y}_{h}\right)$ are carried out using the $t$-distribution. A $(1-\alpha)$ CI for the mean response when $x=x_{h}$ is
+
+$$
+\hat{Y}_{h} \mp t_{1-\alpha / 2, n-2} \operatorname{se}\left(\hat{Y}_{h}\right)
+$$
+
+\subsection*{2.4.4 Prediction interval}
+A CI for a future observation is called a prediction interval. Consider the prediction of a new observation $Y$ corresponding to a given level $x$ of the predictor.
+
+Suppose $x=x_{h}$ and the new observation is denoted $Y_{h(n e w)}$. Note that $\mathbb{E}\left(\hat{Y}_{h}\right)$ is the mean of the distribution of $Y \mid X=x_{h} . Y_{h(n e w)}$ represents the prediction of an individual outcome drawn from the distribution of $Y \mid X=x_{h}$, i.e.,
+
+$$
+Y_{h(n e w)}=\beta_{0}+\beta_{1} x_{h}+\epsilon_{n e w}
+$$
+
+where $\epsilon_{\text {new }}$ is independent of our data.
+
+\begin{itemize}
+  \item The point estimate will be the same for both.
+\end{itemize}
+
+However, the variance is larger when predicting an individual outcome due to the additional variation of an individual about the mean.
+
+\begin{itemize}
+  \item When constructing prediction limits for $Y_{h(n e w)}$ we must take into consideration two sources of variation:
+  \item Variation in the mean of $Y$.
+  \item Variation around the mean.
+  \item The sampling distribution of the studentized statistic:
+\end{itemize}
+
+$$
+\frac{Y_{h(\text { new })}-\hat{Y}_{h}}{\operatorname{se}\left(Y_{h(\text { new })}-\hat{Y}_{h}\right)} \sim t_{n-2}
+$$
+
+All inference regarding $Y_{h(n e w)}$ are carried out using the $t$-distribution:
+
+$$
+\operatorname{Var}\left(Y_{h(n e w)}-\hat{Y}_{h}\right)=\operatorname{Var}\left(Y_{h(n e w)}\right)+\operatorname{Var}\left(\hat{Y}_{h}\right)=\sigma^{2}\left\{1+\frac{1}{n}+\frac{\left(x_{h}-\bar{x}\right)^{2}}{S_{x}^{2}}\right\}
+$$
+
+Thus, $\operatorname{se}_{\text {pred }}=\operatorname{se}\left(Y_{h(\text { new })}-\hat{Y}_{h}\right)=\tilde{\sigma}^{2}\left\{1+\frac{1}{n}+\frac{\left(x_{h}-\bar{x}\right)^{2}}{S_{x}^{2}}\right\}$.
+
+Using this result, ( $1-\alpha$ ) prediction interval for a new observation $Y_{h(n e w)}$ is
+
+$$
+\hat{Y}_{h} \mp t_{1-\alpha / 2, n-2} \mathrm{se}_{\text {pred }}
+$$
+
+\subsection*{2.4.5 Inference about both $\beta_{0}$ and $\beta_{1}$ simultaneously}
+Suppose that $\beta_{0}^{*}$ and $\beta_{1}^{*}$ are given numbers and we are interested in testing the following hypothesis:
+
+
+\begin{equation*}
+H_{0}: \beta_{0}=\beta_{0}^{*} \text { and } \beta_{1}=\beta_{1}^{*} \quad \text { versus } \quad H_{1}: \text { at least one is different } \tag{10}
+\end{equation*}
+
+
+We shall derive the likelihood ratio test for (10).\\
+The likelihood function (8), when maximized under the unconstrained space yields the MLEs $\hat{\beta}_{1}, \hat{\beta}_{1}, \hat{\sigma}^{2}$.
+
+Under the constrained space, $\beta_{0}$ and $\beta_{1}$ are fixed at $\beta_{0}^{*}$ and $\beta_{1}^{*}$, and so
+
+$$
+\hat{\sigma}_{0}^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(Y_{i}-\beta_{0}^{*}-\beta_{1}^{*} x_{i}\right)^{2} .
+$$
+
+The likelihood statistic reduces to
+
+$$
+\Lambda(\mathbf{Y}, \mathbf{x})=\frac{\sup _{\sigma^{2}} L\left(\beta_{0}^{*}, \beta_{1}^{*}, \sigma^{2}\right)}{\sup _{\beta_{0}, \beta_{1}, \sigma^{2}} L\left(\beta_{0}, \beta_{1}, \sigma^{2}\right)}=\left(\frac{\hat{\sigma}^{2}}{\hat{\sigma}_{0}^{2}}\right)^{n / 2}=\left[\frac{\sum_{i=1}^{n}\left(Y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1} x_{i}\right)^{2}}{\sum_{i=1}^{n}\left(Y_{i}-\beta_{0}^{*}-\beta_{1}^{*} x_{i}\right)^{2}}\right]^{n / 2}
+$$
+
+The LRT procedure specifies rejecting $H_{0}$ when
+
+$$
+\Lambda(\mathbf{Y}, \mathbf{x}) \leq k
+$$
+
+for some $k$, chosen given the level condition.\\
+Exercise: Show that
+
+$$
+\sum_{i=1}^{n}\left(Y_{i}-\beta_{0}^{*}-\beta_{1}^{*} x_{i}\right)^{2}=S^{2}+Q^{2}
+$$
+
+where
+
+$$
+\begin{aligned}
+S^{2} & =\sum_{i=1}^{n}\left(Y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1} x_{i}\right)^{2} \\
+Q^{2} & =n\left(\hat{\beta}_{0}-\beta_{0}^{*}\right)^{2}+\left(\sum_{i=1}^{n} x_{i}^{2}\right)\left(\hat{\beta}_{1}-\beta_{1}^{*}\right)^{2}+2 n \bar{x}\left(\hat{\beta}_{0}-\beta_{0}^{*}\right)\left(\hat{\beta}_{1}-\beta_{1}^{*}\right)
+\end{aligned}
+$$
+
+Thus,
+
+$$
+\Lambda(\mathbf{Y}, \mathbf{x})=\left[\frac{S^{2}}{S^{2}+Q^{2}}\right]^{n / 2}=\left[1+\frac{Q^{2}}{S^{2}}\right]^{-n / 2}
+$$
+
+It can be seen that this is equivalent to rejecting $H_{0}$ when $Q^{2} / S^{2} \geq k^{\prime}$ which is equivalent to
+
+$$
+U^{2}:=\frac{\frac{1}{2} Q^{2}}{\tilde{\sigma}^{2}} \geq \gamma
+$$
+
+Exercise: Show that, under $H_{0}, \frac{Q^{2}}{\sigma^{2}} \sim \chi_{2}^{2}$. Also show that $Q^{2}$ and $S^{2}$ are independent.\\
+We know that $S^{2} / \sigma^{2} \sim \chi_{n-2}^{2}$. Thus, under $H_{0}$,
+
+$$
+U^{2} \sim F_{2, n-2}
+$$
+
+and thus $\gamma=F_{2, n-2}^{-1}(1-\alpha)$.
+
+\section*{3 Linear models with normal errors}
+\subsection*{3.1 Basic theory}
+This section concerns models for independent responses of the form
+
+$$
+Y_{i} \sim N\left(\mu_{i}, \sigma^{2}\right), \quad \text { where } \quad \mu_{i}=\mathbf{x}_{i}^{\top} \boldsymbol{\beta}
+$$
+
+for some known vector of explanatory variables $\boldsymbol{x}_{i}^{\top}=\left(x_{i 1}, \ldots, x_{i p}\right)$ and unknown parameter vector $\boldsymbol{\beta}=\left(\beta_{1}, \ldots, \beta_{p}\right)^{\top}$, where $p<n$. This is the linear model and is usually written as
+
+
+\begin{equation*}
+\mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\varepsilon \tag{11}
+\end{equation*}
+
+
+(in vector notation) where\\
+$\mathbf{Y}_{n \times 1}=\left(\begin{array}{c}Y_{1} \\ \vdots \\ Y_{n}\end{array}\right), \quad \mathbf{X}_{n \times p}=\left(\begin{array}{c}x_{1}^{\top} \\ \vdots \\ x_{n}^{\top}\end{array}\right), \quad \boldsymbol{\beta}_{p \times 1}=\left(\begin{array}{c}\beta_{1} \\ \vdots \\ \beta_{p}\end{array}\right), \quad \boldsymbol{\varepsilon}_{n \times 1}=\left(\begin{array}{c}\varepsilon_{1} \\ \vdots \\ \varepsilon_{n}\end{array}\right), \quad \varepsilon_{i} \stackrel{\text { i.i.d. }}{\sim} N\left(0, \sigma^{2}\right)$.\\
+Sometimes this is written in the more compact notation
+
+$$
+\mathbf{Y} \sim N_{n}\left(\mathbf{X} \boldsymbol{\beta}, \sigma^{2} \mathbf{I}\right)
+$$
+
+where $\mathbf{I}$ is the $n \times n$ identity matrix. It is usual to assume that $\mathbf{X}$ has full rank $p$.
+
+\subsection*{3.2 Maximum likelihood estimation}
+The log-likelihood (up to a constant term) for ( $\boldsymbol{\beta}, \sigma^{2}$ ) is
+
+$$
+\begin{aligned}
+\ell\left(\boldsymbol{\beta}, \sigma^{2}\right) & =-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(Y_{i}-\mathbf{x}_{i}^{\top} \boldsymbol{\beta}\right)^{2} \\
+& =-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(Y_{i}-\sum_{j=1}^{p} x_{i j} \beta_{j}\right)^{2}
+\end{aligned}
+$$
+
+An $\operatorname{MLE}\left(\hat{\boldsymbol{\beta}}, \hat{\sigma}^{2}\right)$ satisfies
+
+$$
+\begin{aligned}
+0=\frac{\partial}{\partial \beta_{j}} \ell\left(\hat{\boldsymbol{\beta}}, \hat{\sigma}^{2}\right) & =\frac{1}{\hat{\sigma}^{2}} \sum_{i=1}^{n} x_{i j}\left(y_{i}-\mathbf{x}_{i}^{\top} \hat{\boldsymbol{\beta}}\right), \quad \text { for } j=1, \ldots, p \\
+\text { i.e., } \quad \sum_{i=1}^{n} x_{i j} \mathbf{x}_{i}^{\top} \hat{\boldsymbol{\beta}} & =\sum_{i=1}^{n} x_{i j} y_{i} \quad \text { for } j=1, \ldots, p
+\end{aligned}
+$$
+
+so
+
+$$
+\left(\mathbf{X}^{\top} \mathbf{X}\right) \hat{\boldsymbol{\beta}}=\mathbf{X}^{\top} \mathbf{Y}
+$$
+
+Since $\mathbf{X}^{\top} \mathbf{X}$ is non-singular if $\mathbf{X}$ has rank $p$, we have
+
+
+\begin{equation*}
+\hat{\boldsymbol{\beta}}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{Y} \tag{12}
+\end{equation*}
+
+
+The least squares estimator of $\beta$ minimizes
+
+$$
+\|\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}\|^{2}
+$$
+
+Check that this estimator coincides with the MLE when the errors are normally distributed. Note that the estimator $\hat{\boldsymbol{\beta}}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{Y}$ may be justified even when the normality assumption is uncertain.
+
+Exercise: Consider simple linear regression as discussed in (7) and express that model in the setting of (11). In particular, find the design matrix $\mathbf{X}$, and simplify $\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}$ to make sure that (12) simplifies to the known expressions of $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$.
+
+Theorem 3.1. We have\\
+1.
+
+
+\begin{equation*}
+\hat{\beta} \sim N_{p}\left(\boldsymbol{\beta}, \sigma^{2}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}\right) \tag{13}
+\end{equation*}
+
+
+2.
+
+$$
+\hat{\sigma}^{2}=\frac{1}{n}\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2}=\frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-\mathbf{x}_{i}^{\top} \hat{\boldsymbol{\beta}}\right)^{2}
+$$
+
+and that $\hat{\sigma}^{2} \sim \frac{\sigma^{2}}{n} \chi_{n-p}^{2}$.\\
+3. Show that $\hat{\boldsymbol{\beta}}$ and $\hat{\sigma}^{2}$ are independent.
+
+Recall: Suppose that $\mathbf{U}$ is an $n$-dimensional random vector for which the mean vector $\mathbb{E}(\mathbf{U})$ and the covariance matrix $\operatorname{Cov}(\mathbf{U})$ exist. Suppose that $\mathbf{A}$ is a $q \times n$ matrix whose elements are constants. Let $\mathbf{V}=\mathbf{A U}$. Then
+
+$$
+\mathbb{E}(\mathbf{V})=\mathbf{A} \mathbb{E}(\mathbf{U}) \quad \text { and } \quad \operatorname{Cov}(\mathbf{V})=\mathbf{A} \operatorname{Cov}(\mathbf{U}) \mathbf{A}^{\top} .
+$$
+
+Proof of 1: The MLE of $\boldsymbol{\beta}$ is given by $\hat{\boldsymbol{\beta}}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{Y}$, and we have that the model can be written in vector notation as $\mathbf{Y} \sim N_{n}\left(\mathbf{X} \boldsymbol{\beta}, \sigma^{2} \mathbf{I}\right)$.
+
+Let $\mathbf{M}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}$ so that $\mathbf{M Y}=\hat{\boldsymbol{\beta}}$. Therefore,
+
+$$
+\mathbf{M Y} \sim N_{p}\left(\mathbf{M X} \boldsymbol{\beta}, \mathbf{M}\left(\sigma^{2} \mathbf{I}\right) \mathbf{M}^{\top}\right)
+$$
+
+We have that
+
+$$
+\begin{array}{rlrl}
+\mathbf{M} \mathbf{X} \boldsymbol{\beta} & =\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{X} \boldsymbol{\beta} & \text { and } & \mathbf{M}^{\top} \\
+& =\boldsymbol{\beta} & \left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \\
+& =\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}
+\end{array}
+$$
+
+since $\mathbf{X}^{\top} \mathbf{X}$ is symmetric, and then so is it's inverse.\\
+Therefore,
+
+$$
+\hat{\boldsymbol{\beta}}=\mathbf{M} \mathbf{Y} \sim N_{p}\left(\boldsymbol{\beta}, \sigma^{2}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}\right)
+$$
+
+These results can be used to obtain an exact ( $1-\alpha$ )-level confidence region for $\boldsymbol{\beta}$ : the distribution of $\hat{\boldsymbol{\beta}}$ implies that
+
+$$
+\frac{1}{\sigma^{2}}(\hat{\boldsymbol{\beta}}-\boldsymbol{\beta})^{\top}\left(\mathbf{X}^{\top} \mathbf{X}\right)(\hat{\boldsymbol{\beta}}-\boldsymbol{\beta}) \sim \chi_{p}^{2}
+$$
+
+Let
+
+$$
+\tilde{\sigma}^{2}=\frac{1}{n-p}\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2} \sim \frac{\sigma^{2}}{n-p} \chi_{n-p}^{2}
+$$
+
+so that $\hat{\boldsymbol{\beta}}$ and $\tilde{\sigma}^{2}$ are still independent.\\
+Then, letting $F_{p, n-p}(\alpha)$ denote the upper $\alpha$-point of the $F_{p, n-p}$ distribution,
+
+$$
+1-\alpha=\mathbb{P}_{\boldsymbol{\beta}, \sigma^{2}}\left(\frac{\frac{1}{p}(\hat{\boldsymbol{\beta}}-\boldsymbol{\beta})^{\top}\left(\mathbf{X}^{\top} \mathbf{X}\right)(\hat{\boldsymbol{\beta}}-\boldsymbol{\beta})}{\tilde{\sigma}^{2}} \leq F_{p, n-p}(\alpha)\right)
+$$
+
+Thus,
+
+$$
+\left\{\boldsymbol{\beta} \in \mathbb{R}^{p}: \frac{\frac{1}{p}(\hat{\boldsymbol{\beta}}-\boldsymbol{\beta})^{\top}\left(\mathbf{X}^{\top} \mathbf{X}\right)(\hat{\boldsymbol{\beta}}-\boldsymbol{\beta})}{\tilde{\sigma}^{2}} \leq F_{p, n-p}(\alpha)\right\}
+$$
+
+is a $(1-\alpha)$-level confidence set for $\boldsymbol{\beta}$.
+
+\subsection*{3.2.1 Projections and orthogonality}
+The fitted values $\hat{\mathbf{Y}}=\mathbf{X} \hat{\boldsymbol{\beta}}$ under the model satisfy
+
+$$
+\hat{\mathbf{Y}}=\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-\mathbf{1}} \mathbf{X}^{\top} \mathbf{Y} \equiv \mathbf{P} \mathbf{Y},
+$$
+
+say, where $\mathbf{P}$ is an orthogonal projection matrix (i.e., $\mathbf{P}=\mathbf{P}^{\top}$ and $\mathbf{P}^{\mathbf{2}}=\mathbf{P}$ ) onto the column space of $\mathbf{X}$.
+
+Since $\mathbf{P}^{\mathbf{2}}=\mathbf{P}$, all of the eigenvalues of $\mathbf{P}$ are either 0 or 1 (Why?).\\
+Therefore,
+
+$$
+\operatorname{rank}(\mathbf{P})=\operatorname{tr}(\mathbf{P})=\operatorname{tr}\left(\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-\mathbf{1}} \mathbf{X}^{\top}\right)=\operatorname{tr}\left(\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-\mathbf{1}} \mathbf{X}^{\top} \mathbf{X}\right)=\operatorname{tr}\left(\mathbf{I}_{p}\right)=p
+$$
+
+by the cyclic property of the trace operation.
+
+Some authors denote $\mathbf{P}$ by $\mathbf{H}$, and call it the hat matrix because it "puts the hat on $\mathbf{Y}$ ". In fact, $\mathbf{P}$ is an orthogonal projection. Note that in the standard linear model above we may express the fitted values
+
+$$
+\hat{\mathbf{Y}}=\mathbf{X} \hat{\boldsymbol{\beta}}
+$$
+
+as $\hat{\mathbf{Y}}=\mathbf{P Y}$.\\
+Example 3.2 (Problem 1).
+
+\begin{enumerate}
+  \item Show that $\mathbf{P}$ represents an orthogonal projection.
+  \item Show that $\mathbf{P}$ and $\mathbf{I}-\mathbf{P}$ are positive semi-definite.
+  \item Show that $\mathbf{I}-\mathbf{P}$ has rank $n-p$ and $\mathbf{P}$ has rank $p$.
+\end{enumerate}
+
+Solution: To see that $\mathbf{P}$ represents a projection, notice that $\mathbf{X}^{\top} \mathbf{X}$ is symmetric, so its inverse is also, so
+
+$$
+\mathbf{P}^{\top}=\left\{\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}\right\}^{\top}=\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}=\mathbf{P}
+$$
+
+and
+
+$$
+\mathbf{P}^{2}=\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}=\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top}=\mathbf{P}
+$$
+
+To see that $\mathbf{P}$ is an orthogonal projection, we must show that $\mathbf{P Y}$ and $\mathbf{Y}-\mathbf{P Y}$ are orthogonal. But from the results above,
+
+$$
+(\mathbf{P} \mathbf{Y})^{\top}(\mathbf{Y}-\mathbf{P} \mathbf{Y})=\mathbf{Y}^{\top} \mathbf{P}^{\top}(\mathbf{Y}-\mathbf{P} \mathbf{Y})=\mathbf{Y}^{\top} \mathbf{P} \mathbf{Y}-\mathbf{Y}^{\top} \mathbf{P} \mathbf{Y}=\mathbf{0}
+$$
+
+$\mathbf{I}-\mathbf{P}$ is positive semi-definite since
+
+$$
+\mathbf{x}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{x}=\mathbf{x}^{\top}(\mathbf{I}-\mathbf{P})^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{x}=\|\mathbf{x}-\mathbf{P x}\|^{2} \geq \mathbf{0}
+$$
+
+Similarly, $\mathbf{P}$ is positive semi-definite.
+
+Theorem 3.3 (Cochran's theorem). Let $\mathbf{Z} \sim N_{n}\left(\mathbf{0}, \sigma^{2} \mathbf{I}\right)$, and let $\mathbf{A}_{\mathbf{1}}, \ldots, \mathbf{A}_{\mathbf{k}}$ be $n \times n$ positive semi-definite matrices with $\operatorname{rank}\left(\mathbf{A}_{i}\right)=r_{i}$, such that
+
+$$
+\|\mathbf{Z}\|^{2}=\mathbf{Z}^{\top} \mathbf{A}_{1} \mathbf{Z}+\ldots+\mathbf{Z}^{\top} \mathbf{A}_{k} \mathbf{Z}
+$$
+
+If $r_{1}+\cdots+r_{k}=n$, then $\mathbf{Z}^{\top} \mathbf{A}_{1} \mathbf{Z}, \ldots, \mathbf{Z}^{\top} \mathbf{A}_{k} \mathbf{Z}$ are independent, and
+
+$$
+\frac{\mathbf{Z}^{\top} \mathbf{A}_{i} \mathbf{Z}}{\sigma^{2}} \sim \chi_{r_{i}}^{2}, \quad i=1, \ldots, k
+$$
+
+Example 3.4 (Problem 2). In the standard linear model above, find the maximum likelihood estimator $\hat{\sigma}^{2}$ of $\sigma^{2}$, and use Cochran's theorem to find its distribution.
+
+Solution: Differentiating the log-likelihood
+
+$$
+\ell\left(\boldsymbol{\beta}, \sigma^{2}\right)=-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}}\|\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}\|^{2}
+$$
+
+we see that an $\operatorname{MLE}\left(\hat{\boldsymbol{\beta}}, \hat{\sigma}^{2}\right)$ satisfies
+
+$$
+0=\left.\frac{\partial \ell}{\partial \sigma^{2}}\right|_{\left(\hat{\boldsymbol{\beta}}, \hat{\sigma}^{2}\right)}=-\frac{n}{2 \hat{\sigma}^{2}}+\frac{1}{2 \hat{\sigma}^{4}}\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2}
+$$
+
+so
+
+$$
+\hat{\sigma}^{2}=\frac{1}{n}\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2} \equiv \frac{1}{n}\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}
+$$
+
+where $\mathbf{P}=\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-\mathbf{1}} \mathbf{X}^{\top}$. Observe that
+
+$$
+\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{\mathbf{2}}=\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P})^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}=\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}
+$$
+
+and from the previous question we know that $\mathbf{I}-\mathbf{P}$ and $\mathbf{P}$ are positive semi-definite and of rank $n-p$ and $p$, respectively. We cannot apply Cochran's theorem directly since $\mathbf{Y}$ does not have mean zero. However, $\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}$ does have mean zero and
+
+$$
+\begin{aligned}
+(\mathbf{Y}- & \mathbf{X} \boldsymbol{\beta})^{\top}(\mathbf{I}-\mathbf{P})(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}) \\
+& =\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}-\mathbf{2} \boldsymbol{\beta}^{\top} \mathbf{X}^{\top}\left(\mathbf{I}-\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-\mathbf{1}} \mathbf{X}^{\top}\right) \mathbf{Y}+\boldsymbol{\beta}^{\top} \mathbf{X}^{\top}\left(\mathbf{I}-\mathbf{X}\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-\mathbf{1}} \mathbf{X}^{\top}\right) \mathbf{X} \boldsymbol{\beta} \\
+& =\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}
+\end{aligned}
+$$
+
+Since
+
+$$
+\|\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}\|^{\mathbf{2}}=(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta})^{\top}(\mathbf{I}-\mathbf{P})(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta})+(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta})^{\top} \mathbf{P}(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta})
+$$
+
+we may therefore apply Cochran's theorem to deduce that
+
+$$
+\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}=(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta})^{\top}(\mathbf{I}-\mathbf{P})(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}) \sim \sigma^{2} \chi_{n-p}^{2}
+$$
+
+and hence
+
+$$
+\hat{\sigma}^{2}=\frac{1}{n}\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{\mathbf{2}}=\frac{1}{n}(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta})^{\top}(\mathbf{I}-\mathbf{P})(\mathbf{Y}-\mathbf{X} \boldsymbol{\beta}) \sim \frac{\sigma^{2}}{n} \chi_{n-p}^{2}
+$$
+
+\subsection*{3.2.2 Testing hypotheis}
+Suppose that we want to test
+
+$$
+H_{0}: \beta_{j}=\beta_{j}^{*} \quad \text { versus } \quad H_{0}: \beta_{j} \neq \beta_{j}^{*}
+$$
+
+for some $j \in\{1, \ldots, p\}$, where $\beta_{j}^{*}$ is a fixed number. We know that
+
+$$
+\hat{\beta}_{j} \sim N\left(\beta_{j}, \zeta_{j j} \sigma^{2}\right)
+$$
+
+where $\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}=\left(\left(\zeta_{i j}\right)\right)_{p \times p}$. Thus, we know that
+
+$$
+T=\frac{\hat{\beta}_{j}-\beta_{j}^{*}}{\sqrt{\tilde{\sigma}^{2} \zeta_{j j}}} \sim t_{n-p} \text { under } H_{0}
+$$
+
+where we have used Theorem 3.1.
+
+\subsection*{3.3 Testing for a component of $\boldsymbol{\beta}$ - not included in the final exam}
+Now partition $\mathbf{X}$ and $\boldsymbol{\beta}$ as
+
+$$
+\underbrace{\mathbf{X}}_{n \times p}=(\underbrace{\mathbf{X}_{0}}_{n \times p_{0}} \underbrace{\mathbf{X}_{1}}_{n \times\left(p-p_{0}\right)}) \quad \text { and } \quad\binom{\boldsymbol{\beta}_{0}}{\boldsymbol{\beta}_{1}} \underset{\uparrow p-p_{0}}{\stackrel{\uparrow}{p} p_{0}}
+$$
+
+Suppose that we are interested in testing
+
+$$
+H_{0}: \boldsymbol{\beta}_{1}=0, \quad \text { against } \quad H_{1}: \boldsymbol{\beta}_{1} \neq 0 .
+$$
+
+Then, under $H_{0}$, the MLEs of $\boldsymbol{\beta}_{0}$ and $\sigma^{2}$ are
+
+$$
+\hat{\hat{\boldsymbol{\beta}}}_{0}=\left(\mathbf{X}_{\mathbf{0}}^{\top} \mathbf{X}_{\mathbf{0}}\right)^{-\mathbf{1}} \mathbf{X}_{\mathbf{0}}^{\top} \mathbf{Y}, \quad \quad \hat{\hat{\sigma}}^{2}=\frac{1}{n}\left\|\mathbf{Y}-\mathbf{X}_{0} \hat{\hat{\boldsymbol{\beta}}}_{0}\right\|^{2}
+$$
+
+$\hat{\hat{\beta}}_{0}$ and $\hat{\hat{\sigma}}^{2}$ are independent. The fitted values under $H_{0}$ are
+
+$$
+\hat{\hat{\mathbf{Y}}}=\mathbf{X}_{0} \hat{\hat{\boldsymbol{\beta}}}_{0}=\mathbf{X}_{0}\left(\mathbf{X}_{0}^{\top} \mathbf{X}_{0}\right)^{-1} \mathbf{X}_{0}^{\top} \mathbf{Y}=\mathbf{P}_{0} \mathbf{Y}
+$$
+
+where $P_{0}=\mathbf{X}_{0}\left(\mathbf{X}_{0}^{\top} \mathbf{X}_{0}\right)^{-1} \mathbf{X}_{0}^{\top}$ is an orthogonal projection matrix of rank $p_{0}$.
+
+The likelihood ratio statistic is
+
+$$
+\begin{aligned}
+-2 \log \Lambda & =2\left\{-\frac{n}{2} \log \left(\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2}\right)-\frac{n}{2}+\frac{n}{2} \log \left(\left\|\mathbf{Y}-\mathbf{X}_{0} \hat{\hat{\boldsymbol{\beta}}}_{0}\right\|^{2}\right)+\frac{n}{2}\right\} \\
+& =n \log \left(\frac{\left\|\mathbf{Y}-\mathbf{X}_{0} \hat{\hat{\boldsymbol{\beta}}}_{0}\right\|^{2}}{\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2}}\right)=n \log \left(\frac{\left\|\mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}}{\|\mathbf{Y}-\mathbf{P}\|^{2}}\right)
+\end{aligned}
+$$
+
+We therefore reject $H_{0}$ if the ratio of the residual sum of squares under $H_{0}$ to the residual sum of squares under $H_{1}$ is large.
+
+Rather than use Wilks' theorem to obtain the asymptotic "null distribution" of the test statistic [which anyway depends on unknown $\sigma^{2}$ ], we can work out the exact distribution in this case.
+
+Since $(\mathbf{Y}-\mathbf{P Y})^{\top}\left(\mathbf{P Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right)=\mathbf{0}$, Pythagorean theorem gives that
+
+
+\begin{equation*}
+\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}+\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}=\left\|\mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2} \tag{14}
+\end{equation*}
+
+
+Using (14),
+
+$$
+\begin{aligned}
+\frac{\left\|\mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}}{\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}} & =\frac{\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}}{\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}}+\frac{\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}}{\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}} \\
+& =1+\frac{\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}}{\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}}
+\end{aligned}
+$$
+
+Consider the decomposition:
+
+$$
+\|\mathbf{Y}\|^{2}=\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}+\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}+\left\|\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}
+$$
+
+and a similar one for $\mathbf{Z}=\mathbf{Y}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}$.\\
+Under $H_{0}, \mathbf{Z} \sim N\left(\mathbf{0}, \sigma^{2} \mathbf{I}\right)$. This allows the use of Cochran's theorem to ultimately conclude that $\left\|\mathbf{P Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}$ and $\|\mathbf{Y}-\mathbf{P Y}\|^{2}$ are independent $\sigma^{2} \chi_{p-p_{0}}^{2}$ and $\sigma^{2} \chi_{n-p}^{2}$ random variables, respectively.
+
+Example 3.5 (Problem 3). Let $\mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon}$, where $\boldsymbol{X}$ and $\boldsymbol{\beta}$ are partitioned as $\mathbf{X}= \left(\mathbf{X}_{0} \mid \mathbf{X}_{1}\right)$ and $\boldsymbol{\beta}^{T}=\left(\boldsymbol{\beta}_{0}^{T} \mid \boldsymbol{\beta}_{1}^{T}\right)$ respectively (where $\boldsymbol{\beta}_{0}$ has $p_{0}$ components and $\boldsymbol{\beta}_{1}$ has $p-p_{0}$ components).
+
+\begin{enumerate}
+  \item Show that
+\end{enumerate}
+
+$$
+\|\mathbf{Y}\|^{2}=\left\|\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}+\left\|\left(\mathbf{P}-\mathbf{P}_{\mathbf{0}}\right) \mathbf{Y}\right\|^{2}+\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2} .
+$$
+
+\begin{enumerate}
+  \setcounter{enumi}{1}
+  \item Recall that the likelihood ratio statistic for testing
+\end{enumerate}
+
+$$
+H_{0}: \boldsymbol{\beta}_{1}=\mathbf{0} \quad \text { against } \quad H_{1}: \boldsymbol{\beta}_{1} \neq \mathbf{0}
+$$
+
+is a strictly increasing function of $\left\|\left(\mathbf{P}-\mathbf{P}_{\mathbf{0}}\right) \mathbf{Y}\right\|^{2} /\|\mathbf{Y}-\mathbf{P Y}\|^{2}$.\\
+Use Cochran's theorem to find the joint distribution of $\left\|\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}\right\|^{2}$ and $\|\mathbf{Y}-\mathbf{P Y}\|^{2}$ under $H_{0}$. How would you perform the hypothesis test?\\[0pt]
+[Hint: $\operatorname{rank}(\boldsymbol{P})=p$, and $\operatorname{rank}(\mathbf{I}-\mathbf{P})=n-p$. Similar arguments give that $\operatorname{rank}\left(\mathbf{P}_{\mathbf{0}}\right)= p_{0}$ 。
+
+Solution: 1. Recall that since $(\mathbf{Y}-\mathbf{P Y})^{\top}\left(\mathbf{P Y}-\mathbf{P}_{0} \mathbf{Y}\right)=0$ Pythagorean theorem gives that
+
+$$
+\begin{aligned}
+\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}+\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{0} \mathbf{Y}\right\|^{2} & =\left\|\mathbf{Y}-\mathbf{P}_{0} \mathbf{Y}\right\|^{2} \\
+& =\left(\mathbf{Y}-\mathbf{P}_{0} \mathbf{Y}\right)^{\top}\left(\mathbf{Y}-\mathbf{P}_{0} \mathbf{Y}\right) \\
+& =\mathbf{Y}^{\top} \mathbf{Y}-2 \mathbf{Y}^{\top} \mathbf{P}_{0} \mathbf{Y}+\mathbf{Y}^{\top} \mathbf{P}_{0}^{\top} \mathbf{P}_{0} \mathbf{Y} \\
+& =\mathbf{Y}^{\top} \mathbf{Y}-\mathbf{Y}^{\top} \mathbf{P}_{0} \mathbf{P}_{0}^{\top} \mathbf{Y} \\
+& =\|\mathbf{Y}\|^{2}-\left\|\mathbf{P}_{0} \mathbf{Y}\right\|^{2}
+\end{aligned}
+$$
+
+giving that
+
+$$
+\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}+\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{0} \mathbf{Y}\right\|^{2}+\left\|\mathbf{P}_{0} \mathbf{Y}\right\|^{2}=\|\mathbf{Y}\|^{2}
+$$
+
+as desired.\\
+2. Under $H_{0}$, the response vector $\mathbf{Y}$ has mean $\mathbf{X}_{0} \boldsymbol{\beta}_{0}$, and so $\mathbf{Z}=\mathbf{Y}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}$ satisfies
+
+$$
+\begin{aligned}
+\|\mathbf{Z}\|^{2} & =\|\mathbf{Z}-\mathbf{P} \mathbf{Z}\|^{2}+\left\|\mathbf{P} \mathbf{Z}-\mathbf{P}_{0} \mathbf{Z}\right\|^{2}+\left\|\mathbf{P}_{0} \mathbf{Z}\right\|^{2} \\
+& =\mathbf{Z}^{\top} \mathbf{Z}-2 \mathbf{Z}^{\top} \mathbf{P} \mathbf{Z}+\mathbf{Z}^{\top} \mathbf{P}^{\top} \mathbf{P} \mathbf{Z}+\mathbf{Z}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right)^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Z}+\mathbf{Z}^{\top} \mathbf{P}_{0}^{\top} \mathbf{P}_{0} \mathbf{Z} \\
+& =\mathbf{Z}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Z}+\mathbf{Z}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Z}+\mathbf{Z}^{\top} \mathbf{P}_{0} \mathbf{Z}
+\end{aligned}
+$$
+
+But
+
+$$
+\begin{aligned}
+\mathbf{Z}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Z} & =\left(\mathbf{Y}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}\right)^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right)\left(\mathbf{Y}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}\right) \\
+& =\mathbf{Y}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}-2 \boldsymbol{\beta}_{0}^{\top} \mathbf{X}_{0}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}+\boldsymbol{\beta}_{0}^{\top} \mathbf{X}_{0}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{X}_{0} \boldsymbol{\beta}_{0}
+\end{aligned}
+$$
+
+Since $\mathbf{X}_{0} \boldsymbol{\beta}_{0} \in U_{0}$ and $\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y} \in U_{0}^{\perp}$, and $U_{0}$ and $U_{0}^{\perp}$ are mutually orthogonal, and moreover $\mathbf{P X}_{0} \boldsymbol{\beta}_{0}=\mathbf{P}_{0} \mathbf{X}_{0} \boldsymbol{\beta}_{0}=\mathbf{X}_{0} \boldsymbol{\beta}_{0}$, this gives
+
+$$
+\mathbf{Z}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Z}=\mathbf{Y}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}
+$$
+
+Similarly,
+
+$$
+\begin{aligned}
+\mathbf{Z}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Z} & =\left(\mathbf{Y}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}\right)^{\top}(\mathbf{I}-\mathbf{P})\left(\mathbf{Y}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}\right) \\
+& =\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}-2 \boldsymbol{\beta}_{0}^{\top} \mathbf{X}_{0}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}+\boldsymbol{\beta}_{0}^{\top} \mathbf{X}_{0}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{X}_{0} \boldsymbol{\beta}_{0} \\
+& =\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y},
+\end{aligned}
+$$
+
+since $\mathbf{X}_{0} \boldsymbol{\beta}_{0} \in U_{0}$ and $(\mathbf{I}-\mathbf{P}) \mathbf{Y} \in U^{\perp} \subseteq U_{0}^{\perp}$, while $(\mathbf{I}-\mathbf{P}) \mathbf{X}_{0} \boldsymbol{\beta}_{0}=\mathbf{X}_{0} \boldsymbol{\beta}_{0}-\mathbf{X}_{0} \boldsymbol{\beta}_{0}=$ 0 . Since
+
+$$
+\operatorname{rank}(\mathbf{I}-\mathbf{P})+\operatorname{rank}\left(\mathbf{P}-\mathbf{P}_{0}\right)+\operatorname{rank}\left(\mathbf{P}_{0}\right)=n-p+p-p_{0}+p_{0}=n
+$$
+
+we may therefore apply Cochran's theorem to deduce that under $H_{0},\left\|\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}\right\|^{2}$ and $\|\mathbf{Y}-\mathbf{P Y}\|^{2}$ are independent with
+
+$$
+\left\|\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}\right\|^{2}=\mathbf{Y}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}=\mathbf{Z}^{\top}\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Z} \sim \sigma^{2} \chi_{p-p_{0}}^{2}
+$$
+
+and
+
+$$
+\|(\mathbf{I}-\mathbf{P}) \mathbf{Y}\|^{2}=\mathbf{Y}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Y}=\mathbf{Z}^{\top}(\mathbf{I}-\mathbf{P}) \mathbf{Z} \sim \sigma^{2} \chi_{n-p}^{2}
+$$
+
+It follows that under $H_{0}$,
+
+$$
+F=\frac{\frac{1}{p-p_{0}}\left\|\left(\mathbf{P}-\mathbf{P}_{0}\right) \mathbf{Y}\right\|^{2}}{\frac{1}{n-p}\|(\mathbf{I}-\mathbf{P}) \mathbf{Y}\|^{2}} \sim F_{p-p_{0}, n-p}
+$$
+
+so we may reject $H_{0}$ if $F>F_{p-p_{0}, n-p}(\alpha)$, where $F_{p-p_{0}, n-p}(\alpha)$ is the upper $\alpha$-point of the $F_{p-p_{0}, n-p}$ distribution.
+
+Thus under $H_{0}$,
+
+$$
+F=\frac{\frac{1}{p-p_{0}}\left\|\mathbf{P} \mathbf{Y}-\mathbf{P}_{\mathbf{0}} \mathbf{Y}\right\|^{2}}{\frac{1}{n-p}\|\mathbf{Y}-\mathbf{P} \mathbf{Y}\|^{2}} \sim F_{p-p_{0}, n-p}
+$$
+
+When $\mathbf{X}_{0}$ has one less column than $\mathbf{X}$, say column $k$, we can leverage the normality of the MLE $\hat{\beta}_{k}$ in (13) to perform a $t$-test based on the statistic
+
+$$
+\left.T=\frac{\hat{\beta}_{k}}{\left.\sqrt{\tilde{\sigma}^{2} \operatorname{diag}\left[\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1}\right.}\right]_{k}} \sim t_{n-p} \text { under } H_{0} \quad \text { [i.e., } \beta_{k}=0\right]
+$$
+
+[This is what R uses, though the more general $F$-statistic can also be used in this case.]
+
+The above theory also shows that under $H_{1}, \frac{1}{n-p}\|\mathbf{Y}-\mathbf{X} \hat{\boldsymbol{\beta}}\|^{2}$ is an unbiased estimator of $\sigma^{2}$. This is usually used in preference to the MLE, $\hat{\sigma}^{2}$.
+
+\section*{Example 3.6. 1. Multiple linear regression:}
+For countries $i=1, \ldots, n$, consider how the fertility rate $Y_{i}$ (births per 1000 females in a particular year) depends on
+
+\begin{itemize}
+  \item the gross domestic product per capita $x_{i 1}$
+  \item and the percentage of urban dwellers $x_{i 2}$.
+\end{itemize}
+
+The model
+
+$$
+\log Y_{i}=\beta_{0}+\beta_{1} \log x_{i 1}+\beta_{2} x_{i 2}+\varepsilon_{i}, \quad i=1, \ldots, n
+$$
+
+with $\varepsilon_{i} \stackrel{\text { i.i.d. }}{\sim} N\left(0, \sigma^{2}\right)$, is of linear model form $Y=X \beta+\varepsilon$ with
+
+$$
+Y=\left(\begin{array}{c}
+\log Y_{1} \\
+\vdots \\
+\log Y_{n}
+\end{array}\right), \quad X=\left(\begin{array}{ccc}
+1 & \log x_{11} & x_{12} \\
+\vdots & \vdots & \vdots \\
+1 & \log x_{n 1} & x_{n 2}
+\end{array}\right), \quad \beta=\left(\begin{array}{c}
+\beta_{0} \\
+\beta_{1} \\
+\beta_{2}
+\end{array}\right), \quad \varepsilon=\left(\begin{array}{c}
+\varepsilon_{1} \\
+\vdots \\
+\varepsilon_{n}
+\end{array}\right) .
+$$
+
+On the original scale of the response, this model becomes
+
+$$
+Y=\exp \left(\beta_{0}\right) \exp \left(\beta_{1} \log x_{1}\right) \exp \left(\beta_{2} x_{2}\right) \varepsilon
+$$
+
+Notice how the possibility of transforming variables greatly increases the flexibility of the linear model. [But see how using a log response assumes that the errors enter multiplicatively.]
+
+\section*{4 One-way analysis of variance (ANOVA)}
+Consider measuring yields of plants under a control condition and $J-1$ different treatment conditions. The explanatory variable (factor) has $J$ levels, and the response variables at level $j$ are $Y_{j 1}, \ldots, Y_{j n_{j}}$. The model that the responses are independent with
+
+$$
+Y_{j k} \sim N\left(\mu_{j}, \sigma^{2}\right), \quad j=1, \ldots, J ; \quad k=1, \ldots, n_{j}
+$$
+
+is of linear model form, with
+
+$$
+\left.Y=\left(\begin{array}{c}
+Y_{11} \\
+\vdots \\
+Y_{1 n_{1}} \\
+Y_{21} \\
+\vdots \\
+Y_{2 n_{2}} \\
+\vdots \\
+Y_{J 1} \\
+\vdots \\
+Y_{J n_{J}}
+\end{array}\right) \quad X=\left(\begin{array}{ccccc}
+1 & 0 & \cdots & \cdots & 0 \\
+\vdots & \vdots & \ddots & \ddots & \vdots \\
+1 & 0 & \cdots & \cdots & 0 \\
+0 & 1 & 0 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 1 & 0 & \cdots & 0 \\
+& & \vdots & & \\
+0 & \cdots & \cdots & 0 & 1 \\
+\vdots & \ddots & \ddots & \vdots & \vdots \\
+0 & \cdots & \cdots & 0 & 1
+\end{array}\right)\right\}\left\{n_{1}\right\} \quad n_{2} \quad \beta=\left(\begin{array}{c}
+\mu_{1} \\
+\mu_{2} \\
+\vdots \\
+\mu_{J}
+\end{array}\right) .
+$$
+
+An alternative parameterization, emphasizing the differences between treatments, is
+
+$$
+Y_{j k}=\mu+\alpha_{j}+\varepsilon_{j k}, \quad j=1, \ldots, J ; \quad k=1, \ldots, n_{j}
+$$
+
+where
+
+\begin{itemize}
+  \item $\mu$ is the baseline or mean effect
+  \item $\alpha_{j}$ is the effect of the $j^{\text {th }}$ treatment (or the control $j=1$ ).
+\end{itemize}
+
+Notice that the parameter vector $\left(\mu, \alpha_{1}, \alpha_{2}, \ldots, \alpha_{J}\right)^{\top}$ is not identifiable, since replacing $\mu$ with $\mu+10$ and $\alpha_{j}$ by $\alpha_{j}-10$ gives the same model. Either a
+
+\begin{itemize}
+  \item corner point constraint $\alpha_{1}=0$ is used to emphasise the differences from the control, or the
+  \item sum-to-zero constraint $\sum_{j=1}^{J} n_{j} \alpha_{j}=0$\\
+can be used to make the model identifiable. R uses corner point constraints. If $n_{j}=K$, say, for all $j$, the data are said to be balanced.
+\end{itemize}
+
+We are usually interested in comparing the null model
+
+$$
+H_{0}: Y_{j k}=\mu+\varepsilon_{j k}
+$$
+
+with that given above, which we call $H_{1}$, i.e., we wish to test whether the treatment conditions have an effect on the plant yield:
+
+$$
+H_{0}: \alpha=0, \text { where } \alpha=\left(\alpha_{1}, \ldots, \alpha_{J}\right), \quad \text { against } \quad H_{1}: \alpha \neq 0 .
+$$
+
+Check that the MLE fitted values are
+
+$$
+\hat{Y}_{j k}=\bar{Y}_{j} \equiv \frac{1}{n_{j}} \sum_{k=1}^{n_{j}} Y_{j k}
+$$
+
+under $H_{1}$, whatever parameterization is chosen, and are
+
+$$
+\hat{\hat{Y}}_{j k}=\bar{Y} \equiv \frac{1}{n} \sum_{j=1}^{J} n_{j} \bar{Y}_{j}, \quad \text { where } n=\sum_{j=1}^{J} n_{j}
+$$
+
+under $H_{0}$.\\
+Theorem 4.1. (Partitioning the sum of squares) We have
+
+$$
+S S_{\text {total }}=S S_{\text {within }}+S S_{\text {between }}
+$$
+
+where\\
+$S S_{\text {total }}=\sum_{j=1}^{J} \sum_{k=1}^{n_{j}}\left(Y_{j k}-\bar{Y}\right)^{2}, \quad S S_{\text {within }}=\sum_{j=1}^{J} \sum_{k=1}^{n_{j}}\left(Y_{j k}-\bar{Y}_{j}\right)^{2}, \quad S S_{\text {between }}=\sum_{j=1}^{J} n_{j}\left(\bar{Y}_{j}-\bar{Y}\right)^{2}$.\\
+Furthermore, $S S_{\text {within }}$ has $\sigma^{2} \chi^{2}$-distribution with $(n-J)$ degrees of freedom and is independent of $S S_{\text {between }}$. Also, under $H_{0}, S S_{\text {between }} \sim \sigma^{2} \chi_{J-1}^{2}$.
+
+Our linear model theory says that we should test $H_{0}$ by referring
+
+$$
+F=\frac{\frac{1}{J-1} \sum_{j=1}^{J} n_{j}\left(\bar{Y}_{j}-\bar{Y}\right)^{2}}{\frac{1}{n-J} \sum_{j=1}^{J} \sum_{k=1}^{n_{j}}\left(Y_{j k}-\bar{Y}_{j}\right)^{2}} \equiv \frac{\frac{1}{J-1} S_{2}}{\frac{1}{n-J} S_{1}}
+$$
+
+to $F_{J-1, n-J}$, where $S_{1}$ is the "within groups" sum of squares and $S_{2}$ is the "between groups" sum of squares. We have the following ANOVA table.
+
+\begin{center}
+\begin{tabular}{r|ccc}
+Source of variation & Degrees of freedom & Sum of squares & $F$-statistic \\
+\hline
+Between groups & $J-1$ & $S_{2}$ & $F=\frac{\frac{1}{J-1} S_{2}}{\frac{1}{n-J} S_{1}}$ \\
+Within groups & $n-J$ & $S_{1}$ &  \\
+Total & $n-1$ & $S_{1}+S_{2}=\sum_{j=1}^{J} \sum_{k=1}^{n_{j}}\left(Y_{j k}-\bar{Y}\right)^{2}$ &  \\
+\end{tabular}
+\end{center}
+
+
+\end{document}
