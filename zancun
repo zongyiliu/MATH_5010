@@ -1,229 +1,87 @@
-\documentclass[letterpaper, 9pt]{article}
-\linespread{0.85}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{hyperref}
-\usepackage{physics}
-\usepackage[version=4]{mhchem}
-\usepackage{stmaryrd}
-\usepackage[dvipsnames]{xcolor}
-\colorlet{LightRubineRed}{RubineRed!70}
-\colorlet{Mycolor1}{green!10!orange}
-\definecolor{Mycolor2}{HTML}{00F9DE}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\VaR}{\mathrm{VaR}}
-\DeclareMathOperator{\ES}{\mathrm{ES}}
-\usepackage{graphicx}
-\usepackage{capt-of}
-\usepackage{lipsum}
-\usepackage{fancyvrb}
-\usepackage{tabularx}
-\usepackage{listings}
-\usepackage[export]{adjustbox}
-\graphicspath{ {./images/} }
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{float}
-\usepackage{lipsum}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage[margin=0.7in]{geometry}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{capt-of}
-\usepackage{tcolorbox}
-\usepackage{lipsum}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{listings}
-\usepackage{hyperref} 
-\newcommand{\Cov}{\mathrm{Cov}}
-\newcommand{\E}{\mathbb{E}}
-\usepackage[normalem]{ulem}
-\usepackage{xcolor} % For custom colors
-\lstset{
-	language=Python,                % Choose the language (e.g., Python, C, R)
-	basicstyle=\ttfamily\small, % Font size and type
-	keywordstyle=\color{blue},  % Keywords color
-	commentstyle=\color{gray},  % Comments color
-	stringstyle=\color{red},    % String color
-	numbers=left,               % Line numbers
-	numberstyle=\tiny\color{gray}, % Line number style
-	stepnumber=1,               % Numbering step
-	breaklines=true,            % Auto line break
-	backgroundcolor=\color{black!5}, % Light gray background
-	frame=single,               % Frame around the code
-}
-\usepackage{float}
-\usepackage[]{amsthm} %lets us use \begin{proof}
-	\usepackage[]{amssymb} %gives us the character \varnothing
-	
-	\title{Final Project, STAT 5261}
-	\author{Zongyi Liu}
-	\date{Wed, Nov 26, 2025}
-	
-	\begin{document}
-		\maketitle
-	\section{Executive Summary}
-	
-	\section{Descriptive Statistics}
-	
-	In this study I used 11 assets with time range from January 1, 2019 to October 31, 2025, and the general descriptive statistics are shown as below:
-	
-	\begin{table}[htbp]
-		\centering
-		\caption{Asset Return Summary Statistics}
-		\begin{tabular}{lccccc}
-			\toprule
-			\textbf{Ticker} & \textbf{Mean} & \textbf{StdDev} & \textbf{Skewness} & \textbf{Kurtosis} & \textbf{Beta} \\
-			\midrule
-			AAPL & 0.026195312 & 0.08011206 & -0.03365191 & -0.77901530 & 1.2191835 \\
-			MSFT & 0.021585828 & 0.06226285 &  0.17017810 & -0.38299882 & 0.9403176 \\
-			AMZN & 0.016557489 & 0.08803682 &  0.33517650 &  0.84931329 & 1.1832620 \\
-			GOOGL & 0.022776095 & 0.07735267 & -0.40264341 & -0.28267538 & 1.0176823 \\
-			META & 0.022983741 & 0.11125480 & -0.37138577 &  0.96845122 & 1.2765125 \\
-			TSLA & 0.057683954 & 0.20737137 &  0.73744639 &  0.51012851 & 2.3441502 \\
-			JNJ & 0.005467106 & 0.04920065 &  0.09613001 & -0.34040990 & 0.5128830 \\
-			PG & 0.006585631 & 0.04864787 &  0.16436558 & -0.36205224 & 0.4273911 \\
-			XOM & 0.009271294 & 0.08846612 &  0.26105313 &  1.41911647 & 0.8535354 \\
-			JPM & 0.016276413 & 0.07468222 & -0.21352673 &  0.73558756 & 1.1483736 \\
-			NVDA & 0.059385595 & 0.13613246 & -0.20986786 & -0.03601573 & 1.7732969 \\
-			\bottomrule
-		\end{tabular}
-	\end{table}
-  
-  An equity curve for each assets superposed with that of S\&P 500 is generated as below, where we can see a sharp rise of NVIDIA in recent years.
-  
-  \includegraphics[max width=\textwidth, center]{equity_curve}
-  
-  Here I used the ADF (Augmented Dickey--Fuller) test, which is a statistical procedure used to
-  determine whether a time series contains a unit root, which corresponds to
-  non-stationarity. From the result statistics, we can see that except \texttt{GOOGL} and \texttt{META}, all other assets are stationary. As for the normality, I used Shapiro--Wilk normality test, and from the result we can say that \texttt{TSLA} and \texttt{XOM} are not normally distributed, and all other assets are normally distributed. I also used visualization methods such as QQ plot, which can be seen in the appendix, and the results are the same as the normality test.
-  
-  \begin{table}[htbp]
-  	\centering
-  	\caption{Comparison of Outlier Months Detected by Different Methods}
-  	\begin{tabular}{lccc}
-  		\hline
-  		\textbf{Asset} & \textbf{IQR Method} & \textbf{Z-Score Method} & \textbf{MAD Method} \\
-  		\hline
-  		AAPL  & None & None & None \\
-  		MSFT  & None & None & None \\
-  		AMZN  & 16, 40, 43 & None & 16, 40, 43 \\
-  		GOOGL & 40 & None & 40, 74 \\
-  		META  & 38, 46 & 38, 46 & 38, 46, 47, 62 \\
-  		TSLA  & 20 & 20 & 13, 20 \\
-  		JNJ   & None & None & 16 \\
-  		PG    & None & None & 36 \\
-  		XOM   & 14, 15, 16, 26, 37, 46 & 15 & 14, 15, 16, 21, 23, 26, 37, 46 \\
-  		JPM   & 15 & 15 & 15, 23, 42, 46 \\
-  		NVDA  & 40 & None & 5, 40, 53 \\
-  		\hline
-  	\end{tabular}
-  \end{table}
-  
-  
-  \begin{table}[h!]
-  	\centering
-  	\caption{Annualized Sharpe Ratios of Individual Assets}
-  	\label{tab:sharpe}
-  	\begin{tabular}{l r}
-  		\toprule
-  		Asset & Sharpe Ratio \\
-  		\midrule
-  		AAPL  & 1.2389550 \\
-  		MSFT  & 1.2615931 \\
-  		AMZN  & 0.6486593 \\
-  		GOOGL & 1.0833367 \\
-  		META  & 0.7615089 \\
-  		TSLA  & 1.3086380 \\
-  		JNJ   & 0.2793679 \\
-  		PG    & 0.3676322 \\
-  		XOM   & 0.3168737 \\
-  		JPM   & 0.7490568 \\
-  		NVDA  & 2.0744136 \\
-  		\bottomrule
-  	\end{tabular}
-  \end{table}
+\underline{Two-sample $t$ test (equal variances)}
 
-Table above reports the annualized Sharpe ratios for the eleven assets in the
-sample. The results reveal substantial heterogeneity in risk-adjusted performance across
-sectors.
+\paragraph{Setup.}
+Let
+$X=(X_1,\dots,X_m)\sim N(\mu_1,\sigma^2)$,
+$Y=(Y_1,\dots,Y_n)\sim N(\mu_2,\sigma^2)$,
+independent, with unknown but common variance $\sigma^2$.
 
-NVDA exhibits by far the highest Sharpe ratio (2.07), indicating exceptional
-risk-adjusted returns driven by strong mean performance relative to its volatility.
-Other large-cap technology stocks---including TSLA, MSFT, AAPL, and GOOGL---also achieve
-Sharpe ratios above~1, suggesting that these assets delivered highly favorable 
-risk--return tradeoffs over the sample period. In particular, TSLA’s Sharpe ratio (1.31)
-reflects both elevated volatility and periods of unusually strong returns, especially during 
-the post-2019 expansion.
+Define sample means
+$\bar X_m=\frac1m\sum_{i=1}^m X_i$,
+$\bar Y_n=\frac1n\sum_{j=1}^n Y_j$,
+and sums of squares
+$S_X^2=\sum_{i=1}^m (X_i-\bar X_m)^2$,
+$S_Y^2=\sum_{j=1}^n (Y_j-\bar Y_n)^2$.
 
+\paragraph{Test statistic.}
+$
+U_{m,n}
+=
+\frac{\sqrt{m+n-2}\,(\bar X_m-\bar Y_n)}
+{\sqrt{\left(\frac1m+\frac1n\right)(S_X^2+S_Y^2)}}
+\sim t_{m+n-2}
+\quad\text{under } H_0.
+$
 
+---
 
-\section{Asset Allocation}
-  
-  
-	\section{Principle Component Analysis}
+\underline{One-sided alternatives}
 
-	For generating correlation matrix, we get the correlation matrix generated as below:
+\paragraph{Right-tailed test.}
+$H_0:\mu_1\le\mu_2$
+\quad vs \quad
+$H_1:\mu_1>\mu_2$.
 
-\begin{table}[htbp]
-	\centering
-	\caption{Correlation Matrix of Assets}
-	\resizebox{\textwidth}{!}{
-		\begin{tabular}{lccccccccccc}
-			\toprule
-			& AAPL & MSFT & AMZN & GOOGL & META & TSLA & JNJ & PG & XOM & JPM & NVDA \\
-			\midrule
-			AAPL  & 1.0000000 & 0.5863039 & 0.60825481 & 0.49623262 & 0.34410064 & 0.64668256 & 0.40988295 & 0.36571684 & 0.21676561 & 0.32158080 & 0.53012768 \\
-			MSFT  & 0.5863039 & 1.0000000 & 0.65913657 & 0.55706624 & 0.56945994 & 0.47416466 & 0.24796009 & 0.30849851 & 0.11696617 & 0.33709045 & 0.65147796 \\
-			AMZN  & 0.60825481 & 0.65913657 & 1.0000000 & 0.59683797 & 0.50329704 & 0.58442493 & 0.09341286 & 0.05761213 & 0.06809702 & 0.23987985 & 0.60740706 \\
-			GOOGL & 0.49623262 & 0.55706624 & 0.59683797 & 1.0000000 & 0.39564282 & 0.45825661 & 0.11062309 & 0.05654949 & 0.15590236 & 0.37735126 & 0.49039013 \\
-			META  & 0.34410064 & 0.56945994 & 0.50329704 & 0.39564282 & 1.0000000 & 0.29244560 & 0.18490252 & 0.27500197 & -0.01301193 & 0.35426955 & 0.52086588 \\
-			TSLA  & 0.64668256 & 0.47416466 & 0.58442493 & 0.45825661 & 0.29244560 & 1.0000000 & 0.17291130 & 0.03234005 & 0.05421201 & 0.22991528 & 0.41251101 \\
-			JNJ   & 0.40988295 & 0.24796009 & 0.09341286 & 0.11062309 & 0.18490252 & 0.17291130 & 1.0000000 & 0.43172004 & 0.38737879 & 0.35842446 & 0.05109294 \\
-			PG    & 0.36571684 & 0.30849851 & 0.05761213 & 0.05654949 & 0.27500197 & 0.03234005 & 0.43172004 & 1.0000000 & 0.15928922 & 0.21716270 & 0.08745125 \\
-			XOM   & 0.21676561 & 0.11696617 & 0.06809702 & 0.15590236 & -0.01301193 & 0.05421201 & 0.38737879 & 0.15928922 & 1.0000000 & 0.52309187 & 0.05929966 \\
-			JPM   & 0.32158080 & 0.33709045 & 0.23987985 & 0.37735126 & 0.35426955 & 0.22991528 & 0.35842446 & 0.21716270 & 0.52309187 & 1.0000000 & 0.33439732 \\
-			NVDA  & 0.53012768 & 0.65147796 & 0.60740706 & 0.49039013 & 0.52086588 & 0.41251101 & 0.05109294 & 0.08745125 & 0.05929966 & 0.33439732 & 1.0000000 \\
-			\bottomrule
-		\end{tabular}
-	}
-\end{table}
+Reject $H_0$ if
+$U_{m,n}\ge T^{-1}_{m+n-2}(1-\alpha)$.
 
-We can see that the highest correlation occurs between \texttt{MSFT} and \texttt{AMZN}, with a correlation of $0.6591$. In contrast, the lowest correlation is observed between \texttt{META} and \texttt{XOM}, with a value of $-0.013$, indicating almost no linear co-movement between these two assets.
+$p$-value:
+$p=1-T_{m+n-2}(u)$,
+where $u$ is the observed value of $U_{m,n}$.
 
-\section{Risk Management}
+\paragraph{Left-tailed test.}
+$H_0:\mu_1\ge\mu_2$
+\quad vs \quad
+$H_1:\mu_1<\mu_2$.
 
-\section{Corpulas}
+Reject $H_0$ if
+$U_{m,n}\le -T^{-1}_{m+n-2}(1-\alpha)=T^{-1}_{m+n-2}(\alpha)$.
 
-In this case I tried five types of corpulas, namely, Gaussian, t, Clayton, Gumbel, and Frank corulas. Then I did AIC and BIC tests on it, and results are shown in the table below. Overall the Student-$t$ copula provides the best fit among
-all candidate models.
+$p$-value:
+$p=T_{m+n-2}(u)$.
 
-\begin{table}[htbp]
-	\centering
-	\caption{Model Comparison Using Log-Likelihood, AIC, and BIC}
-	\label{tab:copula_model_selection}
-	\begin{tabular}{lccc}
-		\hline
-		\textbf{Copula Model} & \textbf{Log-Likelihood} & \textbf{AIC} & \textbf{BIC} \\
-		\hline
-		Gaussian & 301.6809 & -471.3619 & -312.5184 \\
-		Student-$t$ & 314.8911 & -495.7822 & -334.5320 \\
-		Clayton & 136.1343 & -270.2687 & -267.8620 \\
-		Gumbel & 105.3848 & -208.7697 & -206.3629 \\
-		Frank & 106.9688 & -211.9376 & -209.5309 \\
-		\hline
-	\end{tabular}
-\end{table}
+---
 
-	
-	\end{document}
-	
+\underline{Two-sided alternative}
+
+$H_0:\mu_1=\mu_2$
+\quad vs \quad
+$H_1:\mu_1\neq\mu_2$.
+
+Reject $H_0$ if
+$|U_{m,n}|\ge T^{-1}_{m+n-2}(1-\alpha/2)$.
+
+$p$-value:
+$p=2\bigl[1-T_{m+n-2}(|u|)\bigr]$.
+
+---
+
+\underline{Power function}
+
+Let
+$\psi=\dfrac{\mu_1-\mu_2}{\sqrt{\sigma^2(\frac1m+\frac1n)}}$
+be the noncentrality parameter.
+
+For the two-sided test rejecting when $|U_{m,n}|\ge c$,
+the power function is
+$
+\pi(\mu_1,\mu_2,\sigma^2\mid\delta)
+=
+T_{m+n-2}(-c\mid\psi)
++
+1-T_{m+n-2}(c\mid\psi),
+$
+where $c=T^{-1}_{m+n-2}(1-\alpha/2)$.
+
+Here $T_{m+n-2}(\cdot\mid\psi)$ is the c.d.f. of the noncentral
+$t$-distribution with $m+n-2$ degrees of freedom.
