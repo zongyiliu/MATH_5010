@@ -1,1370 +1,324 @@
-\documentclass[letterpaper, 9pt]{article}
-\linespread{0.85}
+\documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{array}
-\usepackage{booktabs} 
-\usepackage{hyperref}
-\usepackage{physics}
 \usepackage[version=4]{mhchem}
 \usepackage{stmaryrd}
-\usepackage[dvipsnames]{xcolor}
-\colorlet{LightRubineRed}{RubineRed!70}
-\colorlet{Mycolor1}{green!10!orange}
-\definecolor{Mycolor2}{HTML}{00F9DE}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\VaR}{\mathrm{VaR}}
-\DeclareMathOperator{\ES}{\mathrm{ES}}
-\usepackage{graphicx}
-\usepackage{capt-of}
-\usepackage{lipsum}
-\usepackage{fancyvrb}
-\usepackage{tabularx}
-\usepackage{listings}
-\usepackage[export]{adjustbox}
-\graphicspath{ {./images/} }
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{float}
-\usepackage{lipsum}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage[margin=0.7in]{geometry}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{capt-of}
-\usepackage{tcolorbox}
-\usepackage{lipsum}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{listings}
-\usepackage{hyperref} 
-\newcommand{\Cov}{\mathrm{Cov}}
-\newcommand{\E}{\mathbb{E}}
-\usepackage[normalem]{ulem}
-\usepackage{xcolor} % For custom colors
-\lstset{
-	language=Python,                % Choose the language (e.g., Python, C, R)
-	basicstyle=\ttfamily\small, % Font size and type
-	keywordstyle=\color{blue},  % Keywords color
-	commentstyle=\color{gray},  % Comments color
-	stringstyle=\color{red},    % String color
-	numbers=left,               % Line numbers
-	numberstyle=\tiny\color{gray}, % Line number style
-	stepnumber=1,               % Numbering step
-	breaklines=true,            % Auto line break
-	backgroundcolor=\color{black!5}, % Light gray background
-	frame=single,               % Frame around the code
-}
-\usepackage{float}
-\usepackage[]{amsthm} %lets us use \begin{proof}
-	\usepackage[]{amssymb} %gives us the character \varnothing
-	
-	\title{Appendix for Final Project, STAT 5261}
-	\author{Zongyi Liu}
-	\date{Wed, Nov 26, 2025}
-	
-	\begin{document}
-		\maketitle
-		
-		\tableofcontents
-		
-		\section{Executive Summary}
-		
-		\section{Descriptive Statistics}
-		\subsection{Sample Statistics for Each Data}
-		\subsubsection{Descriptions}
-		In this study I used 11 assets with time range from January 1, 2019 to October 31, 2025. The general information of those assets are listed below:
-		
-		\begin{itemize}
-			\item \texttt{AAPL}: Apple Inc., consumer electronics, smartphones, computers, wearables
-			\item \texttt{MSFT}: Microsoft Corporation, software, cloud computing, enterprise technology
-			\item \texttt{AMZN}: Amazon.com Inc., e-commerce, cloud computing (AWS), logistics
-			\item \texttt{GOOGL}: Alphabet Inc.\ (Class A), online advertising, search engine, cloud services
-			\item \texttt{META}: Meta Platforms Inc., social media (Facebook, Instagram), VR/AR technologies
-			\item \texttt{TSLA}: Tesla Inc., electric vehicles, clean energy, autonomous driving
-			\item \texttt{JNJ}: Johnson \& Johnson, pharmaceuticals, medical devices, healthcare products
-			\item \texttt{PG}: Procter \& Gamble, consumer goods, household \& personal care brands
-			\item \texttt{XOM}: Exxon Mobil Corporation, oil \& gas, energy exploration, petrochemicals
-			\item \texttt{JPM}: JPMorgan Chase \& Co., banking, investment management, financial services
-			\item \texttt{NVDA}: NVIDIA Corporation, GPUs, AI hardware, data center computing
-			\item \texttt{GSPC}: S\&P 500 Index (market benchmark), represents 500 large U.S.\ companies
-		\end{itemize}
-		
-		
-		and the general descriptive statistics are in this table.
-		
-		\begin{table}[htbp]
-			\centering
-			\caption{Asset Return Summary Statistics}
-			\begin{tabular}{lccccc}
-				\toprule
-				\textbf{Ticker} & \textbf{Mean} & \textbf{StdDev} & \textbf{Skewness} & \textbf{Kurtosis} & \textbf{Beta} \\
-				\midrule
-				AAPL & 0.026195312 & 0.08011206 & -0.03365191 & -0.77901530 & 1.2191835 \\
-				MSFT & 0.021585828 & 0.06226285 &  0.17017810 & -0.38299882 & 0.9403176 \\
-				AMZN & 0.016557489 & 0.08803682 &  0.33517650 &  0.84931329 & 1.1832620 \\
-				GOOGL & 0.022776095 & 0.07735267 & -0.40264341 & -0.28267538 & 1.0176823 \\
-				META & 0.022983741 & 0.11125480 & -0.37138577 &  0.96845122 & 1.2765125 \\
-				TSLA & 0.057683954 & 0.20737137 &  0.73744639 &  0.51012851 & 2.3441502 \\
-				JNJ & 0.005467106 & 0.04920065 &  0.09613001 & -0.34040990 & 0.5128830 \\
-				PG & 0.006585631 & 0.04864787 &  0.16436558 & -0.36205224 & 0.4273911 \\
-				XOM & 0.009271294 & 0.08846612 &  0.26105313 &  1.41911647 & 0.8535354 \\
-				JPM & 0.016276413 & 0.07468222 & -0.21352673 &  0.73558756 & 1.1483736 \\
-				NVDA & 0.059385595 & 0.13613246 & -0.20986786 & -0.03601573 & 1.7732969 \\
-				\bottomrule
-			\end{tabular}
-		\end{table}
-	
-	\subsubsection{Codes}
-	
-	First we need to load the data;
-	
-\begin{lstlisting}
-     library(PerformanceAnalytics) # used to compute returns
-     library(quantmod)
-     
-     symbols <- c("AAPL", "MSFT", "AMZN", "GOOGL", "META",
-     "TSLA", "JNJ", "PG", "XOM", "JPM",
-     "NVDA","^GSPC" # S&P 500
-     )
-     
-     getSymbols(symbols, 
-     from = "2019-01-01", 
-     to = "2025-10-31", 
-     periodicity = "monthly")
-\end{lstlisting}
+\usepackage{bbold}
+\usepackage{fvextra, csquotes}
 
-And set the risk free rate as 0.035 (annually).
+\title{Pratice Problems }
 
-\begin{lstlisting}
-     # 0.035/12=0.002917
-     rf_m=0.002917
-\end{lstlisting}
+\author{Fangyi Chen}
+\date{}
 
-Retrieve the data;
 
-\begin{lstlisting}
-     symbols <- c(
-     "AAPL", "MSFT", "AMZN", "GOOGL", "META",
-     "TSLA", "JNJ", "PG", "XOM", "JPM",
-     "NVDA", "GSPC" # S&P 500
-     )
-     
-     getSymbols(symbols, from="2019-01-01", to="2025-10-31", periodicity="monthly")
-\end{lstlisting}
+\begin{document}
+\maketitle
+Dec 4, 2025
 
-And then we tried to find the descriptive data:
+\section*{Problem 1(a)}
+Suppose that $X$ follows a geometric distribution,
 
-\begin{lstlisting}
-     # Compute monthly returns
-     rets <- na.omit(do.call(merge, lapply(symbols, function(x) monthlyReturn(Cl(get(x)))) ) )
-     colnames(rets) <- symbols
-     
-     # Split S&P 500 and assets
-     sp500 <- rets[,"GSPC"]
-     assets <- rets[,symbols[symbols!="GSPC"]]
-     
-     # Compute beta for each asset vs market
-     get_beta <- function(asset, market){
-     	cov(asset, market) / var(market)
-     }
-     betas <- sapply(assets, function(x) get_beta(x, sp500))
-     
-     # Compute statistics
-     stats <- data.frame(
-     Mean = apply(assets, 2, mean),
-     StdDev = apply(assets, 2, sd),
-     Skewness = apply(assets, 2, skewness),
-     Kurtosis = apply(assets, 2, kurtosis),
-     Beta = betas
-     )
-     
-     # Get the table
-     
-     print(stats)
-\end{lstlisting}
-		
-		\subsection{Equity Curve}
-		\subsubsection{Descriptions}
+$$
+P(X=k)=p(1-p)^{k}, \quad k=0,1, \ldots,
+$$
 
-The equity curve represents the evolution of the portfolio value over time and is defined as the cumulative effect of period-by-period returns. Let $V_0$ denote the initial capital and $r_t$ the portfolio return at time $t$, then the equity curve is given by
-\[
-V_t = V_0 \prod_{s=1}^{t} (1 + r_s).
-\]
+and assume that we are given an i.i.d. sample $X_{1}, \ldots, X_{n}$.\\
+(a) Find the Fisher Information in a single random variable.
 
-Unlike summary performance statistics such as total return or the Sharpe ratio, the equity curve provides a complete view of the return path of a strategy. It reveals important dynamic characteristics, including return stability, drawdown behavior, and recovery speed after losses.
-
-In particular, the shape of the equity curve allows for an assessment of risk that cannot be captured by average-based metrics alone. Large and persistent drawdowns, high path volatility, or reliance on a small number of extreme return periods can be directly identified from the equity curve. As a result, the equity curve plays a central role in evaluating the practical viability and robustness of a trading strategy.
-
-\includegraphics[max width=\textwidth, center]{equity_curve}
-\subsubsection{Codes}
-\begin{lstlisting}
-     equity <- cumprod(1 + rets)
-     colnames(equity) <- symbols
-     
-     # Plot equity curves (with log scale)
-     chart.TimeSeries(equity,
-     legend.loc="topleft",
-     main="Equity Curve: Growth of $1 Invested (2019–2025)",
-     ylab="$ Value",
-     ylog=TRUE)
-\end{lstlisting}
-
-\subsection{Stationary Test}
-\subsubsection{Descriptions}
-Here I used the ADF (Augmented Dickey--Fuller) test, which is a statistical procedure used to
-determine whether a time series contains a unit root, which corresponds to
-non-stationarity.  
-The test is based on the following regression model:
-
-\[
-\Delta y_t = \alpha + \beta t + \gamma y_{t-1}
-+ \sum_{i=1}^{p} \phi_i\, \Delta y_{t-i} + \varepsilon_t,
-\]
-
-where
 \begin{itemize}
-	\item $y_t$ is the observed time series,
-	\item $\Delta y_t = y_t - y_{t-1}$ is the first difference,
-	\item $\alpha$ is an intercept term,
-	\item $\beta t$ is an optional deterministic trend,
-	\item $\gamma$ is the coefficient of interest,
-	\item the lagged differences $\Delta y_{t-i}$ control for autocorrelation,
-	\item $\varepsilon_t$ is white noise.
+  \item $f(x, \theta)$ is the pmf/pdf of $X$
+  \item (original) $I(\theta)=\mathbb{E}_{\theta}\left(\dot{\ell}(X, \theta)^{2}\right)$, where $\dot{\ell}(X, \theta)=\frac{\partial}{\partial \theta} \log f(X, \theta)$.
+  \item (alternative) $I(\theta)=-\mathbb{E}_{\theta}(\ddot{\ell}(X, \theta)), \ddot{\ell}(X, \theta)=\frac{\partial^{2}}{\partial \theta^{2}} \log f(X, \theta)$
 \end{itemize}
 
-The null and alternative hypotheses are:
-\[
-H_0: \gamma = 0 \quad \text{(unit root, the series is non-stationary)}, 
-\]
-\[
-H_1: \gamma < 0 \quad \text{(no unit root, the series is stationary)}.
-\]
-
-Under the null hypothesis, the process behaves like a random walk and does not
-revert to a stable mean.  
-The test statistic is the $t$-ratio of the estimated coefficient $\hat{\gamma}$.
-Because the distribution under $H_0$ is non-standard, the critical values are
-derived from the Dickey--Fuller distribution rather than the usual $t$-distribution.
-
-A small $p$-value (typically $< 0.05$) provides evidence against $H_0$,
-indicating that the time series is stationary.  
-Conversely, a large $p$-value suggests that the series may contain a unit root
-and should be treated as non-stationary.
-
-The generated results are:
-
-\begin{minipage}{\linewidth}
-	\begin{Verbatim}
-     AAPL       MSFT       AMZN      GOOGL       META       TSLA        JNJ         PG     
-     0.01000000 0.02288985 0.02555763 0.18572361 0.06129735 0.02332262 0.01000000 0.01000000 
-     XOM        JPM        NVDA 
-     0.02893795 0.01810877 0.02327581 
-	\end{Verbatim}
-\end{minipage}
-
-From the result statistics, we can see that except \texttt{GOOGL} and \texttt{META}, all other assets are stationary.
-
-\subsubsection{Codes}
-\begin{lstlisting}
-     rets <- na.omit( do.call(merge, lapply(symbols, function(x) monthlyReturn(Cl(get(x)))) ) )
-     colnames(rets) <- symbols
-     
-     # Asset vs market
-     sp500  <- rets[,"GSPC"]
-     assets <- rets[, symbols[symbols != "GSPC"]]
-     
-     # Do the ADF test
-     library(tseries)
-     
-     adf_pvals <- sapply(colnames(assets), function(sym) {
-     	x <- as.numeric(assets[, sym])
-     	tseries::adf.test(x)$p.value
-     })
-     
-     adf_pvals
-\end{lstlisting}
-
-\subsection{Normality Test}
-\subsubsection{Descriptions}
-As for the normality test, I used the Shapiro--Wilk normality test; it is widely regarded as one of the most powerful tests for normality,
-particularly for small to medium sample sizes.
-
-The test evaluates the hypotheses
-\[
-H_0: \text{the data are drawn from a normal distribution}, \qquad
-H_1: \text{the data are not drawn from a normal distribution}.
-\]
-
-A small $p$-value (typically $p < 0.05$) provides evidence against the null
-hypothesis, indicating that the sample deviates significantly from normality.
-
-The test statistic $W$ is defined as
-\[
-W = \frac{\left( \sum_{i=1}^{n} a_i\, x_{(i)} \right)^2}
-{\sum_{i=1}^{n} (x_i - \overline{x})^2},
-\]
-where
+\section*{Problem 1(a)}
+\section*{Solution:}
 \begin{itemize}
-	\item $x_{(i)}$ are the ordered sample values,
-	\item $\overline{x}$ is the sample mean,
-	\item the coefficients $a_i$ are determined from the expected values
-	of order statistics of a standard normal distribution.
+  \item $\dot{\ell}(X, p)=\frac{\partial}{\partial p} \log p(1-p)^{X}=\frac{1}{p}-\frac{X}{1-p}$.
+  \item $\ddot{\ell}(X, p)=\frac{\partial^{2}}{\partial p^{2}} \log p(1-p)^{X}=-\frac{1}{p^{2}}-\frac{X}{(1-p)^{2}}$.
+  \item $I(p)=\mathbb{E}_{\theta}\left(\dot{\ell}(X, p)^{2}\right)=\operatorname{Var}(\dot{\ell}(X, p))=\operatorname{Var}\left(\frac{X}{1-p}\right)= \frac{1}{(1-p)^{2}} \cdot \frac{1-p}{p^{2}}=\frac{1}{p^{2}(1-p)}$.
+  \item $I(p)=-\mathbb{E}_{\theta}(\ddot{\ell}(X, p))=\frac{1}{p^{2}}+\frac{1}{(1-p)^{2}} \mathbb{E}(X)=\frac{1}{p^{2}}+\frac{1}{(1-p)^{2}} \cdot \frac{1-p}{p}= \frac{1}{p^{2}(1-p)}$.
 \end{itemize}
 
-A value of $W$ close to $1$ indicates that the sample closely follows a normal
-distribution, whereas smaller values of $W$ suggest departures from normality.
-Because the distribution of $W$ under $H_0$ is non-standard, critical values
-and $p$-values are obtained from tabulated or simulated reference distributions.
+Problem 1(b)
 
-\begin{minipage}{\linewidth}
-	\begin{Verbatim}
-     AAPL       MSFT       AMZN      GOOGL       META       TSLA        JNJ         PG
-     0.21248837 0.62165060 0.15510607 0.22833142 0.12889031 0.01970367 0.73330810 0.76560839 
-     XOM        JPM        NVDA 
-     0.02309470 0.59347899  0.92021681 
-	\end{Verbatim}
-\end{minipage}
+Suppose that $X$ follows a geometric distribution,
 
+$$
+P(X=k)=p(1-p)^{k}, \quad k=0,1, \ldots,
+$$
 
-From the result we can say that \texttt{TSLA} and \texttt{XOM} are not normally distributed, and all other assets are normally distributed.
+and assume that we are given an i.i.d. sample $X_{1}, \ldots, X_{n}$.\\
+(b) Find the method of moments estimator of $p$.
 
-Another way is to generate QQ plots to visualize the normality. A quantile--quantile (QQ) plot is a graphical tool used to assess whether a sample of data
-is consistent with a specified theoretical distribution, most commonly the normal distribution.
-The basic idea is to compare the empirical quantiles of the data to the theoretical quantiles
-of the reference distribution.
-
-Let $X_1,\dots,X_n$ denote the observed returns of a given asset, and let
-$X_{(1)} \leq \cdots \leq X_{(n)}$ be the corresponding order statistics.
-For a normal QQ plot, we proceed as follows:
-\begin{enumerate}
-	\item Choose plotting positions $p_i$ for $i=1,\dots,n$, for example
-	\[
-	p_i = \frac{i - 0.5}{n}.
-	\]
-	\item Compute the theoretical quantiles
-	\[
-	q_i = F^{-1}(p_i),
-	\]
-	where $F^{-1}$ is the quantile function of the reference distribution.
-	For a standard normal QQ plot, $F^{-1} = \Phi^{-1}$, the inverse of the standard normal
-	cumulative distribution function.
-	\item Plot the points $(q_i, X_{(i)})$ in the plane and optionally add a reference line,
-	e.g.\ the least-squares line or the line through the first and third quartiles.
-\end{enumerate}
-
-If the sample is approximately drawn from the reference distribution, the points in the QQ plot
-should lie close to a straight line. Systematic deviations from linearity indicate departures
-from the assumed distribution:
+\section*{Solution:}
 \begin{itemize}
-	\item \textbf{Heavy tails:} If the points bend away from the line in both tails
-	(the extremes are farther from the line than the middle), this suggests heavier tails
-	than the normal distribution.
-	\item \textbf{Light tails:} If the points are closer to the line in the tails and deviate
-	in the center, this suggests lighter tails.
-	\item \textbf{Skewness:} An ``S-shaped'' pattern, where one tail lies above the line and
-	the other below, indicates skewness in the data.
+  \item We only need one equation to get the estimator (only one parameter $p$ ).
+  \item $\mathbb{E}(X)=\frac{1-p}{p}$. Let $\bar{X}=\frac{1-p}{p}$, we have $\hat{p}_{\text {MOM }}=\frac{1}{1+\bar{X}}$.
 \end{itemize}
 
-In the context of asset returns, normal QQ plots are commonly used to visually check the
-normality assumption underlying many classical models (e.g.\ mean--variance analysis,
-linear factor models). Assets whose QQ plots exhibit strong curvature or extreme deviations
-in the tails are likely to have non-normal, heavy-tailed return distributions, and may be
-better modeled using, for example, Student-$t$ or skewed distributions.
-
-
-\includegraphics[max width=\textwidth, center]{QQplot1}
-\includegraphics[max width=\textwidth, center]{QQplot2}
-\includegraphics[max width=\textwidth, center]{QQplot3}
-		
-\subsubsection{Codes}
-
-\begin{lstlisting}
-     shapiro_pvals <- sapply(colnames(assets), function(sym) {
-     	x <- as.numeric(assets[, sym])
-     	shapiro.test(x)$p.value
-     })
-     
-     shapiro_pvals
-\end{lstlisting}
-
-To generate QQ plots, we have:
-
-\begin{lstlisting}
-     par(mfrow = c(2, 2))
-     
-     for(sym in c("AAPL", "MSFT", "AMZN", "GOOGL", "META",
-     "TSLA", "JNJ", "PG", "XOM", "JPM",
-     "NVDA")) {
-     	x <- as.numeric(assets[, sym])
-     	qqnorm(x, main = paste(sym, "QQ-plot"))
-     	qqline(x, col = 1)
-     }
-     par(mfrow = c(1,1))
-\end{lstlisting}
-
-\subsection{Outlier Test}
-\subsubsection{Descriptions}
-
-Firstly I used the IOR methods, 
-
-\begin{table}[h!]
-	\centering
-	\caption{Outliers Detected Using the IQR Method}
-	\begin{tabular}{ll}
-		\toprule
-		Asset & Outlier Months (Index) \\
-		\midrule
-		AAPL  & None \\
-		MSFT  & None \\
-		AMZN  & 16,\; 40,\; 43 \\
-		GOOGL & 40 \\
-		META  & 38,\; 46 \\
-		TSLA  & 20 \\
-		JNJ   & None \\
-		PG    & None \\
-		XOM   & 14,\; 15,\; 16,\; 26,\; 37,\; 46 \\
-		JPM   & 15 \\
-		NVDA  & 40 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-Then I used the Z score test, which is common for financial statistics. Here AAPL, MSFT, AMZN, GOOGL, JNJ, PG, NVDA do not have outliers.
-
-\begin{table}[h!]
-	\centering
-	\caption{Outliers Detected Using Z-Score Method}
-	\begin{tabular}{ll}
-		\toprule
-		Asset & Outlier Months (Index) \\
-		\midrule
-		AAPL  & None \\
-		MSFT  & None \\
-		AMZN  & None \\
-		GOOGL & None \\
-		META  & 38, 46 \\
-		TSLA  & 20 \\
-		JNJ   & None \\
-		PG    & None \\
-		XOM   & 15 \\
-		JPM   & 15 \\
-		NVDA  & None \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-
-
-The third methods is MAD (Median Absolute Deviation) method. From the results
-
-
-\begin{table}[h!]
-	\centering
-	\caption{MAD-Based Outlier Detection Across Assets}
-	\begin{tabular}{ll}
-		\toprule
-		Asset & Outlier Months (Index) \\
-		\midrule
-		AAPL  & None \\
-		MSFT  & None \\
-		AMZN  & 16, 40, 43 \\
-		GOOGL & 40, 74 \\
-		META  & 38, 46, 47, 62 \\
-		TSLA  & 13, 20 \\
-		JNJ   & 16 \\
-		PG    & 36 \\
-		XOM   & 14, 15, 16, 21, 23, 26, 37, 46 \\
-		JPM   & 15, 23, 42, 46 \\
-		NVDA  & 5, 40, 53 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-These plots can be aggregated together:
-
-\begin{table}[htbp]
-	\centering
-	\caption{Comparison of Outlier Months Detected by Different Methods}
-	\begin{tabular}{lccc}
-		\hline
-		\textbf{Asset} & \textbf{IQR Method} & \textbf{Z-Score Method} & \textbf{MAD Method} \\
-		\hline
-		AAPL  & None & None & None \\
-		MSFT  & None & None & None \\
-		AMZN  & 16, 40, 43 & None & 16, 40, 43 \\
-		GOOGL & 40 & None & 40, 74 \\
-		META  & 38, 46 & 38, 46 & 38, 46, 47, 62 \\
-		TSLA  & 20 & 20 & 13, 20 \\
-		JNJ   & None & None & 16 \\
-		PG    & None & None & 36 \\
-		XOM   & 14, 15, 16, 26, 37, 46 & 15 & 14, 15, 16, 21, 23, 26, 37, 46 \\
-		JPM   & 15 & 15 & 15, 23, 42, 46 \\
-		NVDA  & 40 & None & 5, 40, 53 \\
-		\hline
-	\end{tabular}
-\end{table}
-
-
-\includegraphics[max width=\textwidth, center]{box_plot}
-
-
-\includegraphics[max width=\textwidth, center]{violin_plot}
-
-
-\subsubsection{Codes}
-
-Codes for IQR methods (ie. Boxplot rule)
-
-\begin{lstlisting}
-     outlier_iqr <- function(x) {
-     	Q1 <- quantile(x, 0.25, na.rm = TRUE)
-     	Q3 <- quantile(x, 0.75, na.rm = TRUE)
-     	IQR <- Q3 - Q1
-     	lower <- Q1 - 1.5 * IQR
-     	upper <- Q3 + 1.5 * IQR
-     	which(x < lower | x > upper)
-     }
-     
-     outliers_IQR <- lapply(as.data.frame(assets), outlier_iqr)
-     outliers_IQR
-\end{lstlisting}
-
-Then the codes for z score is shown as below:
-
-
-\begin{lstlisting}
-	outlier_z <- function(x, threshold = 3) {
-		z <- (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)
-		which(abs(z) > threshold)
-	}
-	
-	outliers_Z <- lapply(as.data.frame(assets), outlier_z)
-	outliers_Z
-\end{lstlisting}
-
-For MAD test
-\begin{lstlisting}
-     outlier_mad <- function(x, threshold = 3.5) {
-     	m <- median(x, na.rm = TRUE)
-     	mad_val <- mad(x, constant = 1, na.rm = TRUE)
-     	z <- abs((x - m) / mad_val)
-     	which(z > threshold)
-     }
-     
-     outliers_MAD <- lapply(as.data.frame(assets), outlier_mad)
-     outliers_MAD
-\end{lstlisting}
-
-For box plot
-\begin{lstlisting}
-     boxplot(assets, main="Boxplot of Monthly Returns", las=2)
-\end{lstlisting}
-
-
-For violin plot
-\begin{lstlisting}
-     library(vioplot)
-     vioplot(as.matrix(assets), names=colnames(assets), las=2)
-\end{lstlisting}
-
-\subsection{Fit Different Distributions}
-\subsubsection{Descriptions}
-Overall the t distribution fits the best.
-\subsubsection{Codes}
-\begin{lstlisting}
-     # Fit Different Distributions on Daily Data
-     daily_best_distribution = pd.DataFrame(columns=["Distribution", "Degree of Freedom", "Mean", "Standard Deviation", "P-value"])
-     
-     for column in daily.columns:
-     data = daily[column]
-     params_norm = stats.norm.fit(data)
-     loc_norm, scale_norm = params_norm # loc means mean, scale means standard deviation
-     params_t = stats.t.fit(data)
-     df_t, loc_t, scale_t = params_t # df means degree of freedom, loc means mean, scale means standard deviation
-     
-     ks_stat_normal, ks_pvalue_norm = stats.kstest(data, 'norm', params_norm)
-     ks_stat_t, ks_pvalue_t = stats.kstest(data, 't', params_t)
-     if ks_pvalue_norm >= ks_pvalue_t: # Higher p-values suggest a better fit or Estimated df >= 30
-     daily_best_distribution.loc[column, "Distribution"] = "Normal"
-     daily_best_distribution.loc[column, "Mean"] = loc_norm
-     daily_best_distribution.loc[column, "Standard Deviation"] = scale_norm
-     daily_best_distribution.loc[column, "P-value"] = ks_pvalue_norm
-     else:
-     daily_best_distribution.loc[column, "Distribution"] = "T"
-     daily_best_distribution.loc[column, "Degree of Freedom"] = int(np.around(df_t))
-     daily_best_distribution.loc[column, "Mean"] = loc_t
-     daily_best_distribution.loc[column, "Standard Deviation"] = scale_t
-     daily_best_distribution.loc[column, "P-value"] = ks_pvalue_t
-     
-     daily_best_distribution
-\end{lstlisting}
-
-\begin{lstlisting}
-     monthly_best_distribution = pd.DataFrame(columns=["Distribution", "Degree of Freedom", "Mean", "Standard Deviation", "P-value"])
-     
-     for column in monthly.columns:
-     data = monthly[column]
-     params_norm = stats.norm.fit(data)
-     loc_norm, scale_norm = params_norm # loc means mean, scale means standard deviation
-     params_t = stats.t.fit(data)
-     df_t, loc_t, scale_t = params_t # df means degree of freedom, loc means mean, scale means standard deviation
-     
-     ks_stat_normal, ks_pvalue_norm = stats.kstest(data, 'norm', params_norm)
-     ks_stat_t, ks_pvalue_t = stats.kstest(data, 't', params_t)
-     if ks_pvalue_norm >= ks_pvalue_t: # Higher p-values suggest a better fit
-     monthly_best_distribution.loc[column, "Distribution"] = "Normal"
-     monthly_best_distribution.loc[column, "Mean"] = loc_norm
-     monthly_best_distribution.loc[column, "Standard Deviation"] = scale_norm
-     monthly_best_distribution.loc[column, "P-value"] = ks_pvalue_norm
-     else:
-     monthly_best_distribution.loc[column, "Distribution"] = "T"
-     monthly_best_distribution.loc[column, "Degree of Freedom"] = int(np.around(df_t))
-     monthly_best_distribution.loc[column, "Mean"] = loc_t
-     monthly_best_distribution.loc[column, "Standard Deviation"] = scale_t
-     monthly_best_distribution.loc[column, "P-value"] = ks_pvalue_t
-     
-     monthly_best_distribution
-\end{lstlisting}
-
-\subsection{Sharpe Ratio}
-\subsubsection{Descriptions}
-
-The Sharpe ratio is a widely used measure of risk-adjusted performance in finance. 
-For an asset or portfolio with excess return $R_{t} - R_{f}$, where $R_{f}$ denotes the 
-risk-free rate, the Sharpe ratio is defined as
-\[
-\text{Sharpe} = 
-\frac{\mathbb{E}[R_{t} - R_{f}]}{\sqrt{\operatorname{Var}(R_{t} - R_{f})}}
-= 
-\frac{\mu - R_{f}}{\sigma},
-\]
-where $\mu$ is the mean return and $\sigma$ is the standard deviation of returns.  
-In empirical applications, the Sharpe ratio is typically computed using sample averages and 
-sample standard deviations, and is often annualized for comparability across assets.
-
-Intuitively, the Sharpe ratio measures the amount of excess return obtained per unit of risk.
-A higher Sharpe ratio indicates more efficient compensation for the volatility borne by the investor.
-Assets or portfolios with Sharpe ratios above~1 are usually interpreted as having strong 
-risk--return characteristics, while values above~2 are considered exceptionally strong.
-Conversely, low Sharpe ratios---even for assets with low volatility---indicate limited reward 
-per unit of risk.
-
-Because the Sharpe ratio penalizes return variability symmetrically, it is most appropriate 
-when returns are approximately normally distributed. In cases where returns exhibit skewness 
-or heavy tails, alternative measures such as the Sortino ratio or expected shortfall 
-may provide a richer assessment of downside risk. Nonetheless, the Sharpe ratio remains one 
-of the most widely implemented benchmarks for evaluating investment performance.
-
-
-\begin{table}[h!]
-	\centering
-	\caption{Annualized Sharpe Ratios of Individual Assets}
-	\label{tab:sharpe}
-	\begin{tabular}{l r}
-		\toprule
-		Asset & Sharpe Ratio \\
-		\midrule
-		AAPL  & 1.2389550 \\
-		MSFT  & 1.2615931 \\
-		AMZN  & 0.6486593 \\
-		GOOGL & 1.0833367 \\
-		META  & 0.7615089 \\
-		TSLA  & 1.3086380 \\
-		JNJ   & 0.2793679 \\
-		PG    & 0.3676322 \\
-		XOM   & 0.3168737 \\
-		JPM   & 0.7490568 \\
-		NVDA  & 2.0744136 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-Table above reports the annualized Sharpe ratios for the eleven assets in the
-sample. The results reveal substantial heterogeneity in risk-adjusted performance across
-sectors.
-
-NVDA exhibits by far the highest Sharpe ratio (2.07), indicating exceptional
-risk-adjusted returns driven by strong mean performance relative to its volatility.
-Other large-cap technology stocks---including TSLA, MSFT, AAPL, and GOOGL---also achieve
-Sharpe ratios above~1, suggesting that these assets delivered highly favorable 
-risk--return tradeoffs over the sample period. In particular, TSLA’s Sharpe ratio (1.31)
-reflects both elevated volatility and periods of unusually strong returns, especially during 
-the post-2019 expansion.
-
-In contrast, defensive assets such as JNJ, PG, and XOM exhibit Sharpe ratios well below~0.5.
-Although these stocks experience relatively low volatility, their mean returns are also modest,
-resulting in comparatively poor risk-adjusted performance. XOM, in particular, shows a low  
-Sharpe ratio (0.32), consistent with the heavy-tailed behavior induced by commodity price
-shocks observed elsewhere in the analysis.
-
-Overall, the evidence suggests that growth-oriented technology firms dominated the 
-risk-adjusted performance ranking during the sample window, while traditional defensive 
-and commodity-linked assets offered limited gains per unit of risk.
-
-\subsubsection{Codes}
-
-\begin{lstlisting}
-     # Compute mean & sd for each asset (monthly)
-     mu_m <- colMeans(assets, na.rm = TRUE)
-     sd_m <- apply(assets, 2, sd, na.rm = TRUE)
-     
-     # Annualized mean and sd
-     mu_a <- (1 + mu_m)^12 - 1
-     sd_a <- sd_m * sqrt(12)
-     
-     # Annualized Sharpe ratio for each asset
-     sharpe_a <- (mu_a - rf_annual) / sd_a
-     
-     sharpe_a
-     
-     
-     asset_stats <- t(apply(assets, 2, stat_fun))
-     asset_stats <- as.data.frame(asset_stats)
-     
-\end{lstlisting}
-
-\subsection{Annualization of the Data}
-\subsubsection{Descriptions}
-
-\begin{table}[ht]
-	\centering
-	\caption{Annualized Mean Returns and Standard Deviations of Assets}
-	\begin{tabular}{lcc}
-		\toprule
-		\textbf{Asset} & \textbf{Mean (Annual)} & \textbf{Std.~Dev (Annual)} \\
-		\midrule
-		AAPL  & 0.3143 & 0.2775 \\
-		MSFT  & 0.2590 & 0.2157 \\
-		AMZN  & 0.1987 & 0.3050 \\
-		GOOGL & 0.2733 & 0.2680 \\
-		META  & 0.2758 & 0.3854 \\
-		TSLA  & 0.6922 & 0.7184 \\
-		JNJ   & 0.0656 & 0.1704 \\
-		PG    & 0.0790 & 0.1685 \\
-		XOM   & 0.1113 & 0.3065 \\
-		JPM   & 0.1953 & 0.2587 \\
-		NVDA  & 0.7126 & 0.4716 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-\subsubsection{Codes}
-
-\begin{lstlisting}
-     library(PerformanceAnalytics)
-     
-     # Monthly mean / std
-     mean_monthly <- apply(assets, 2, mean)
-     sd_monthly   <- apply(assets, 2, sd)
-     
-     # Annualize
-     mean_annual <- mean_monthly * 12
-     sd_annual   <- sd_monthly * sqrt(12)
-     
-     annual_stats <- data.frame(
-     Mean_Annual = mean_annual,
-     StdDev_Annual = sd_annual
-     )
-     print(annual_stats)
-     
-\end{lstlisting}
-
-		\section{Portfolio Theory}
-		\subsection{Construct MVP}
-		\subsubsection{Descriptions}
-		\subsection{Codes}
-		
-		\subsection{Comparison of MVP and other Assets}
-		\subsubsection{Descriptions}
-		\subsubsection{Codes}
-		
-		\subsubsection{Descriptions}
-		
-		\begin{table}[h!]
-			\centering
-			\caption{Portfolio Weights: No-Short MVP, Short-Allowed MVP, and Tangency Portfolio}
-			\begin{tabular}{lcccc}
-				\toprule
-				Asset & Asset & $w_{\text{MVP,noshort}}$ & $w_{\text{MVP,short}}$ & $w_{\text{Tangency}}$ \\
-				\midrule
-				AAPL  & AAPL  & 0.0000 & -0.1650 & 0.2570 \\
-				MSFT  & MSFT  & 0.0512 & 0.1177  & 0.4101 \\
-				AMZN  & AMZN  & 0.0566 & 0.1564  & -0.9761 \\
-				GOOGL & GOOGL & 0.1217 & 0.1422  & 0.3640 \\
-				META  & META  & 0.0000 & -0.0769 & -0.0607 \\
-				TSLA  & TSLA  & 0.0000 & -0.0196 & 0.1878 \\
-				JNJ   & JNJ   & 0.3225 & 0.3659  & -0.1525 \\
-				PG    & PG    & 0.3921 & 0.4195  & 0.1348 \\
-				XOM   & XOM   & 0.0435 & 0.0177  & 0.1087 \\
-				JPM   & JPM   & 0.0124 & 0.0434  & -0.0227 \\
-				NVDA  & NVDA  & 0.0000 & -0.0012 & 0.7494 \\
-				\bottomrule
-			\end{tabular}
-		\end{table}
-		
-		
-		\begin{table}[h!]
-			\centering
-			\caption{Portfolio Performance: MVP (No Short), MVP (Short Allowed), and Tangency Portfolio}
-			\begin{tabular}{lccccccc}
-				\toprule
-				Portfolio & mean\_m & sd\_m & mean\_a & sd\_a & VaR\_5\_m & ES\_5\_m & Sharpe\_a \\
-				\midrule
-				MVP\_noshort & 0.0103 & 0.0379 & 0.1315 & 0.1314 & -0.0464 & -0.0618 & 0.8488 \\
-				MVP\_short   & 0.0039 & 0.0593 & 0.0476 & 0.2055 & -0.0910 & -0.1088 & 0.1344 \\
-				Tangency     & 0.0556 & 0.1211 & 0.9139 & 0.4194 & -0.1263 & -0.1799 & 2.1312 \\
-				\bottomrule
-			\end{tabular}
-		\end{table}
-		
-		\subsubsection{Codes}
-		
-		\section{Asset Allocation}
-		
-		\subsection{Without Risk Free Assets}
-		
-		
-		\subsection{With Risk Free Assets}
-		
-		\subsubsection{Descriptions}
-		Let $R_f$ denote the annualized risk--free rate (T-bill), and let the tangency portfolio
-		have annualized mean return $\mu_T$ and standard deviation $\sigma_T$, with asset weights
-		$\{w_i^T\}_{i=1}^{11}$ over the risky assets
-		(AAPL, MSFT, \dots, NVDA).  Consider a portfolio that invests a fraction
-		$y$ of wealth in the tangency portfolio and the remaining fraction $(1-y)$ in
-		the risk--free asset.  The annualized expected return and standard deviation of this
-		two-fund portfolio are
-		\[
-		\mu_P(y) = (1-y)\,R_f + y\,\mu_T,
-		\qquad
-		\sigma_P(y) = y\,\sigma_T,
-		\]
-		because the risk--free asset has zero variance and zero covariance with the tangency portfolio.
-		
-		\paragraph{Choice of $y$ for a 6\% target return.}
-		To obtain a target annual return of $6\%$, we choose $y$ such that
-		\[
-		\mu_P(y^*) = 0.06
-		\quad\Longrightarrow\quad
-		(1-y^*)\,R_f + y^*\,\mu_T = 0.06.
-		\]
-		Solving for $y^*$ gives
-		\[
-		y^* = \frac{0.06 - R_f}{\mu_T - R_f}.
-		\]
-		Under the no-short-sales constraint we require $0 \le y^* \le 1$, which is satisfied
-		whenever the target return lies between the risk--free rate and the tangency portfolio
-		return, i.e.\ $R_f \le 0.06 \le \mu_T$.
-		
-		\paragraph{Dollar amounts invested in each asset and in T-bills.}
-		Let initial wealth be $W_0 = 100{,}000$.  The amount invested in the risk--free asset is
-		\[
-		W_f = (1-y^*)\,W_0,
-		\]
-		and the dollar amount allocated to risky asset $i$ is
-		\[
-		W_i = y^*\,W_0\,w_i^T, \qquad i=1,\dots,11.
-		\]
-		By construction we have $\sum_{i=1}^{11} W_i + W_f = W_0$.
-		
-		\paragraph{Value-at-Risk comparison}
-		Assuming (approximately) normal returns, the $\alpha$-level \emph{return} VaR of the
-		tangency portfolio (risky-assets-only allocation) is
-		\[
-		\mathrm{VaR}_\alpha^{(T)} 
-		= \mu_T + z_\alpha \sigma_T,
-		\]
-		where $z_\alpha$ is the $\alpha$-quantile of the standard normal distribution
-		(e.g.\ $z_{0.05} \approx -1.645$).  For the combined T-bill + tangency portfolio with
-		weight $y^*$ in the tangency portfolio, the corresponding VaR is
-		\[
-		\mathrm{VaR}_\alpha^{(P)} 
-		= \mu_P(y^*) + z_\alpha \sigma_P(y^*)
-		= \bigl((1-y^*)R_f + y^* \mu_T\bigr)
-		+ z_\alpha \, y^* \sigma_T.
-		\]
-		In dollar terms, the loss-based VaR over one year is
-		\[
-		\mathrm{VaR}^{\text{\$}}_\alpha = - W_0 \,\mathrm{VaR}_\alpha^{(\cdot)}.
-		\]
-		
-		Because $0 < y^* < 1$, we have $\sigma_P(y^*) = y^* \sigma_T < \sigma_T$, so the
-		magnitude of the VaR for the target-return portfolio is strictly smaller than that of
-		the risky-assets-only tangency allocation:
-		\[
-		\bigl|\mathrm{VaR}_\alpha^{(P)}\bigr|
-		\;<\;
-		\bigl|\mathrm{VaR}_\alpha^{(T)}\bigr|,
-		\]
-		provided the same confidence level and horizon are used.  Hence, by mixing the tangency
-		portfolio with T-bills to achieve a 6\% target return, the investor reduces downside risk
-		relative to holding the tangency portfolio alone.
-				
-		\section{Principal Component Analysis}
-		
-		\subsection{Correlation Matrix}
-		
-		\subsubsection{Descriptions}
-		
-		For generating correlation matrix, we get the correlation matrix generated as below:
-		
-		\begin{table}[htbp]
-			\centering
-			\caption{Correlation Matrix of Assets}
-			\resizebox{\textwidth}{!}{
-				\begin{tabular}{lccccccccccc}
-					\toprule
-					& AAPL & MSFT & AMZN & GOOGL & META & TSLA & JNJ & PG & XOM & JPM & NVDA \\
-					\midrule
-					AAPL  & 1.0000000 & 0.5863039 & 0.60825481 & 0.49623262 & 0.34410064 & 0.64668256 & 0.40988295 & 0.36571684 & 0.21676561 & 0.32158080 & 0.53012768 \\
-					MSFT  & 0.5863039 & 1.0000000 & 0.65913657 & 0.55706624 & 0.56945994 & 0.47416466 & 0.24796009 & 0.30849851 & 0.11696617 & 0.33709045 & 0.65147796 \\
-					AMZN  & 0.60825481 & 0.65913657 & 1.0000000 & 0.59683797 & 0.50329704 & 0.58442493 & 0.09341286 & 0.05761213 & 0.06809702 & 0.23987985 & 0.60740706 \\
-					GOOGL & 0.49623262 & 0.55706624 & 0.59683797 & 1.0000000 & 0.39564282 & 0.45825661 & 0.11062309 & 0.05654949 & 0.15590236 & 0.37735126 & 0.49039013 \\
-					META  & 0.34410064 & 0.56945994 & 0.50329704 & 0.39564282 & 1.0000000 & 0.29244560 & 0.18490252 & 0.27500197 & -0.01301193 & 0.35426955 & 0.52086588 \\
-					TSLA  & 0.64668256 & 0.47416466 & 0.58442493 & 0.45825661 & 0.29244560 & 1.0000000 & 0.17291130 & 0.03234005 & 0.05421201 & 0.22991528 & 0.41251101 \\
-					JNJ   & 0.40988295 & 0.24796009 & 0.09341286 & 0.11062309 & 0.18490252 & 0.17291130 & 1.0000000 & 0.43172004 & 0.38737879 & 0.35842446 & 0.05109294 \\
-					PG    & 0.36571684 & 0.30849851 & 0.05761213 & 0.05654949 & 0.27500197 & 0.03234005 & 0.43172004 & 1.0000000 & 0.15928922 & 0.21716270 & 0.08745125 \\
-					XOM   & 0.21676561 & 0.11696617 & 0.06809702 & 0.15590236 & -0.01301193 & 0.05421201 & 0.38737879 & 0.15928922 & 1.0000000 & 0.52309187 & 0.05929966 \\
-					JPM   & 0.32158080 & 0.33709045 & 0.23987985 & 0.37735126 & 0.35426955 & 0.22991528 & 0.35842446 & 0.21716270 & 0.52309187 & 1.0000000 & 0.33439732 \\
-					NVDA  & 0.53012768 & 0.65147796 & 0.60740706 & 0.49039013 & 0.52086588 & 0.41251101 & 0.05109294 & 0.08745125 & 0.05929966 & 0.33439732 & 1.0000000 \\
-					\bottomrule
-				\end{tabular}
-			}
-		\end{table}
-		
-		We can also use an alternative way to plot the correlation matrix, as shown below:
-
-
-\includegraphics[max width=0.7\textwidth, center]{corrematrix}
-
-We can see that the correlation matrix reveals that the highest correlation occurs between \texttt{MSFT} and \texttt{AMZN}, with a correlation of $0.6591$. In contrast, the lowest correlation is observed between \texttt{META} and \texttt{XOM}, with a value of $-0.013$, indicating almost no linear co-movement between these two assets.
-
-
-\subsubsection{Codes}
-
-
-	\begin{lstlisting}
-	R <- cor(assets, use = "pairwise.complete.obs")
-	
-	R
-\end{lstlisting}
-
-\begin{lstlisting}
-	corrplot(R, method = "color", type = "upper",
-	tl.col = "black", tl.cex = 0.8,
-	addCoef.col = "black")
-\end{lstlisting}
-
-\begin{lstlisting}
-     # Keep only the upper triangle (exclude diagonal and lower triangle)
-     R_upper <- R
-     R_upper[lower.tri(R_upper, diag = TRUE)] <- NA
-     
-     # Find the pair with the HIGHEST correlation
-     max_pos <- which(R_upper == max(R_upper, na.rm = TRUE), arr.ind = TRUE)
-     
-     # In case there are multiple pairs with the same max correlation,
-     # use the first one
-     max_row <- max_pos[1, "row"]
-     max_col <- max_pos[1, "col"]
-     
-     max_name_1 <- rownames(R)[max_row]
-     max_name_2 <- colnames(R)[max_col]
-     max_value  <- R[max_row, max_col]
-     
-     cat("Highest correlation: ",
-     max_name_1, "-",
-     max_name_2,
-     " = ", round(max_value, 4), "\n")
-     
-     # Find the pair with the LOWEST correlation
-     
-     min_pos <- which(R_upper == min(R_upper, na.rm = TRUE), arr.ind = TRUE)
-     
-     min_row <- min_pos[1, "row"]
-     min_col <- min_pos[1, "col"]
-     
-     min_name_1 <- rownames(R)[min_row]
-     min_name_2 <- colnames(R)[min_col]
-     min_value  <- R[min_row, min_col]
-     
-     cat("Lowest correlation: ",
-     min_name_1, "-",
-     min_name_2,
-     " = ", round(min_value, 4), "\n")
-\end{lstlisting}
-
-\subsection{Perform PCA}
-
-\subsubsection{Descriptions}
-
-
-To perform PCA, we have:
-
-\begin{table}[htbp]
-	\centering
-	\caption{PCA Loadings for the First Three Principal Components}
-	\resizebox{0.3\textwidth}{!}{
-		\begin{tabular}{lccc}
-			\toprule
-			\textbf{Asset} & \textbf{PC1} & \textbf{PC2} & \textbf{PC3} \\
-			\midrule
-			AAPL & 0.377 & -0.053 & -0.096 \\
-			MSFT & 0.388 & 0.089 & -0.155 \\
-			AMZN & 0.370 & 0.263 & 0.061 \\
-			GOOGL & 0.335 & 0.144 & 0.255 \\
-			META & 0.308 & 0.085 & -0.276 \\
-			TSLA & 0.315 & 0.174 & 0.111 \\
-			JNJ  & 0.184 & -0.522 & -0.178 \\
-			PG   & 0.161 & -0.398 & -0.621 \\
-			XOM  & 0.131 & -0.510 & 0.505 \\
-			JPM  & 0.259 & -0.350 & 0.369 \\
-			NVDA & 0.347 & 0.220 & 0.028 \\
-			\bottomrule
-		\end{tabular}
-	}
-\end{table}
-
-And:
-
-\begin{table}[htbp]
-	\centering
-	\caption{Importance of Principal Components}
-	\resizebox{\textwidth}{!}{
-		\begin{tabular}{lccccccccccc}
-			\toprule
-			& \textbf{PC1} & \textbf{PC2} & \textbf{PC3} & \textbf{PC4} & \textbf{PC5} & 
-			\textbf{PC6} & \textbf{PC7} & \textbf{PC8} & \textbf{PC9} & \textbf{PC10} & \textbf{PC11} \\
-			\midrule
-			\textbf{Standard deviation} 
-			& 2.1458 & 1.3269 & 1.04017 & 0.95869 & 0.73010 
-			& 0.70475 & 0.67358 & 0.62469 & 0.54867 & 0.51643 & 0.43890 \\
-			\textbf{Proportion of Variance} 
-			& 0.4186 & 0.1601 & 0.09836 & 0.08355 & 0.04846 
-			& 0.04515 & 0.04125 & 0.03548 & 0.02737 & 0.02425 & 0.01751 \\
-			\textbf{Cumulative Proportion}
-			& 0.4186 & 0.5786 & 0.67699 & 0.76054 & 0.80900 
-			& 0.85415 & 0.89540 & 0.93088 & 0.95824 & 0.98249 & 1.00000 \\
-			\bottomrule
-		\end{tabular}
-	}
-\end{table}
-
-\subsubsection{Codes}
-\begin{lstlisting}
-	pca <- prcomp(assets, scale. = TRUE)
-	summary(pca)
-	
-	# Loading of each asset in the principal components
-	
-	round(pca$rotation[, 1:3], 3)
-\end{lstlisting}
-
-\subsection{Factor Analysis}
-
-\subsubsection{Descriptions}
-
-We run the factor analysis, and get results as below:
-
-
-	\includegraphics[max width=0.9\linewidth]{factoranalysis}
-
-
-The parallel analysis compares the eigenvalues from the actual correlation matrix 
-with those obtained from randomly generated data of the same dimension. 
-As shown in the figure, only the first two factors have eigenvalues 
-that exceed the corresponding simulated eigenvalues. This indicates that these 
-two factors represent systematic covariance in the data, while the remaining 
-factors fall below the random-data threshold and are therefore attributable 
-to noise. Consequently, a two-factor structure is appropriate for subsequent 
-factor analysis.
-
-\subsubsection{Codes}
-
-\begin{lstlisting}
-	library(psych)
-	fa.parallel(assets, fa="fa")   # Advised number of factors
-\end{lstlisting}
-
-		\section{Risk Management}
-		
-		\subsection{Normal and Non-parameteric}
-		\subsubsection{Descriptions}
-		
-		
-		\subsubsection{Codes}
-	\begin{lstlisting}
-     ## 0. Setup parameters & clean data
-     
-     investment <- 100000          # Initial investment amount
-     alpha      <- 0.95            # Confidence level 95% (tail probability = 5%)
-     assets_ret <- na.omit(assets) # Remove any missing values
-     
-     asset_names <- colnames(assets_ret)
-     
-     # Result table: one row per asset
-     results <- data.frame(
-     Asset    = asset_names,
-     VaR_norm = NA_real_,  # Normal-method VaR (loss in USD)
-     ES_norm  = NA_real_,  # Normal-method ES  (loss in USD)
-     VaR_hist = NA_real_,  # Historical (nonparametric) VaR
-     ES_hist  = NA_real_   # Historical (nonparametric) ES
-     )
-     
-     ## 1. Compute Loss, VaR, and ES for each asset
-     
-     for (j in seq_along(asset_names)) {
-     	r_j <- as.numeric(assets_ret[, j])          # Monthly returns of the asset
-     	L_j <- -investment * r_j                    # Monthly loss for a long position
-     	
-     	## --- Normal-method VaR/ES (assuming loss ~ Normal) ---
-     	mu_L <- mean(L_j)                           # Mean loss
-     	sd_L <- sd(L_j)                             # Standard deviation of loss
-     	
-     	# 5% tail → 95% quantile of loss
-     	VaR_norm_j <- mu_L + sd_L * qnorm(alpha)    
-     	
-     	# Closed-form ES for the Normal distribution
-     	ES_norm_j <- mu_L + sd_L * dnorm(qnorm(alpha)) / (1 - alpha)
-     	
-     	## --- Historical (nonparametric) VaR/ES ---
-     	VaR_hist_j <- as.numeric(quantile(L_j, probs = alpha, type = 7))
-     	ES_hist_j  <- mean(L_j[L_j >= VaR_hist_j]) # Average of losses in the tail
-     	
-     	## Store results
-     	results$VaR_norm[j] <- VaR_norm_j
-     	results$ES_norm[j]  <- ES_norm_j
-     	results$VaR_hist[j] <- VaR_hist_j
-     	results$ES_hist[j]  <- ES_hist_j
-     }
-     
-     
-     ## 2. Inspect results
-     
-     results_VaR_norm <- results[order(results$VaR_norm, decreasing = TRUE), ]
-     results_ES_norm  <- results[order(results$ES_norm,  decreasing = TRUE), ]
-     results_VaR_hist <- results[order(results$VaR_hist, decreasing = TRUE), ]
-     results_ES_hist  <- results[order(results$ES_hist,  decreasing = TRUE), ]
-     
-     head(results_VaR_norm)   # Largest Normal VaR
-     head(results_ES_norm)    # Largest Normal ES
-     head(results_VaR_hist)   # Largest Historical VaR
-     head(results_ES_hist)    # Largest Historical ES
-     
-     ## 3. Identify assets with highest & lowest VaR / ES
-     
-     # Normal VaR
-     max_VaR_norm_asset <- results$Asset[which.max(results$VaR_norm)]
-     min_VaR_norm_asset <- results$Asset[which.min(results$VaR_norm)]
-     
-     # Normal ES
-     max_ES_norm_asset <- results$Asset[which.max(results$ES_norm)]
-     min_ES_norm_asset <- results$Asset[which.min(results$ES_norm)]
-     
-     # Historical VaR
-     max_VaR_hist_asset <- results$Asset[which.max(results$VaR_hist)]
-     min_VaR_hist_asset <- results$Asset[which.min(results$VaR_hist)]
-     
-     # Historical ES
-     max_ES_hist_asset <- results$Asset[which.max(results$ES_hist)]
-     min_ES_hist_asset <- results$Asset[which.min(results$ES_hist)]
-     
-     cat("Normal VaR 95%: highest =", max_VaR_norm_asset,
-     ", lowest =", min_VaR_norm_asset, "\n")
-     cat("Normal ES 95%: highest =", max_ES_norm_asset,
-     ", lowest =", min_ES_norm_asset, "\n")
-     
-     cat("Historical VaR 95%: highest =", max_VaR_hist_asset,
-     ", lowest =", min_VaR_hist_asset, "\n")
-     cat("Historical ES 95%: highest =", max_ES_hist_asset,
-     ", lowest =", min_ES_hist_asset, "\n")
-     
-     ## Print the full table
-     results
-	\end{lstlisting}
-		
-		\subsection{Bootstrap}
-		
-		\section{Copulas}
-		\subsection{Run Different Corpulas}
-		\subsubsection{Descriptions}
-		
-		In multivariate portfolio analysis, we are interested in the joint
-		distribution of asset returns,
-		\[
-		F_{R_1, R_2, \ldots, R_n}(r_1, r_2, \ldots, r_n),
-		\]
-		since it determines how assets co-move, how diversification behaves, and
-		how portfolio risk (such as VaR and ES) is transmitted across markets.
-		Real-world return distributions, however, are typically non-normal: they
-		exhibit skewness, heavy tails, and nonlinear dependence that cannot be
-		captured using linear correlation alone.
-		
-		Copulas provide a flexible framework for modeling multivariate dependence
-		by separating the marginal distributions from the dependence structure.
-		By Sklar's Theorem, any joint distribution can be written as
-		\[
-		F_{R_1,\ldots,R_n}(r_1,\ldots,r_n)
-		= C\!\left( F_1(r_1), \ldots, F_n(r_n) \right),
-		\]
-		where $F_i$ are the marginal distributions and
-		$C:[0,1]^n \to [0,1]$ is a copula that captures the dependence among the
-		uniform variables $U_i = F_i(R_i)$.
-		
-		This decomposition has several advantages in financial modeling:
-		\begin{itemize}
-			\item {Flexible marginals:}
-			each asset's return distribution can be modeled using an appropriate
-			parametric family (e.g., normal, $t$, skew-$t$, Laplace), while the
-			copula combines them into a coherent multivariate structure.
-			
-			\item {Nonlinear dependence:}
-			copulas allow dependence beyond linear correlation, capturing
-			asymmetric relationships and regimes in which assets move together more
-			strongly.
-			
-			\item {Tail dependence:}
-			certain copulas, such as the $t$-copula or Archimedean copulas,
-			capture the increased probability of joint crashes that is observed
-			empirically but missed by the Gaussian copula.
-			
-			\item {Improved risk estimation:}
-			modeling realistic joint behavior produces more accurate estimates of
-			portfolio VaR and ES, particularly during stressed market conditions.
-		\end{itemize}
-		
-		In summary, using copulas for the joint distribution of returns allows
-		the analyst to model each asset's distribution separately while capturing
-		the complex dependence structure observed in financial markets. This
-		approach is especially valuable for representing nonlinear co-movements
-		and joint tail risk that traditional multivariate normal models cannot
-		adequately describe.
-		
-		
-		
-		\subsubsection{Codes}
-\begin{lstlisting}
-     library(copula)
-     # Merge all assets
-     rets <- do.call(merge, lapply(symbols, function(sym) {
-     	monthlyReturn(Cl(get(sym)))
-     }))
-     colnames(rets) <- symbols
-     
-     
-     # Transfer to normal matrix
-     R_mat <- coredata(rets)          
-     colnames(R_mat) <- symbols
-     d <- ncol(R_mat)                  # dimension = 12
-     
-     # pseudo-observations: U ~ U(0,1)
-     U <- pobs(R_mat)                  # Matrix with same dimensions
-     
-     # Gaussian copula
-     cop_norm <- normalCopula(dim = d, dispstr = "un") 
-     fit_norm <- fitCopula(cop_norm, U, method = "ml")
-     
-     # t copula
-     cop_t <- tCopula(dim = d, dispstr = "un")
-     fit_t  <- fitCopula(cop_t, U, method = "ml")
-     
-     # Clayton copula (lower tail related)
-     cop_clay <- claytonCopula(dim = d)
-     fit_clay <- fitCopula(cop_clay, U, method = "ml")
-     
-     # Gumbel copula (upper tail related)
-     cop_gum  <- gumbelCopula(dim = d)
-     fit_gum  <- fitCopula(cop_gum, U, method = "ml")
-     
-     # Frank copula (symmetric)
-     cop_frank <- frankCopula(dim = d)
-     fit_frank <- fitCopula(cop_frank, U, method = "ml")
-\end{lstlisting}
-		
-		
-		\subsection{Find the Best Fit}
-		
-		To determine which probability distribution provides the best fit for the
-		return series of each asset, we compare several candidate models using
-		information criteria.  Let $\ell(\hat{\theta})$ denote the maximized
-		log-likelihood of a fitted model, $k$ the number of parameters, and $n$
-		the sample size.  The Akaike Information Criterion (AIC) and the Bayesian
-		Information Criterion (BIC) are defined respectively as
-		\[
-		\mathrm{AIC}
-		= -2\,\ell(\hat{\theta}) + 2k,
-		\qquad
-		\mathrm{BIC}
-		= -2\,\ell(\hat{\theta}) + k \log n.
-		\]
-		
-		Both criteria penalize model complexity: the first term rewards models
-		with higher likelihood, whereas the second term penalizes additional
-		parameters in order to avoid overfitting.  The BIC imposes a stronger
-		penalty than the AIC, especially for large sample sizes.
-		
-		When comparing competing models fitted to the same dataset, the preferred
-		model is the one that minimizes either AIC or BIC.  More formally, for a
-		set of fitted distributions $\{M_1, M_2, \ldots, M_m\}$ with information
-		criteria $\{\mathrm{AIC}_1, \mathrm{AIC}_2, \ldots, \mathrm{AIC}_m\}$,
-		the best-fitting model under the AIC is
-		\[
-		M^{\ast}_{\mathrm{AIC}}
-		= \arg\min_{M_j} \; \mathrm{AIC}_j,
-		\]
-		and similarly for the BIC:
-		\[
-		M^{\ast}_{\mathrm{BIC}}
-		= \arg\min_{M_j} \; \mathrm{BIC}_j.
-		\]
-		
-		In our analysis, each asset's return distribution was fitted using several
-		candidate models (e.g., normal, Student's $t$, logistic, etc.), and the
-		corresponding AIC and BIC values were computed.  The model with the
-		smallest AIC/BIC for that asset is therefore selected as the best
-		representation of its marginal return distribution, balancing goodness of
-		fit and model complexity.
-		
-		\begin{minipage}{\linewidth}
-			\begin{Verbatim}
-      Gaussian         t   Clayton    Gumbel     Frank 
-     -471.3619 -495.7822 -270.2687 -208.7697 -211.9376 
-     Gaussian         t   Clayton    Gumbel     Frank 
-     -312.5184 -334.5320 -267.8620 -206.3629 -209.5309 
-     Gaussian        t  Clayton   Gumbel    Frank 
-     301.6809 314.8911 136.1343 105.3848 106.9688 
-			\end{Verbatim}
-		\end{minipage}
-	
-	\subsubsection{Codes}
-\begin{lstlisting}
-     cop_fits <- list(
-     Gaussian = fit_norm,
-     t        = fit_t,
-     Clayton  = fit_clay,
-     Gumbel   = fit_gum,
-     Frank    = fit_frank
-     )
-     
-     AIC_values <- sapply(cop_fits, AIC)
-     BIC_values <- sapply(cop_fits, BIC)
-     logLik_values <- sapply(cop_fits, logLik)
-     
-     AIC_values
-     BIC_values
-     logLik_values
-     
-     # Find the smallest AIC/BIC
-     best_AIC_copula <- names(which.min(AIC_values))
-     best_BIC_copula <- names(which.min(BIC_values))
-\end{lstlisting}
-	\end{document}
-	
+Problem 1(c)\\
+Suppose that $X$ follows a geometric distribution,
+
+$$
+P(X=k)=p(1-p)^{k}, \quad k=0,1, \ldots,
+$$
+
+and assume that we are given an i.i.d. sample $X_{1}, \ldots, X_{n}$.\\
+(c) Find the MLE of $p$.
+
+\section*{Solution:}
+\begin{itemize}
+  \item Likelihood: $L_{n}(p)=\prod_{i=1}^{n} p(1-p)^{X_{i}}$.
+  \item Log-likelihood: $\log L_{n}(p)=\sum_{i=1}^{n}\left(\log p+X_{i} \log (1-p)\right)$.
+  \item Let $\frac{\partial}{\partial p} \log L_{n}(p)=0$, we have $\frac{n}{p}-\frac{\sum_{i=1}^{n} X_{i}}{1-p}=0 \Rightarrow \hat{p}_{\text {MLE }}=\frac{1}{1+\bar{X}}$.
+  \item Check: $\frac{\partial^{2}}{\partial p^{2}} \log L_{n}(p)=-\frac{n}{p}-\frac{\sum_{i=1}^{n} X_{i}}{(1-p)^{2}}<0$.
+\end{itemize}
+
+\section*{Problem 1(d)}
+Suppose that $X$ follows a geometric distribution,
+
+$$
+P(X=k)=p(1-p)^{k}, \quad k=0,1, \ldots,
+$$
+
+and assume that we are given an i.i.d. sample $X_{1}, \ldots, X_{n}$.\\
+(d) Find the asymptotic distribution of the MLE.
+
+\section*{Solution:}
+$$
+\sqrt{n}\left(\hat{p}_{\mathrm{MLE}}-p\right) \xrightarrow{d} \mathcal{N}\left(0, I(p)^{-1}\right)=\mathcal{N}\left(0, p^{2}(1-p)\right) .
+$$
+
+\section*{Problem 1(e)}
+Suppose that $X$ follows a geometric distribution,
+
+$$
+P(X=k)=p(1-p)^{k}, \quad k=0,1, \ldots,
+$$
+
+and assume that we are given an i.i.d. sample $X_{1}, \ldots, X_{n}$.\\
+(e) Let $p$ have a uniform prior distribution on $[0,1]$. What is the posterior distribution of $p$ ? What is the posterior mean?
+
+\section*{Concept:}
+\begin{itemize}
+  \item Joint density function: $f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right)$ (function of $\left.x_{1}, \ldots, x_{n}\right)$
+  \item Prior distribution: $\xi(\theta)$ (function of $\theta$ )
+  \item Posterior distribution: $\xi(\theta \mid \boldsymbol{x})=\frac{f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta)}{\int f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta) \mathrm{d} \theta}$ (function of $\theta$ )
+\end{itemize}
+
+Problem 1(e)
+
+\begin{itemize}
+  \item $\xi(\theta \mid \boldsymbol{x})$ is a density function of $\theta$ since
+\end{itemize}
+
+$$
+\int \frac{f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta)}{\int f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta) \mathrm{d} \theta} \mathrm{~d} \theta=1 .
+$$
+
+\begin{itemize}
+  \item It might not be easy to calculate the normalizing constant $\int f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta) \mathrm{d} \theta$, but in many cases we do not need to calculate it.
+  \item Common distribution families:
+  \item Gamma: $\frac{\lambda^{\alpha}}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x} 1_{(0, \infty)}(x)$
+  \item Beta: $\frac{1}{B(\alpha, \beta)} x^{\alpha-1}(1-x)^{\beta-1} \mathbb{1}_{(0,1)}(x)$
+  \item Normal: $\frac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left(-\frac{(x-\mu)^{2}}{2 \sigma^{2}}\right) 1_{(-\infty,+\infty)}(x)$
+  \item Once the red part and the orange part are determined, the blue part (normalizing constant) is also determined.
+\end{itemize}
+
+Problem 1(e)
+
+\begin{itemize}
+  \item $\xi(\theta \mid \boldsymbol{x})=\frac{f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta)}{\int f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta) \mathrm{d} \theta} \propto f\left(x_{1} \mid \theta\right) \ldots f\left(x_{n} \mid \theta\right) \xi(\theta)$.
+  \item $f\left(x_{1} \mid p\right) \ldots f\left(x_{n} \mid p\right)=\prod_{i=1}^{n} p(1-p)^{X_{i}}$.
+  \item $\xi(p)=\mathbf{1}_{(0,1)}(p)$.
+  \item $\xi(p \mid \boldsymbol{x}) \propto f\left(x_{1} \mid p\right) \ldots f\left(x_{n} \mid p\right) \xi(p)=p^{n}(1-p)^{\sum_{i=1}^{n} X_{i}} \mathbb{1}_{(0,1)}(x)$.
+  \item $\xi(p \mid x) \sim \operatorname{Beta}\left(n+1, \sum_{i=1}^{n} X_{i}+1\right)$
+  \item Posterior mean $\mathbb{E} \xi(p \mid \boldsymbol{x})=\frac{n+1}{n+1+\sum_{i=1}^{n} X_{i}+1}$.
+\end{itemize}
+
+\section*{Problem 2}
+Suppose that $Y \sim N\left(0, \sigma^{2}\right)$, where $\sigma^{2}$ is unknown. What is the distribution of $Y^{2} / \sigma^{2}$. Use the pivotal quantity $Y^{2} / \sigma^{2}$ to find:\\
+(a) a $95 \%$ confidence interval for $\sigma^{2}$.\\
+(b) a $95 \%$ upper confidence limit for $\sigma^{2}$.\\
+(c) a $95 \%$ lower confidence limit for $\sigma^{2}$.
+
+\section*{Problem 2}
+(a) Observe that $Y^{2} / \sigma^{2} \sim \chi_{1}^{2}$. Thus,
+
+$$
+\begin{aligned}
+0.95 & =\mathbb{P}\left(q\left(\chi_{1}^{2}, 0.025\right) \leq \frac{Y^{2}}{\sigma^{2}} \leq q\left(\chi_{1}^{2}, 0.975\right)\right) \\
+& =\mathbb{P}\left(\frac{Y^{2}}{q\left(\chi_{1}^{2}, 0.975\right)} \leq \sigma^{2} \leq \frac{Y^{2}}{q\left(\chi_{1}^{2}, 0.025\right)}\right) .
+\end{aligned}
+$$
 
+(b)
+
+$$
+0.95=\mathbb{P}\left(q\left(\chi_{1}^{2}, 0.05\right) \leq \frac{Y^{2}}{\sigma^{2}}\right)=\mathbb{P}\left(\sigma^{2} \leq \frac{Y^{2}}{q\left(\chi_{1}^{2}, 0.05\right)}\right) .
+$$
+
+(c)
+
+$$
+0.95=\mathbb{P}\left(\frac{Y^{2}}{\sigma^{2}} \leq q\left(\chi_{1}^{2}, 0.95\right)\right)=\mathbb{P}\left(\sigma^{2} \geq \frac{Y^{2}}{q\left(\chi_{1}^{2}, 0.95\right)}\right) .
+$$
+
+\section*{Problem 3}
+Let $Y_{1}, \ldots, Y_{n}$ denote a random sample of size $n$ from a population with a uniform distribution on the interval $[0, \theta]$. Let $Y_{(n)}=\max \left\{Y_{1}, \ldots Y_{n}\right\}$. Let $U=(1 / \theta) Y_{(n)}$.\\
+(a) Find the distribution function of $U$.\\
+(b) Is $U$ a pivotal quantity? Use this, or otherwise, find a $95 \%$ lower confidence bound for $\theta$.
+
+Pivotal quantity: a random variable whose distribution does not depend on $\theta$.
+
+\section*{Problem 3}
+(a) Let $G_{n}$ be the c.d.f. of $Y_{(n)}$. Then,
+
+$$
+\begin{gathered}
+G_{n}(v)=\left(\frac{v}{\theta}\right)^{n}, \quad 0 \leq v \leq \theta . \\
+F_{U}(u)= \begin{cases}0, & u \leq 0 \\
+u^{n}, & 0 \leq u \leq 1 \\
+1, & u>1 .\end{cases}
+\end{gathered}
+$$
+
+(b) As the distribution of $U$ does not depend on $\theta, U$ is a pivot. Note that
+
+$$
+0.95=F_{U}(u)=u^{n} \quad \Rightarrow \quad u=(0.95)^{1 / n} \text {. }
+$$
+
+Thus,
+
+$$
+0.95=\mathbb{P}\left(\frac{Y_{(n)}}{\theta}<(0.95)^{1 / n}\right)=\mathbb{P}\left(\theta>\frac{Y_{(n)}}{(0.95)^{1 / n}}\right) .
+$$
+
+Therefore, a $95 \%$ lower confidence bound for $\theta$ is $\frac{Y_{(n)}}{(0.95)^{1 / n}}$.
+
+\section*{Problem 4(a)}
+Let $X_{1}, \ldots, X_{n}$ be a random sample from the $\operatorname{Uniform}(\theta, \theta+1)$ distribution. To test $H_{0}: \theta=0$ versus $H_{1}: \theta>0$, use the test
+
+\begin{displayquote}
+reject $H_{0}$ if $Y_{n} \geq 1$ or $Y_{1} \geq k$,
+\end{displayquote}
+
+where $k$ is a constant, $Y_{1}=\min \left\{X_{1}, \ldots, X_{n}\right\}, Y_{n}=\max \left\{X_{1}, \ldots, X_{n}\right\}$.\\
+(a) Determine $k$ so that the test will have size $\alpha$.
+
+\section*{Concept:}
+\begin{itemize}
+  \item $H_{0}: \theta \in \Omega_{0} \quad$ v.s. $H_{1}: \theta \in \Omega_{1}$
+  \item Power function: $\pi(\theta \mid \delta)=\mathbb{P}_{\theta}\left(\delta\right.$ reject $\left.H_{0}\right) \quad$ (no matter it is right or wrong).
+  \item Size: $\alpha(\delta)=\sup _{\theta \in \Omega_{0}} \pi(\theta \mid \delta)$.
+\end{itemize}
+
+\section*{Problem 4(a)}
+Under $H_{0}$, we have $\theta=0$. Thus, $X_{i} \sim \operatorname{Uniform}(0,1)$. Rejection region: Reject $H_{0}$ if $Y_{n} \geq 1$ or $Y_{1} \geq k$. Therefore,
+
+$$
+\alpha=\mathbb{P}_{\theta=0}\left(Y_{n} \geq 1 \cup Y_{1} \geq k\right) .
+$$
+
+Since $\mathbb{P}_{\theta=0}\left(Y_{n} \geq 1\right)=0$, the expression simplifies to $\alpha=\mathbb{P}_{\theta=0}\left(Y_{1} \geq k\right)$.
+
+$$
+\begin{aligned}
+\alpha=\mathbb{P}_{\theta=0}\left(Y_{1} \geq k\right) & =\mathbb{P}\left(X_{1} \geq k, X_{2} \geq k, \ldots, X_{n} \geq k\right) \\
+& =\left(\int_{k}^{1} 1 d x\right)^{n} \\
+& =(1-k)^{n} .
+\end{aligned}
+$$
+
+Hence $k=1-\alpha^{1 / n}$.
+
+\section*{Problem 4(b)}
+Let $X_{1}, \ldots, X_{n}$ be a random sample from the $\operatorname{Uniform}(\theta, \theta+1)$ distribution. To test $H_{0}: \theta=0$ versus $H_{1}: \theta>0$, use the test
+
+$$
+\text { reject } H_{0} \text { if } Y_{n} \geq 1 \text { or } Y_{1} \geq k \text {, }
+$$
+
+where $k$ is a constant, $Y_{1}=\min \left\{X_{1}, \ldots, X_{n}\right\}, Y_{n}=\max \left\{X_{1}, \ldots, X_{n}\right\}$.\\
+(b) Find an expression for the power function of the test in part (a).
+
+For given $\theta, X_{i} \sim \operatorname{Uniform}(\theta, \theta+1)$.
+
+$$
+\pi(\theta \mid \delta)=\mathbb{P}_{\theta}\left(\text { Reject } H_{0}\right)=1-\mathbb{P}_{\theta}\left(\text { Do not reject } H_{0}\right)
+$$
+
+The condition "Do not reject" corresponds to: $Y_{n}<1$ and $Y_{1}<k$. This implies all $X_{i}<1$ and at least one $X_{i}<k$ (equivalent to min $X_{i}<k$ ).
+
+Problem 4(b)\\
+Case 1: $\theta \geq k$\\
+The support of the distribution is $[\theta, \theta+1]$. Since $\theta \geq k$, all observed values $X_{i} \geq k$. Therefore, $Y_{1} \geq k$ is always true. $\pi(\theta \mid \delta)=1$.
+
+Case 2: $0<\theta<k$\\
+We calculate the probability of the acceptance region $A=\left\{\right.$ all $X_{i}<1$ and $\left.Y_{1}<k\right\}$. For all $X_{i}$ to be less than 1 , they must fall in the interval $[\theta, 1)$.
+
+$$
+\begin{aligned}
+\mathbb{P}(A) & =\mathbb{P}\left(\text { all } X_{i}<1\right)-\mathbb{P}\left(\text { all } X_{i}<1 \text { and } Y_{1} \geq k\right) \\
+& =(1-\theta)^{n}-(1-k)^{n}
+\end{aligned}
+$$
+
+The power is $1-P(A)$ :
+
+$$
+\pi(\theta \mid \delta)=1-P(A)=1-(1-\theta)^{n}+(1-k)^{n},
+$$
+
+where $k=1-\alpha^{1 / n}$.
+
+\section*{Problem 5}
+In each of the following situations, calculate the p -value of the observed data.\\
+(a) For testing $H_{0}: \theta \leq 1 / 2$ versus $H_{1}: \theta>1 / 2,7$ successes are observed out of 10 Bernoulli trials.\\
+(b) For testing $H_{0}: \lambda \leq 1$ versus $H_{1}: \lambda>1, X=3$ is observed where $X \sim \operatorname{Poisson}(\lambda)$.\\
+(c) For testing $H_{0}: \theta=1 / 2$ versus $H_{1}: \theta \neq 1 / 2,7$ successes are observed out of 10 Bernoulli trials.
+
+\section*{Concept:}
+\begin{itemize}
+  \item P-value: smallest level $\alpha$ such that we would reject $H_{0}$ at level $\alpha$ with the observed data.
+  \item (alternative): The probability that the test statistic is at least "extreme" as the observed one.
+\end{itemize}
+
+\section*{Problem 5}
+\begin{itemize}
+  \item $X \sim \operatorname{Binomial}(n=10, \theta)$, observed $x=7$.
+\end{itemize}
+
+$$
+p=\mathbb{P}_{\theta=1 / 2}(X \geq 7)=\sum_{k=7}^{10}\binom{10}{k}\left(\frac{1}{2}\right)^{10}=\frac{176}{1024} \approx 0.172 .
+$$
+
+The reason of fixing $\theta=1 / 2$ : Among $\Omega_{0}, \theta=1 / 2$ has the largest power function if the rejection region is $\{X \geq k\}$ for $k \geq 5$.
+
+\begin{itemize}
+  \item $X \sim \operatorname{Poisson}(\lambda)$, observed $x=3$.
+\end{itemize}
+
+$$
+\begin{aligned}
+p=\mathbb{P}_{\lambda=1}(X \geq 3) & =1-\mathbb{P}_{\lambda=1}(X \leq 2) \\
+& =1-e^{-1}\left(1+1+\frac{1}{2}\right)=1-\frac{5}{2 e} \approx 0.0803 .
+\end{aligned}
+$$
+
+\begin{itemize}
+  \item $X \sim \operatorname{Binomial}(n=10, \theta)$, observed $x=7$.
+\end{itemize}
+
+$$
+p=\mathbb{P}_{\theta=1 / 2}(X \geq 7 \text { and } X \leq 3)=2 \times 0.172=0.344 .
+$$
+
+
+\end{document}
