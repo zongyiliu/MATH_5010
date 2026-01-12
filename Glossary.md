@@ -3,3 +3,6 @@
 * Lafayette: 拉法耶
 * Wabash: 沃巴什
 * Bristol: 布里斯托爾
+* Newport: 紐波特
+* Delaware: 德拉瓦
+* Penn: 賓
