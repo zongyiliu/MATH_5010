@@ -1,19 +1,19 @@
-# 整體
-## 數學符號
+## 整體
+### 數學符號
 [列表](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
-## 在宏包之前
+### 在宏包之前
 <code>
 \documentclass[letterpaper, 9pt]{article}
 \linespread{0.85}
 </code>
 
-## 空行
+### 空行
 <code>
 \vspace*{0.1\textheight}
 </code>
 
 
-## 使用的包
+### 使用的包
 <code>
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -74,12 +74,12 @@
 	
 </code>
 
-## 調用漢字
+### 調用漢字
 <code>
 \usepackage{ctex} 
 </code>
 
-## 標題
+### 標題
 * 正標題: Homework/Lecture/Exercise 1, MATH 451
 * 小標題: Dirichlet Boundary Condition 下面換行寫漢字
 * 副標題: Zongyi Liu/Wed Jan 1, 2023 [星期, 月份使用簡寫, 即使 June March這種字數少的]
@@ -92,13 +92,13 @@
 	\date{Thu, Mar 27, 2023}
 </code>
 
-## 目錄
+### 目錄
 <code>
 \tableofcontents
 </code>
 
-# 內部
-## 插入註釋
+## 內部
+### 插入註釋
 <code>
 \begin{tcolorbox}[width=\linewidth, colframe=MidnightBlue, title=A]
 
@@ -107,7 +107,7 @@
 藍色: MidnightBlue, 我自己的註釋
 紅色: Maroon
 綠色: OliveGreen, 原lecture的
-## 插入圖片
+### 插入圖片
 <code>
 \includegraphics[max width=\textwidth, center]{gas}
 \captionof{figure}{Natural gas futures curve on Jan 31, 2025}
@@ -115,23 +115,23 @@
 
 caption放在圖片下面
 
-## 引用代碼
+### 引用代碼
 <code>
 \begin{lstlisting}
 \end{lstlisting}
 </code>
 
-## 超鏈接
+### 超鏈接
 <code>
 \href{https:網址}{顯示名}
 </code>
 
-## R那樣的數字
+### R那樣的數字
 <code>
 \mathbb{}
 </code>
 
-## 代碼打印結果
+### 代碼打印結果
 <code>
 \begin{minipage}{\linewidth}
 \begin{Verbatim}
@@ -139,15 +139,22 @@ caption放在圖片下面
 \end{minipage}
 </code>
 
-## 用顏色
+### 用顏色
 <code>
 \textcolor{red}{easily}
 </code>
 
 
-## 插入目錄
+### 插入目錄
 <code>
 \tableofcontents
 </code>
 
-## 
+### 插入著重字體
+
+<code>
+\definecolor{deepred}{RGB}{139,0,0}
+{\color{deepred}\fontspec{Georgia} Edmonds-Karp Algorithm}
+</code>
+
+
