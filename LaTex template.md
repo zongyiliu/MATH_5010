@@ -82,7 +82,7 @@
 ### 標題
 * 正標題: Homework/Lecture/Exercise 1, MATH 451
 * 小標題: Dirichlet Boundary Condition 下面換行寫漢字
-* 副標題: Zongyi Liu/Wed Jan 1, 2023 [星期, 月份使用簡寫, 即使 June March這種字數少的]
+* 副標題: Zongyi Liu/Wed Jan 1, 2023 [星期, 月份使用簡寫, 即使 June March 這種字數少的]
 
 <code>
 	\title{Lecture 9, MATH 451\\
@@ -106,7 +106,7 @@
 </code>
 藍色: MidnightBlue, 我自己的註釋
 紅色: Maroon
-綠色: OliveGreen, 原lecture的
+綠色: OliveGreen, 原 lecture 的
 ### 插入圖片
 <code>
 \includegraphics[max width=\textwidth, center]{gas}
