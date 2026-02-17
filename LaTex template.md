@@ -1,6 +1,6 @@
 ## Overall
 ### Mathematical symbols
-[List](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
+* [List](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
 ### Before packages
 <code>
 \documentclass[letterpaper, 9pt]{article}
