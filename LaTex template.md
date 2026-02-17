@@ -1,19 +1,19 @@
-## 整體
-### 數學符號
+## Overall
+### Mathematical symbols
 [列表](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
-### 在宏包之前
+### Before packages
 <code>
 \documentclass[letterpaper, 9pt]{article}
 \linespread{0.85}
 </code>
 
-### 空行
+### Another line
 <code>
 \vspace*{0.1\textheight}
 </code>
 
 
-### 使用的包
+### packages
 <code>
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -74,15 +74,15 @@
 	
 </code>
 
-### 調用漢字
+### Use Chinese charaters
 <code>
 \usepackage{ctex} 
 </code>
 
-### 標題
-* 正標題: Homework/Lecture/Exercise 1, MATH 451
-* 小標題: Dirichlet Boundary Condition 下面換行寫漢字
-* 副標題: Zongyi Liu/Wed Jan 1, 2023 [星期, 月份使用簡寫, 即使 June March 這種字數少的]
+### Title
+* Main Title: Homework/Lecture/Exercise 1, MATH 451
+* Micro Title: Dirichlet Boundary Condition, then a new line with Chinese
+* Sub Title: Zongyi Liu/Wed Jan 1, 2023 [Weekday, Month, with abbre, even June March]
 
 <code>
 	\title{Lecture 9, MATH 451\\
@@ -92,46 +92,47 @@
 	\date{Thu, Mar 27, 2023}
 </code>
 
-### 目錄
+### Table of contents
 <code>
 \tableofcontents
 </code>
 
-## 內部
-### 插入註釋
+## Within the article
+### Comments
 <code>
 \begin{tcolorbox}[width=\linewidth, colframe=MidnightBlue, title=A]
 
 \end{tcolorbox}
 </code>
-藍色: MidnightBlue, 我自己的註釋
-紅色: Maroon
-綠色: OliveGreen, 原 lecture 的
-### 插入圖片
+BLUE: MidnightBlue; my own comments
+RED: Maroon
+GREEN: OliveGreen; lecture comments
+### Picture
 <code>
 \includegraphics[max width=\textwidth, center]{gas}
 \captionof{figure}{Natural gas futures curve on Jan 31, 2025}
 </code>
 
-caption放在圖片下面
+caption is but under the picture
 
-### 引用代碼
+### Quoting codes
 <code>
 \begin{lstlisting}
 \end{lstlisting}
 </code>
 
-### 超鏈接
+### Hyperlink
 <code>
-\href{https:網址}{顯示名}
+\href{https:website}{displaying name}
 </code>
 
-### R那樣的數字
+### R-like letters
 <code>
 \mathbb{}
 </code>
 
-### 代碼打印結果
+
+### Printout
 <code>
 \begin{minipage}{\linewidth}
 \begin{Verbatim}
@@ -139,18 +140,13 @@ caption放在圖片下面
 \end{minipage}
 </code>
 
-### 用顏色
+### Text with color
 <code>
 \textcolor{red}{easily}
 </code>
 
 
-### 插入目錄
-<code>
-\tableofcontents
-</code>
-
-### 插入著重字體
+### Text with color and font; fixed for emphasis
 
 <code>
 \definecolor{deepred}{RGB}{139,0,0}
