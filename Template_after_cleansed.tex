@@ -11,7 +11,7 @@
 % Fonts (use XeLaTeX)
 % ------------------------------------------------
 \usepackage{fontspec}
-\setmainfont{Times New Roman} % or remove if not needed
+% \setmainfont{Times New Roman} % it will make all fonts to be Times New Roman
 
 % ------------------------------------------------
 % Math packages
@@ -51,17 +51,17 @@
 \usepackage{listings}
 
 \lstset{
-    language=Python,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    commentstyle=\color{gray},
-    stringstyle=\color{red},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    stepnumber=1,
-    breaklines=true,
-    backgroundcolor=\color{black!5},
-    frame=single,
+	language=Python,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	stringstyle=\color{red},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	breaklines=true,
+	backgroundcolor=\color{black!5},
+	frame=single,
 }
 
 % ------------------------------------------------
@@ -74,3 +74,10 @@
 % ------------------------------------------------
 \usepackage{mhchem}
 \usepackage{tcolorbox}
+
+% ------------------------------------------------
+% Chinese characters and different fonts
+% ------------------------------------------------
+\usepackage[UTF8]{ctex} 
+\newfontfamily\georgiafont{Georgia}
+\newcommand{\redtitle}[1]{{\color{deepred}\georgiafont #1}}
