@@ -1,0 +1,76 @@
+\documentclass[letterpaper]{article}
+
+% ------------------------------------------------
+% Basic settings
+% ------------------------------------------------
+\linespread{0.9}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[english]{babel}
+
+% ------------------------------------------------
+% Fonts (use XeLaTeX)
+% ------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{Times New Roman} % or remove if not needed
+
+% ------------------------------------------------
+% Math packages
+% ------------------------------------------------
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{stmaryrd}
+
+% ------------------------------------------------
+% Tables and layout
+% ------------------------------------------------
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+% ------------------------------------------------
+% Graphics
+% ------------------------------------------------
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{capt-of}
+\usepackage{float}
+\graphicspath{{./images/}}
+
+% ------------------------------------------------
+% Colors
+% ------------------------------------------------
+\usepackage[dvipsnames]{xcolor}
+\definecolor{deepred}{RGB}{139,0,0}
+\colorlet{LightRubineRed}{RubineRed!70}
+\colorlet{Mycolor1}{green!10!orange}
+\definecolor{Mycolor2}{HTML}{00F9DE}
+
+% ------------------------------------------------
+% Code display
+% ------------------------------------------------
+\usepackage{fancyvrb}
+\usepackage{listings}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    breaklines=true,
+    backgroundcolor=\color{black!5},
+    frame=single,
+}
+
+% ------------------------------------------------
+% Hyperlinks (load LAST)
+% ------------------------------------------------
+\usepackage{hyperref}
+
+% ------------------------------------------------
+% Optional packages
+% ------------------------------------------------
+\usepackage{mhchem}
+\usepackage{tcolorbox}
