@@ -1,6 +1,6 @@
 ## Overall
 ### Mathematical symbols
-* [List](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
+* [Full list](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf)
 ### Before packages
 <code>
 \documentclass[letterpaper, 9pt]{article}
@@ -144,7 +144,7 @@ caption is but under the picture
 <code>
 \textcolor{red}{easily}
 </code>
-
+* [Full list](https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX))
 
 ### Text with color and font; fixed for emphasis
 
