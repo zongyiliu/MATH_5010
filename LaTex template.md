@@ -144,7 +144,8 @@ caption is but under the picture
 <code>
 \textcolor{red}{easily}
 </code>
-* [Full list](https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX))
+
+* [Full list](https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX)
 
 ### Text with color and font; fixed for emphasis
 
