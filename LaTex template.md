@@ -107,13 +107,13 @@
 BLUE: MidnightBlue; my own comments
 RED: Maroon
 GREEN: OliveGreen; lecture comments
-### Picture
+### Image
 <code>
 \includegraphics[max width=\textwidth, center]{gas}
 \captionof{figure}{Natural gas futures curve on Jan 31, 2025}
 </code>
 
-caption is but under the picture
+caption is put under the picture
 
 ### Quoting codes
 <code>
