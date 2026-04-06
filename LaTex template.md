@@ -154,4 +154,8 @@ caption is put under the picture
 {\color{deepred}\fontspec{Georgia} Edmonds-Karp Algorithm}
 </code>
 
+### Footnote
 
+<code>
+\footnote{    }
+</code>
