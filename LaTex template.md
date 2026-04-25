@@ -73,7 +73,6 @@
 \usepackage[]{amssymb} %gives us the character \varnothing
 	
 </code>
-
 ### Use Chinese charaters
 <code>
 \usepackage{ctex} 
