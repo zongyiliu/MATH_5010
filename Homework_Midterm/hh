@@ -1,0 +1,167 @@
+### Section 1
+#### Problem 1
+On Facebook, 20% of stories are "fake news". "Fake news" stories have a 40% probability of having at least 100 "likes". Real news stories have a 5% probability of having at least 100 "likes". If a story has at least 100 "likes", what is the probability that it is "fake news"? Please express your answer to the nearest whole percent (e.g. 65%).
+
+_Answer_: 
+
+$P(F) = 0.2$, $P(F') = 0.8$, $P(L|F) = 0.4$, $P(L|F') = 0.05$ 
+$$P(F|L) = \frac{P(L|F)P(F)}{P(L|F)P(F)+P(L|F')P(F')} = \frac{0.4 \times 0.2}{0.4 \times 0.2 + 0.05 \times 0.8} = \frac{2}{3} = 0.67$$
+
+---
+#### Problem 2
+Starting at the point $(0,0)$, how many ways are there to get to the point $(8,5)$ if you have to pass through the point $(3,2)$, and each step can only be in a positive direction (i.e., to the right or up)?
+
+_Answer_: 
+
+$$\frac{(3+2)!}{3!2!}\times\frac{(5+3)!}{5!3!} = \frac{5!}{3!2!}\times\frac{8!}{5!3!} = \frac{8!}{2!3!3!} = 560$$
+
+---
+#### Problem 3
+Two friends canoe upstream for $3$ hours, only to realize that their campsite is downstream. They turn around, and paddle downstream for $5$ hours. The next morning, they pack up and get back on the river to canoe to their original starting point 26 miles upstream and arrive at $6$ pm. Assume the river always flows at a constant rate of $2$ miles per hour, and the two friends always paddle at a constant rate. What time did they leave for their return trip? Please answer with the time followed by am or pm (e.g. $2:15$ pm).
+
+_Answer_:
+
+$5(v+2)-3(v-2) = 5v+10-3v+6 = 2v + 16 = 26 \Rightarrow v =5$. Time required to go upstream, $\frac{26}{5-2} = 8:40$ hour. So, they started at $9:20$ am.
+
+---
+#### Problem 4
+I need to sit $5$ toddlers around a round table for lunch, but there are some problems! Anna won't sit next to Brian or Eva. 
+Brian won't sit next to Charlie. Dixie won't sit next to Eva or Charlie. If Dixie is sitting to the left of Anna, who is sitting to the left of Brian?
+
+_Answer_: 
+
+$C, D \leftarrow A \rightarrow B, E$
+
+$A, D, E \leftarrow B \rightarrow C$
+
+$A, B \leftarrow D \rightarrow E, C$
+
+$E, B, D, A, C$
+
+---
+#### Problem 5
+You are on an island inhabited by three types of people: those who only tell the truth (knights), those who only tell lies (knaves), and those who either tell the truth or lie (spies). You come across three people. You know that one is a knight, one is a knave, and one is a spy. 
+
+A says: "B is a spy."
+
+B says: "C is a spy."
+
+C says: "B is a spy."
+
+_Answer_: 
+$A$ is Knave, $B$ is Knight, $C$ is Spy.
+
+---
+#### Problem 6
+I have a bag of $N$ white marbles. I paint $20$ of the marbles black. Later, my sister pulls out $30$ marbles, and I tell her that my best guess (i.e., the mean answer) is that $10$ of them will be black. How many marbles are in the bag?
+
+_Answer_:
+$\frac{20}{N} = \frac{10}{30}$ gives $N = 60$.
+
+---
+#### Problem 7
+Consider two independent random variables $X,Y \sim U[0, 1]$. Calculate the probability that $|X - Y| \geq \frac{1}{3}$. Please submit your answer as a fraction in lowest terms.
+
+_Answer_:
+$\frac{4}{9}$. Similar problem [here](https://math.stackexchange.com/questions/1681363/cdf-of-absolute-value-of-difference-in-random-variables).
+
+---
+#### Problem 8
+The number $20$ has a total of $6$ positive factors. What is the total number of positive factors for $2160$?
+
+_Answer_:
+$2160 = 2^4 3^3 5^1 \to 5\cdot4\cdot2 = 40$
+
+---
+#### Problem 9
+Consider a biased coin where the probability of flipping Heads is $\frac{2}{5}$. Let $X$ be the number of Heads after flipping the coin $4$ times. Calculate $\mathbb E[X]$. Please submit your answer as a fraction in lowest terms:
+
+_Answer_: 
+$\mathbb E[X] = np = \frac{8}{5}$ 
+
+---
+### Section 2
+#### Problem 1
+A spherical balloon is inflated at a constant rate of $4$ cubic inches per second. When the volume of the balloon is at $\frac{9\pi}{2}$ cubic inches, at what rate is the surface area of the balloon expanding?
+
+_Answer_: 
+$\frac{dv}{dt} = 4$ and $\frac{4}{3}\pi r^3 = \frac{9\pi}{2} \Rightarrow r = \frac{3}{2}$. Also, $\frac{ds}{dt} = 4\pi \cdot 2r \cdot \frac{dr}{dt} = \frac{2}{r} \frac{dv}{dt} = 2 \times \frac{2}{3} \times 4 = \frac{16}{3}$
+
+---
+#### Problem 2
+Let $A= {1, 2, 3, 4, 5}$ and $B = {6,7,8}$. Count the number of surjective functions $f: A \to B$. A function $f: A \to B$ is surjective if for all $b \in B$ there exists an $a \in A$ such that $f(a) = b$.
+
+_Answer_: 
+$3^5 - 3(2^5-2)-3 = 243 - 90 -3 = 150$. For general solution, see [here](https://math.stackexchange.com/questions/500674/number-of-surjective-functions-from-a-to-b).
+
+---
+#### Problem 3
+For all $x \in \mathbb R$ where $x \neq \frac{3\pi}{2}$, define $f(x) = \frac{1+\sin(x)}{(2x-3\pi)^2}$. Find the value that should be assigned to $f(\frac{3\pi}{2})$ such that $f$ is a continuous function. Please submit your answer as a fraction in lowest terms.
+
+_Answer_: 
+$\lim\limits_{x \to \frac{3\pi}{2}}f(x) = \lim\limits_{x \to \frac{3\pi}{2}} \frac{1+\sin(x)}{(2x-3\pi)^2} = \lim\limits_{x \to \frac{3\pi}{2}} \frac{\cos(x)}{2\cdot(2x-3\pi)\cdot2} = \lim\limits_{x \to \frac{3\pi}{2}} -\frac{1}{8}\sin(x) = \frac{1}{8}$
+
+---
+#### Problem 4
+Suppose you have a fair $6$-sided die (i.e. a discrete random variable uniformly distributed on the integers {1, 2, ..., 6}). Consider rolling the die repeatedly until either (A) you roll the number $1$ or (B) you roll the number $2$ twice in a row. Let $X$ be the number of die rolls it takes for you to reach either condition (A) or condition (B). Calculate $\mathbb E[X]$. Please submit your answer as a fraction in lowest terms
+
+---
+#### Problem 5
+Let $f(x)=(1+2x^3)e^{x^2}$. Calculate $f^{(5)}(0)$ (i.e. the fifth derivative of $f$ evaluated at $0$).
+
+_Answer_: 
+We know that $$e^{x^2} = 1 + \frac{x^2}{1!} + \frac{x^4}{2!} + \cdots + \frac{x^{2n}}{n!} = 1 + \frac{x^2}{1!} + \frac{x^4}{2!} + O(x^6)$$
+
+$$(1+2x^3)e^{x^2} = (1+2x^3)(1 + \frac{x^2}{1!} + \frac{x^4}{2!} + O(x^6)) = \sum_{n} \frac{f^{(n)}(0)}{n!} x^n$$
+This translates to $\frac{f^{(5)}(0)}{5!} = 2$ or $f^{(5)}(0) = 2 \times 5! = 240$
+
+---
+#### Problem 6
+Consider a stick of length $1$. Select two points independently and uniformly at random on the stick. Break the stick at these two points, resulting in $3$ smaller pieces. What is the probability that the smallest of these pieces is $\leq \frac{1}{5}$? Please submit your answer as a fraction in lowest terms:
+
+[Solution](https://math.stackexchange.com/questions/3872156/uniformly-at-random-break-a-unit-stick-in-two-places-what-is-the-probability-t)
+
+---
+#### Scores: 
+
+##### Section 1
+- [x] 1
+- [x] 2
+- [ ] 3
+- [x] 4
+- [ ] 5
+- [x] 6
+- [ ] 7
+- [x] 8
+- [x] 9
+
+##### Section 2
+- [x] 1
+- [ ] 2
+- [x] 3
+- [ ] 4
+- [ ] 5
+- [ ] 6
+
+### Phone Interview (05/08/2023)
+#### Problem 1
+I have $4$ double sided cards as follows (1) Black Jack (2) Red Queen (3) Red King (4) Red King + Black King. (a) You pick 2 cards. What is the probability of having 1 Jack and 1 King?
+
+##### Answer: $2\times(\frac{2}{4}\times\frac{1}{3}) = \frac{1}{3}$
+
+#### Problem 2
+Using the previous setup of cards. You are showed one card with one face having Red King. If the other face is Red King, I win. If the other side is Black King, you win. Do you want to play?
+
+##### Answer: 
+
+(You Win, I win) $=(\frac{2}{3}, \frac{1}{3})$. I should not play. 
+
+#### Problem 3
+The is a land with probability 0.1, 0.3 and 0.6 of finding oil, coal and nothing respectively. In that case the price of the becomes $1M, $500K and $200K respectively. (a) What is the maximum price you would agree to buy this land (b) You sign a contract of $300K, that allows you to explore this place. What is going to be the fair price of this contract?
+
+(a) Maximum Price $= 0.1\times1000 + 0.3\times500+0.6\times200 = 100 + 150 + 120 = 370K$
+
+(b) Fair price $= 200K$
+
+
+
